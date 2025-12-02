@@ -1,41 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import tarif1 from "../assets/tarifs/Tarifs_au_depart_de_la France_metropolitaine.png";
 import tarif2 from "../assets/tarifs/Envois_en_Lettre_internationale.png";
-import ShippingZoneSelector from "../components/ShippingZoneSelector";
+import ordersService from "../services/ordersService";
+import useCart from "../hooks/useCart";
 
 const CartPage = () => {
-  const [shippingZone, setShippingZone] = useState("FR");
+  const { cartItems, updateQuantity, removeItem, getCartCount } = useCart();
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [loadingCountries, setLoadingCountries] = useState(true);
   const [showFranceDetails, setShowFranceDetails] = useState(false);
   const [showEuropeDetails, setShowEuropeDetails] = useState(false);
 
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 3,
-      slug: "Castorin",
-      title: "Je ne veux plus être un castor...",
-      image: "https://placehold.co/100x150/F4E8B4/2C3E50?text=Castor",
-      quantity: 1,
-      unitPrice: 7.0,
-    },
-  ]);
+  // Charger les pays depuis l'API
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        setLoadingCountries(true);
+        const response = await ordersService.getCountries();
+        const countriesList = response.results || response;
+        setCountries(countriesList);
+        // Sélectionner France par défaut si disponible
+        const france = countriesList.find(c => c.code === 'FR');
+        if (france) {
+          setSelectedCountry(france);
+        } else if (countriesList.length > 0) {
+          setSelectedCountry(countriesList[0]);
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des pays:', error);
+      } finally {
+        setLoadingCountries(false);
+      }
+    };
+    fetchCountries();
+  }, []);
 
-  const shippingCosts = {
-    FR: 4.71,
-    EU: 10.48,
-  };
-
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: parseInt(newQuantity) } : item
-      )
-    );
-  };
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const getShippingCost = () => {
+    if (!selectedCountry) return 0;
+    return parseFloat(selectedCountry.shipping_cost_euros) || (selectedCountry.shipping_cost / 100);
   };
 
   const calculateSubtotal = () => {
@@ -46,15 +50,20 @@ const CartPage = () => {
   };
 
   const getTotalQuantity = () => {
-    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    return getCartCount();
   };
 
   const calculateTotal = () => {
-    return calculateSubtotal() + shippingCosts[shippingZone];
+    return calculateSubtotal() + getShippingCost();
   };
 
   const formatPrice = (price) => {
     return price.toFixed(2).replace(".", ",") + " €";
+  };
+
+  const handleQuantityChange = (id, newQuantity) => {
+    if (newQuantity < 1) return;
+    updateQuantity(id, parseInt(newQuantity));
   };
 
   return (
@@ -77,23 +86,38 @@ const CartPage = () => {
           Mon Panier
         </h1>
 
-        {/* Shipping Zone Selector */}
+        {/* Sélecteur de pays de livraison */}
         <div className="mb-6 flex items-center gap-3 flex-wrap">
-          <ShippingZoneSelector
-            shippingZone={shippingZone}
-            setShippingZone={setShippingZone}
-          />
+          <label className="font-semibold text-slate-700">Pays de livraison:</label>
+          {loadingCountries ? (
+            <span className="text-gray-500">Chargement...</span>
+          ) : (
+            <select
+              value={selectedCountry?.id || ''}
+              onChange={(e) => {
+                const country = countries.find(c => c.id === parseInt(e.target.value));
+                setSelectedCountry(country);
+              }}
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              {countries.map((country) => (
+                <option key={country.id} value={country.id}>
+                  {country.name} - {country.shipping_cost_euros || formatPrice(country.shipping_cost / 100)}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         {cartItems.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-2xl text-gray-500 mb-4">Votre panier est vide</p>
-            <a
-              href="/"
+            <Link
+              to="/"
               className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
             >
               Continuer mes achats
-            </a>
+            </Link>
           </div>
         ) : (
           <>
@@ -117,11 +141,17 @@ const CartPage = () => {
                     >
                       <td className="p-3">
                         <div className="flex items-center gap-4">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="w-20 h-28 object-cover rounded"
-                          />
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-20 h-28 object-cover rounded"
+                            />
+                          ) : (
+                            <div className="w-20 h-28 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
+                              No image
+                            </div>
+                          )}
                           <span className="font-medium text-slate-700">
                             {item.title}
                           </span>
@@ -129,22 +159,24 @@ const CartPage = () => {
                       </td>
                       <td className="p-3 text-center">
                         <div className="flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                            className="bg-gray-200 text-gray-700 w-8 h-8 rounded hover:bg-gray-300 transition"
+                          >
+                            -
+                          </button>
                           <input
                             type="number"
                             min="1"
                             value={item.quantity}
-                            onChange={(e) =>
-                              updateQuantity(item.id, e.target.value)
-                            }
+                            onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                             className="w-16 border border-gray-300 rounded px-2 py-1 text-center"
                           />
                           <button
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity)
-                            }
-                            className="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 transition"
+                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                            className="bg-gray-200 text-gray-700 w-8 h-8 rounded hover:bg-gray-300 transition"
                           >
-                            Modifier
+                            +
                           </button>
                         </div>
                       </td>
@@ -176,11 +208,17 @@ const CartPage = () => {
                   className="border border-gray-300 rounded-lg p-4 bg-gray-50"
                 >
                   <div className="flex gap-4 mb-4">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-20 h-28 object-cover rounded"
-                    />
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-20 h-28 object-cover rounded"
+                      />
+                    ) : (
+                      <div className="w-20 h-28 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
+                        No image
+                      </div>
+                    )}
                     <div className="flex-1">
                       <h3 className="font-semibold text-slate-700 mb-2">
                         {item.title}
@@ -197,20 +235,24 @@ const CartPage = () => {
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                        className="bg-gray-200 text-gray-700 w-8 h-8 rounded"
+                      >
+                        -
+                      </button>
                       <input
                         type="number"
                         min="1"
                         value={item.quantity}
-                        onChange={(e) =>
-                          updateQuantity(item.id, e.target.value)
-                        }
+                        onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                         className="w-16 border border-gray-300 rounded px-2 py-1 text-center"
                       />
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity)}
-                        className="bg-yellow-500 text-white px-3 py-1 rounded text-sm"
+                        onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                        className="bg-gray-200 text-gray-700 w-8 h-8 rounded"
                       >
-                        Modifier
+                        +
                       </button>
                     </div>
                     <button
@@ -229,23 +271,20 @@ const CartPage = () => {
               {/* Subtotal Quantity/Price */}
               <div className="flex justify-between items-center py-3 border-t border-gray-300">
                 <span className="font-semibold text-slate-700">
-                  Sous-total quantité / prix
+                  Sous-total ({getTotalQuantity()} article{getTotalQuantity() > 1 ? 's' : ''})
                 </span>
-                <div className="flex gap-4">
-                  <span className="font-bold">{getTotalQuantity()}</span>
-                  <span className="font-bold">
-                    {formatPrice(calculateSubtotal())}
-                  </span>
-                </div>
+                <span className="font-bold">
+                  {formatPrice(calculateSubtotal())}
+                </span>
               </div>
 
               {/* Shipping Cost */}
               <div className="flex justify-between items-center py-3 border-t border-gray-300">
                 <span className="font-semibold text-slate-700">
-                  Sous-total frais d'expédition
+                  Frais d'expédition ({selectedCountry?.name || 'Non sélectionné'})
                 </span>
                 <span className="font-bold">
-                  {formatPrice(shippingCosts[shippingZone])}
+                  {formatPrice(getShippingCost())}
                 </span>
               </div>
 
@@ -298,7 +337,7 @@ const CartPage = () => {
                     que vous paierez des frais d'envoi moins élevés en passant
                     une commande à partir de 4 ou 7 titres.
                   </p>
-                  <img src={tarif1} alt="image tarifs internationnale" />
+                  <img src={tarif1} alt="Tarifs France" />
                   <p className="font-bold mb-2">
                     Chacun des titres « Je ne veux plus être… » pèse 103
                     grammes,
@@ -311,46 +350,27 @@ const CartPage = () => {
                   <div className="space-y-4 mt-6">
                     <div className="bg-white p-4 rounded border">
                       <p className="font-bold">2 titres</p>
-                      <p>
-                        = 206 grammes (+ enveloppe bulle de 30 g) = 236 grammes
-                      </p>
+                      <p>= 206 grammes (+ enveloppe bulle de 30 g) = 236 grammes</p>
                       <p>→ pour un tarif de 4,71 €</p>
-                      <p className="font-bold mt-2">
-                        Soit un coût unitaire d'expédition de 2,35 € / livre.
-                      </p>
+                      <p className="font-bold mt-2">Soit un coût unitaire d'expédition de 2,35 € / livre.</p>
                     </div>
-
                     <div className="bg-white p-4 rounded border">
                       <p className="font-bold">3 titres</p>
-                      <p>
-                        = 309 grammes (+ enveloppe bulle de 45 g) = 354 grammes
-                      </p>
+                      <p>= 309 grammes (+ enveloppe bulle de 45 g) = 354 grammes</p>
                       <p>→ pour un tarif de 6,77 €</p>
-                      <p className="font-bold mt-2">
-                        Soit un coût unitaire d'expédition de 2,25 € / livre.
-                      </p>
+                      <p className="font-bold mt-2">Soit un coût unitaire d'expédition de 2,25 € / livre.</p>
                     </div>
-
                     <div className="bg-white p-4 rounded border border-red-400">
                       <p className="font-bold">4 titres</p>
-                      <p>
-                        = 412 grammes (+ enveloppe bulle de 45 g) = 457 grammes
-                      </p>
+                      <p>= 412 grammes (+ enveloppe bulle de 45 g) = 457 grammes</p>
                       <p>→ pour un tarif de 5,13 €</p>
-                      <p className="font-bold text-red-600 mt-2">
-                        Soit un coût unitaire d'expédition de 1,28 € / livre.
-                      </p>
+                      <p className="font-bold text-red-600 mt-2">Soit un coût unitaire d'expédition de 1,28 € / livre.</p>
                     </div>
-
                     <div className="bg-white p-4 rounded border">
                       <p className="font-bold">7 titres</p>
-                      <p>
-                        = 721 grammes (+ enveloppe bulle de 60 g) = 781 grammes
-                      </p>
+                      <p>= 721 grammes (+ enveloppe bulle de 60 g) = 781 grammes</p>
                       <p>→ pour un tarif de 8,42 €</p>
-                      <p className="font-bold mt-2">
-                        Soit un coût unitaire d'expédition de 1,20 € / livre.
-                      </p>
+                      <p className="font-bold mt-2">Soit un coût unitaire d'expédition de 1,20 € / livre.</p>
                     </div>
                   </div>
                 </div>
@@ -374,126 +394,38 @@ const CartPage = () => {
                       https://www.laposte.fr/mon-timbre-en-ligne/tarifs
                     </a>
                   </p>
-                  <p className="mb-4">
-                    Pourquoi cette transparence ? Simplement pour vous informer
-                    que vous paierez des frais d'envoi moins élevés en passant
-                    une commande à partir de 4 ou 8 titres.
-                  </p>
-                  <img src={tarif2} alt="jdkj jnjsdn jdsj" />
+                  <img src={tarif2} alt="Tarifs Europe" />
                   <p className="font-bold mb-2">
-                    Chacun des titres « Je ne veux plus être… » pèse 103
-                    grammes,
+                    Chacun des titres « Je ne veux plus être… » pèse 103 grammes,
                   </p>
                   <p className="mb-4">
-                    auxquels s'ajoutent 30 grammes de papier bulle. Soit un
-                    total de 133 grammes.
-                  </p>
-                  <p>
-                    Mais la poste ne propose pas de tarifs pour 130 g. Elle nous
-                    fait directement basculer dans la 3ème tranche de 101 à 250
-                    grammes, tarifés à 10,48 €.
+                    auxquels s'ajoutent 30 grammes de papier bulle. Soit un total de 133 grammes.
                   </p>
                   <p className="text-red-500">
-                    Nous comprenons qu’il est impensable de régler 10,48 € pour
-                    un livre qui en coute 7 €. C’est donc la raison pour
-                    laquelle, nous vous proposons de réduire ces frais d’envoi
-                    en achetant directement plus d’un titre.
+                    Nous comprenons qu'il est impensable de régler 10,48 € pour
+                    un livre qui en coute 7 €. C'est donc la raison pour
+                    laquelle, nous vous proposons de réduire ces frais d'envoi
+                    en achetant directement plus d'un titre.
                   </p>
 
                   <div className="space-y-4 mt-6">
                     <div className="bg-white p-4 rounded border">
                       <p className="font-bold">2 titres</p>
-                      <p>
-                        = 206 grammes (+ enveloppe bulle de 30 g) = 236 grammes
-                      </p>
+                      <p>= 206 grammes (+ enveloppe bulle de 30 g) = 236 grammes</p>
                       <p>→ pour un tarif de 10,48 €</p>
-                      <p className="font-bold mt-2">
-                        Soit un coût unitaire d'expédition de 5,24 € / livre.
-                      </p>
+                      <p className="font-bold mt-2">Soit un coût unitaire d'expédition de 5,24 € / livre.</p>
                     </div>
-
-                    <div className="bg-white p-4 rounded border">
-                      <p className="font-bold">3 titres</p>
-                      <p>
-                        = 309 grammes (+ enveloppe bulle de 45 g) = 354 grammes
-                      </p>
-                      <p>
-                        Nous passons à la 4ème tranche comprise entre 251 et 500
-                        grammes que La Poste facture à 15,24 €.
-                      </p>
-                      <p className="font-bold mt-2">
-                        Soit un coût unitaire d'expédition de 5,08 € / livre.
-                      </p>
-                    </div>
-
                     <div className="bg-white p-4 rounded border border-red-400">
                       <p className="font-bold">4 titres</p>
-                      <p>
-                        = 412 grammes (+ enveloppe bulle de 45 g) = 457 grammes
-                      </p>
-                      <p>
-                        4ème tranche comprise entre 251 et 500 grammes que La
-                        Poste facture à 15,24 €.
-                      </p>
-                      <p className="font-bold text-red-600 mt-2">
-                        Soit un coût unitaire d'expédition de 3,81 € / livre.
-                      </p>
+                      <p>= 412 grammes (+ enveloppe bulle de 45 g) = 457 grammes</p>
+                      <p>4ème tranche comprise entre 251 et 500 grammes que La Poste facture à 15,24 €.</p>
+                      <p className="font-bold text-red-600 mt-2">Soit un coût unitaire d'expédition de 3,81 € / livre.</p>
                     </div>
-
-                    <div className="bg-white p-4 rounded border">
-                      <p className="font-bold">5 titres</p>
-                      <p>
-                        = 515 grammes (+ enveloppe bulle de 50 g) = 565 grammes
-                      </p>
-                      <p>
-                        Nous passons à la 5ème tranche comprise entre 501 et
-                        1000 grammes que La Poste facture à 8,30 €.
-                      </p>
-                      <p className="font-bold mt-2">
-                        Soit un cout unitaire d’expédition de 5,72 € / livre.
-                      </p>
-                    </div>
-
-                    <div className="bg-white p-4 rounded border">
-                      <p className="font-bold">6 titres</p>
-                      <p>
-                        = 618 grammes (+ enveloppe bulle de 50 g) = 668 grammes
-                      </p>
-                      <p>
-                        5ème tranche comprise entre 501 et 1000 grammes que La
-                        Poste facture à 28,62 €.
-                      </p>
-                      <p className="font-bold mt-2">
-                        Soit un cout unitaire d’expédition de 4,77 € / livre.
-                      </p>
-                    </div>
-
-                    <div className="bg-white p-4 rounded border">
-                      <p className="font-bold">7 titres</p>
-                      <p>
-                        = 721 grammes (+ enveloppe bulle de 60 g) = 781 grammes
-                      </p>
-                      <p>
-                        5ème tranche comprise entre 501 et 1000 grammes que La
-                        Poste facture à 28,62 €.
-                      </p>
-                      <p className="font-bold mt-2">
-                        Soit un cout unitaire d’expédition de 4,08 € / livre.
-                      </p>
-                    </div>
-
                     <div className="bg-white p-4 rounded border border-red-400">
                       <p className="font-bold">8 titres</p>
-                      <p>
-                        = 824 grammes (+ enveloppe bulle de 60 g) = 884 grammes
-                      </p>
-                      <p>
-                        5ème tranche comprise entre 501 et 1000 grammes que La
-                        Poste facture à 28,62 €.
-                      </p>
-                      <p className="font-bold text-red-600 mt-2">
-                        Soit un cout unitaire d’expédition de 3,57 € / livre.
-                      </p>
+                      <p>= 824 grammes (+ enveloppe bulle de 60 g) = 884 grammes</p>
+                      <p>5ème tranche comprise entre 501 et 1000 grammes que La Poste facture à 28,62 €.</p>
+                      <p className="font-bold text-red-600 mt-2">Soit un cout unitaire d'expédition de 3,57 € / livre.</p>
                     </div>
                   </div>
                 </div>
@@ -514,12 +446,19 @@ const CartPage = () => {
             <div className="flex flex-col md:flex-row justify-center gap-4 mt-8">
               <Link
                 to="/"
-                className="bg-white text-black px-8 py-3 rounded-lg text-center font-semibold hover:bg-green-700 transition"
+                className="bg-white text-black px-8 py-3 rounded-lg text-center font-semibold border border-gray-300 hover:bg-gray-100 transition"
               >
                 Continuer mes achats
               </Link>
               <Link
                 to="/order"
+                state={{ 
+                  cartItems, 
+                  selectedCountry, 
+                  subtotal: calculateSubtotal(),
+                  shippingCost: getShippingCost(),
+                  total: calculateTotal()
+                }}
                 className="bg-green-700 text-white px-8 py-3 rounded-lg text-center font-semibold hover:bg-orange-700 transition"
               >
                 Passer à l'achat

@@ -5,10 +5,12 @@ import Z from "../../assets/A_Z/Zoonova_burger_Z.png";
 import instagram from "../../assets/reseau/instagram1.png";
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
+import useCart from "../../hooks/useCart";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartItemCount] = useState(0); // Compteur panier - vous pouvez le rendre dynamique
+  const { getCartCount } = useCart();
+  const cartItemCount = getCartCount();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

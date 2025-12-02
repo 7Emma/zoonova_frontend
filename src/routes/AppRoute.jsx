@@ -7,6 +7,8 @@ import CartPage from "../pages/Panier";
 import LegalMentionsPage from "../pages/MentionsLegales";
 import NacrealePage from "../pages/Editions";
 import BookDetailPage from "../pages/Details";
+import SuccessPage from "../pages/Success";
+import CancelPage from "../pages/Cancel";
 import Error404 from "../pages/errors/NotFound";
 
 function AppRoute() {
@@ -21,6 +23,8 @@ function AppRoute() {
         <Route path="/order" element={<CheckoutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/nacreale" element={<NacrealePage />} />
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/cancel" element={<CancelPage />} />
 
         {/**Erreur 404 */}
         <Route path="*" element={<Error404 />} />

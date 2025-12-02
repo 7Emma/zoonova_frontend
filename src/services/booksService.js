@@ -1,3 +1,5 @@
+// booksService.js
+
 import axiosInstance from './axiosInstance';
 import ApiError from './ApiError';
 
@@ -14,6 +16,7 @@ const getBooks = async (params = {}) => {
 
 const getBookById = async (id) => {
   try {
+    // Cet endpoint récupère désormais tous les détails, y compris le tableau "images"
     const res = await axiosInstance.get(`${prefix}${id}/`);
     return res.data;
   } catch (err) {
@@ -21,39 +24,35 @@ const getBookById = async (id) => {
   }
 };
 
+// Stratégie révisée : Récupérer tous les livres et trouver par slug exact
 const getBookBySlug = async (slug) => {
   if (!slug) return null;
 
-  // First, try to find the book in a short list request to avoid 404 noise
   try {
-    const list = await getBooks({ page_size: 200 });
-    const items = Array.isArray(list) ? list : (list.results || []);
-    const found = items.find((b) => b.slug === slug);
-    if (found) return found;
-  } catch (e) {
-    // ignore and try the slug endpoint next
-  }
+    // 1. Récupérer la liste des livres (sans filtre search car le slug n'est pas dans les champs recherchables)
+    const listRes = await getBooks({ page_size: 100 });
+    
+    // Rechercher l'objet avec le slug exact
+    const results = Array.isArray(listRes) ? listRes : (listRes.results || []);
+    const foundBookInList = results.find(b => b.slug === slug);
 
-  // Fallback to the dedicated slug endpoint if available
-  try {
-    const res = await axiosInstance.get(`${prefix}slug/${slug}/`);
-    return res.data;
-  } catch (err) {
-    // If slug endpoint 404 or other, try a wider list lookup as last resort
-    if (err?.response?.status === 404) {
-      try {
-        const list = await getBooks({ page_size: 1000 });
-        const items = Array.isArray(list) ? list : (list.results || []);
-        return items.find((b) => b.slug === slug) || null;
-      } catch (e) {
-        throw new ApiError('Failed to fetch book by slug (fallback)', e?.response?.status || 500, e?.response?.data);
-      }
+    if (foundBookInList) {
+      const bookId = foundBookInList.id;
+      // 2. Utiliser l'ID pour obtenir l'objet complet détaillé (qui inclut images et métadonnées)
+      return await getBookById(bookId);
     }
+
+    return null; // Non trouvé
+
+  } catch (err) {
+    // Capture les erreurs de la chaîne de promesses (getBooks ou getBookById)
     throw new ApiError('Failed to fetch book by slug', err?.response?.status || 500, err?.response?.data);
   }
 };
 
+
 const createBook = async (payload) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.post(prefix, payload);
     return res.data;
@@ -63,6 +62,7 @@ const createBook = async (payload) => {
 };
 
 const updateBook = async (id, payload) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.patch(`${prefix}${id}/`, payload);
     return res.data;
@@ -72,6 +72,7 @@ const updateBook = async (id, payload) => {
 };
 
 const deleteBook = async (id) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.delete(`${prefix}${id}/`);
     return res.data;
@@ -81,6 +82,7 @@ const deleteBook = async (id) => {
 };
 
 const getBookImages = async (id) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.get(`${prefix}${id}/images/`);
     return res.data;
@@ -90,6 +92,7 @@ const getBookImages = async (id) => {
 };
 
 const addBookImage = async (id, formData) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.post(`${prefix}${id}/add_image/`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -101,6 +104,7 @@ const addBookImage = async (id, formData) => {
 };
 
 const deleteBookImage = async (bookId, imageId) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.delete(`${prefix}${bookId}/images/${imageId}/`);
     return res.data;
@@ -110,6 +114,7 @@ const deleteBookImage = async (bookId, imageId) => {
 };
 
 const addBookVideo = async (id, payload) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.post(`${prefix}${id}/add_video/`, payload);
     return res.data;
@@ -119,6 +124,7 @@ const addBookVideo = async (id, payload) => {
 };
 
 const deleteBookVideo = async (bookId, videoId) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.delete(`${prefix}${bookId}/videos/${videoId}/`);
     return res.data;
@@ -128,6 +134,7 @@ const deleteBookVideo = async (bookId, videoId) => {
 };
 
 const toggleActive = async (id) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.post(`${prefix}${id}/toggle_active/`);
     return res.data;
@@ -137,6 +144,7 @@ const toggleActive = async (id) => {
 };
 
 const toggleFeatured = async (id) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.post(`${prefix}${id}/toggle_featured/`);
     return res.data;
@@ -146,6 +154,7 @@ const toggleFeatured = async (id) => {
 };
 
 const updateStock = async (id, payload) => {
+// ... (reste inchangé)
   try {
     const res = await axiosInstance.patch(`${prefix}${id}/update_stock/`, payload);
     return res.data;
