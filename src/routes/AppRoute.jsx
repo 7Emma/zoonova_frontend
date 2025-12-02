@@ -1,0 +1,32 @@
+import { Routes, Route } from "react-router-dom";
+import HomePage from "../pages/Home";
+import CheckoutPage from "../pages/Commande";
+import PrivacyPolicyPage from "../pages/Politiques";
+import ContactPage from "../pages/Contact";
+import CartPage from "../pages/Panier";
+import LegalMentionsPage from "../pages/MentionsLegales";
+import NacrealePage from "../pages/Editions";
+import BookDetailPage from "../pages/Details";
+import Error404 from "../pages/errors/NotFound";
+
+function AppRoute() {
+  return (
+    <div className="">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/book/:bookSlug" element={<BookDetailPage />} />
+        <Route path="politiques" element={<PrivacyPolicyPage />} />
+        <Route path="/mentions" element={<LegalMentionsPage />} />
+        <Route path="/order" element={<CheckoutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/nacreale" element={<NacrealePage />} />
+
+        {/**Erreur 404 */}
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default AppRoute;

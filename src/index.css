@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Fredoka:wght@300..700&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Londrina+Shadow&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+}
