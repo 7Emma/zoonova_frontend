@@ -30,7 +30,7 @@ export default function Navbar() {
                 <img
                   src={logo}
                   alt="Logo Zoonova"
-                  className="h-6 sm:h-14 md:h-16 w-auto object-contain"
+                  className="h-6 sm:h-10 md:h-12 w-auto object-contain"
                 />
               </Link>
             </div>
@@ -84,7 +84,7 @@ export default function Navbar() {
             </div>
 
             {/* --- SECTION GAUCHE (Panier, Insta, Commande) --- */}
-            <div className="flex items-center gap-2 sm:gap-4 z-10">
+            <div className="flex items-center gap-2 sm:gap-2 z-4">
               {/* Panier avec badge rouge */}
               <Link
                 to="/cart"
