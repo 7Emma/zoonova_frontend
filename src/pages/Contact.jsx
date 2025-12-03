@@ -10,7 +10,6 @@ const ContactPage = () => {
     email: "",
     message: "",
   });
-
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);

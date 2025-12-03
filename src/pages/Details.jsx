@@ -263,7 +263,7 @@ export default function BookDetailPage() {
           {book.backImg ? (
             <img
               src={book.backImg}
-              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
+              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity"
               alt="Quatrième de couverture"
               onClick={() => handleImageClick(book.backImg)}
             />
@@ -348,7 +348,7 @@ export default function BookDetailPage() {
           {book.coverImg ? (
             <img
               src={book.coverImg}
-              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
+              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity"
               alt="Première de couverture"
               onClick={() => handleImageClick(book.coverImg)}
             />
@@ -555,24 +555,21 @@ export default function BookDetailPage() {
           </div>
         </div>
 
-        {/* Affichage de l'image sélectionnée en grand format */}
+        {/* Affichage de l'image sélectionnée en grand format en bas */}
         {selectedImage && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            <div className="relative max-w-[95vw] max-h-[95vh]">
+          <div className="mt-12 mb-8 border-t-4 pt-8">
+            <div className="flex flex-col items-center">
               <img
                 src={selectedImage}
-                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                className="w-full max-w-2xl md:max-w-4xl lg:max-w-5xl object-contain rounded-lg"
                 alt="Image agrandie"
-                onClick={(e) => e.stopPropagation()}
               />
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-2 right-2 md:top-4 md:right-4 bg-white bg-opacity-90 text-black rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-opacity-100 transition text-xl md:text-2xl font-bold shadow-lg"
+                className="mt-6 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded-full shadow-lg transition-all duration-200"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                ✕
+                Fermer
               </button>
             </div>
           </div>
