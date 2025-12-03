@@ -264,29 +264,29 @@ export default function BookDetailPage() {
              {book.backImg ? (
                <img
                  src={book.backImg}
-                 className="w-40 lg:w-52 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity rounded"
+                 className="w-16 lg:w-20 xl:w-24 cursor-pointer hover:opacity-80 transition-opacity h-40 object-cover"
                  alt="Quatrième de couverture"
                  onClick={() => handleImageClick(book.backImg)}
                />
              ) : (
-               <div className="w-40 lg:w-52 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 rounded shadow-xl">
+               <div className="w-16 lg:w-20 xl:w-24 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
                  No image
                </div>
              )}
            </div>
 
            {/* Carousel des pages - Centre du livre */}
-           <div className="relative flex-1 max-w-4xl">
+           <div className="relative flex-shrink-0">
              {slides.length > 0 && (
-               <div className="flex gap-0">
+               <div className="flex gap-0 h-40">
                  {slides[currentSlide].page1 ? (
                    <img
                      src={slides[currentSlide].page1}
-                     className="h-40 shadow-lg"
+                     className="h-40 object-cover"
                      alt={`Page ${currentSlide * 2 + 1}`}
                    />
                  ) : (
-                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-5">
+                   <div className="w-32 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
                      No image
                    </div>
                  )}
@@ -294,11 +294,11 @@ export default function BookDetailPage() {
                  {slides[currentSlide].page2 ? (
                    <img
                      src={slides[currentSlide].page2}
-                     className="h-40 shadow-lg"
+                     className="h-40 object-cover"
                      alt={`Page ${currentSlide * 2 + 2}`}
                    />
                  ) : (
-                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-5">
+                   <div className="w-32 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
                      No image
                    </div>
                  )}
@@ -308,7 +308,7 @@ export default function BookDetailPage() {
              {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
              {slides.length === 0 && (
                <div className="flex gap-0">
-                 <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-5">
+                 <div className="w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
                    No content images
                  </div>
                </div>
@@ -316,11 +316,11 @@ export default function BookDetailPage() {
 
              {/* Flèches et bouton acheter */}
              {slides.length > 1 && (
-               <div className="flex justify-center items-center gap-4 mt-4">
+               <div className="flex justify-center items-center gap-2 mt-2">
                  <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                    <img
                      src={leftArrow}
-                     className={`w-10 lg:w-12 transition-all duration-200 ${
+                     className={`w-8 lg:w-10 transition-all duration-200 ${
                        arrowClicked.left ? "brightness-0 invert" : ""
                      }`}
                      alt="Précédent"
@@ -328,7 +328,7 @@ export default function BookDetailPage() {
                  </button>
                  <button
                    onClick={handleAddToCart}
-                   className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                   className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-2 px-4 lg:py-3 lg:px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                  >
                    Acheter - {book.price}
@@ -336,7 +336,7 @@ export default function BookDetailPage() {
                  <button onClick={nextSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                    <img
                      src={rightArrow}
-                     className={`w-10 lg:w-12 transition-all duration-200 ${
+                     className={`w-8 lg:w-10 transition-all duration-200 ${
                        arrowClicked.right ? "brightness-0 invert" : ""
                      }`}
                      alt="Suivant"
@@ -351,12 +351,12 @@ export default function BookDetailPage() {
              {book.coverImg ? (
                <img
                  src={book.coverImg}
-                 className="w-40 lg:w-52 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity rounded shadow-xl"
+                 className="w-16 lg:w-20 xl:w-24 cursor-pointer hover:opacity-80 transition-opacity h-40 object-cover"
                  alt="Première de couverture"
                  onClick={() => handleImageClick(book.coverImg)}
                />
              ) : (
-               <div className="w-40 lg:w-52 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 rounded shadow-xl">
+               <div className="w-16 lg:w-20 xl:w-24 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
                  No image
                </div>
              )}
