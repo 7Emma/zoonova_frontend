@@ -278,35 +278,33 @@ export default function BookDetailPage() {
         </h1>
 
         {/* Carousel Desktop - Livre Ouvert */}
-        <div className="hidden md:flex items-center justify-center mb-8 gap-2 lg:gap-4 px-4">
+        <div className="hidden md:flex items-center justify-center mb-8 gap-4 lg:gap-8">
           {/* Image back (couverture arrière) */}
-          <div className="flex-shrink-0">
-            {book.backImg ? (
-              <img
-                src={book.backImg}
-                className="w-32 lg:w-40 xl:w-52 cursor-pointer hover:opacity-80 transition-opacity h-64 object-cover"
-                alt="Quatrième de couverture"
-                onClick={() => handleImageClick(book.backImg)}
-              />
-            ) : (
-              <div className="w-16 lg:w-20 xl:w-24 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
-                No image
-              </div>
-            )}
-          </div>
+          {book.backImg ? (
+            <img
+              src={book.backImg}
+              className="w-56 lg:w-64 xl:w-72 cursor-pointer hover:opacity-80 transition-opacity"
+              alt="Quatrième de couverture"
+              onClick={() => handleImageClick(book.backImg)}
+            />
+          ) : (
+            <div className="w-56 lg:w-64 xl:w-72 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+              No image
+            </div>
+          )}
 
           {/* Carousel des pages - Centre du livre */}
-          <div className="relative flex-shrink-0">
+          <div className="relative max-w-3xl xl:max-w-4xl">
             {slides.length > 0 && (
-              <div className="flex gap-0 h-60">
+              <div className="flex gap-0">
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="h-72 object-cover"
+                    className="w-80 h-96 object-cover"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
-                  <div className="w-32 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
+                  <div className="w-80 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                     No image
                   </div>
                 )}
@@ -314,11 +312,11 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="h-72 object-cover"
+                    className="w-80 h-96 object-cover"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
-                  <div className="w-32 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
+                  <div className="w-80 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                     No image
                   </div>
                 )}
@@ -328,7 +326,7 @@ export default function BookDetailPage() {
             {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
             {slides.length === 0 && (
               <div className="flex gap-0">
-                <div className="w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
+                <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                   No content images
                 </div>
               </div>
@@ -336,14 +334,11 @@ export default function BookDetailPage() {
 
             {/* Flèches et bouton acheter */}
             {slides.length > 1 && (
-              <div className="flex justify-center items-center gap-2 mt-2">
-                <button
-                  onClick={prevSlide}
-                  className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200"
-                >
+              <div className="flex justify-center items-center gap-4 mt-4">
+                <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                   <img
                     src={leftArrow}
-                    className={`w-8 lg:w-10 transition-all duration-200 ${
+                    className={`w-10 lg:w-12 transition-all duration-200 ${
                       arrowClicked.left ? "brightness-0 invert" : ""
                     }`}
                     alt="Précédent"
@@ -351,18 +346,15 @@ export default function BookDetailPage() {
                 </button>
                 <button
                   onClick={handleAddToCart}
-                  className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-2 px-4 lg:py-3 lg:px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
+                  className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
                   style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
                   Acheter - {book.price}
                 </button>
-                <button
-                  onClick={nextSlide}
-                  className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200"
-                >
+                <button onClick={nextSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                   <img
                     src={rightArrow}
-                    className={`w-8 lg:w-10 transition-all duration-200 ${
+                    className={`w-10 lg:w-12 transition-all duration-200 ${
                       arrowClicked.right ? "brightness-0 invert" : ""
                     }`}
                     alt="Suivant"
@@ -373,20 +365,18 @@ export default function BookDetailPage() {
           </div>
 
           {/* Image cover (couverture avant) */}
-          <div className="flex-shrink-0">
-            {book.coverImg ? (
-              <img
-                src={book.coverImg}
-                className="w-16 lg:w-20 xl:w-24 cursor-pointer hover:opacity-80 transition-opacity h-62 object-cover"
-                alt="Première de couverture"
-                onClick={() => handleImageClick(book.coverImg)}
-              />
-            ) : (
-              <div className="w-32 lg:w-40 xl:w-52 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-40">
-                No image
-              </div>
-            )}
-          </div>
+          {book.coverImg ? (
+            <img
+              src={book.coverImg}
+              className="w-56 lg:w-64 xl:w-72 cursor-pointer hover:opacity-80 transition-opacity"
+              alt="Première de couverture"
+              onClick={() => handleImageClick(book.coverImg)}
+            />
+          ) : (
+            <div className="w-56 lg:w-64 xl:w-72 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+              No image
+            </div>
+          )}
         </div>
 
         {/* Carousel Mobile */}
