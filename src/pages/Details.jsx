@@ -46,8 +46,7 @@ export default function BookDetailPage() {
   });
   const [selectedImage, setSelectedImage] = useState(null);
   const [showCoversModal, setShowCoversModal] = useState(false);
-  const [selectedCover, setSelectedCover] = useState(null);
-  const [showCoverPreview, setShowCoverPreview] = useState(false);
+  const [selectedCoverForPreview, setSelectedCoverForPreview] = useState(null);
 
   // helper: normalize backend/book object to the shape the UI expects
   const normalizeBook = (raw) => {
@@ -310,7 +309,7 @@ export default function BookDetailPage() {
                 src={book.backImg}
                 className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
                 alt="Quatrième de couverture"
-                onClick={() => setShowCoverPreview(true)}
+                onClick={() => setSelectedCoverForPreview(book.backImg)}
               />
             ) : (
               <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
@@ -366,7 +365,7 @@ export default function BookDetailPage() {
                 src={book.coverImg}
                 className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
                 alt="Première de couverture"
-                onClick={() => setShowCoverPreview(true)}
+                onClick={() => setSelectedCoverForPreview(book.coverImg)}
               />
             ) : (
               <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
@@ -418,31 +417,20 @@ export default function BookDetailPage() {
         </div>
 
         {/* Affichage de la couverture cliquée en grand (DESKTOP ET TABLETTE) */}
-        {showCoverPreview && (
+        {selectedCoverForPreview && (
           <div className="hidden md:flex flex-col items-center justify-center mt-12 mb-12">
             <button
-              onClick={() => setShowCoverPreview(false)}
+              onClick={() => setSelectedCoverForPreview(null)}
               className="mb-6 bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-6 rounded-full transition-all"
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               Fermer
             </button>
-            <div className="flex gap-12 justify-center flex-wrap max-w-6xl">
-              {book.coverImg && (
-                <img
-                  src={book.coverImg}
-                  className="max-w-sm max-h-[700px] lg:max-h-[850px] object-contain rounded-lg shadow-lg"
-                  alt="Couverture avant agrandie"
-                />
-              )}
-              {book.backImg && (
-                <img
-                  src={book.backImg}
-                  className="max-w-sm max-h-[700px] lg:max-h-[850px] object-contain rounded-lg shadow-lg"
-                  alt="Couverture arrière agrandie"
-                />
-              )}
-            </div>
+            <img
+              src={selectedCoverForPreview}
+              className="max-w-2xl max-h-[700px] lg:max-h-[900px] object-contain rounded-lg shadow-lg"
+              alt="Couverture agrandie"
+            />
           </div>
         )}
 
