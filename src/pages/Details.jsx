@@ -270,12 +270,12 @@ export default function BookDetailPage() {
         >
           {book.title}
         </h1>
-        <h1
+        <p
           className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic"
           style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
         >
-          {book.subtitle}
-        </h1>
+          {book.description}
+        </p>
 
         {/* Carousel Desktop */}
         <div className="hidden md:flex items-center justify-center mb-8 gap-4 lg:gap-8">
@@ -294,17 +294,17 @@ export default function BookDetailPage() {
           )}
 
           {/* Carousel des pages */}
-          <div className="relative max-w-4xl xl:max-w-5xl">
+          <div className="relative w-full flex justify-center">
             {slides.length > 0 && (
-              <div className="flex gap-4">
+              <div className="flex gap-6">
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="w-1/2 h-96 object-cover shadow-lg"
+                    className="h-[700px] object-contain shadow-lg"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
-                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                  <div className="h-[700px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 w-80">
                     No image
                   </div>
                 )}
@@ -312,11 +312,11 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="w-1/2 h-96 object-cover shadow-lg"
+                    className="h-[700px] object-contain shadow-lg"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
-                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                  <div className="h-[700px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 w-80">
                     No image
                   </div>
                 )}
@@ -335,15 +335,13 @@ export default function BookDetailPage() {
             {/* Flèches et bouton acheter */}
             {slides.length > 1 && (
               <div className="flex justify-center items-center gap-4 mt-4">
-                <button onClick={prevSlide} className="bg-transparent border-0">
-                  <img
-                    src={leftArrow}
-                    className={`w-10 lg:w-12 transition-all duration-200 ${
-                      arrowClicked.left ? "brightness-0 invert" : ""
-                    }`}
-                    alt="Précédent"
-                  />
-                </button>
+                <button onClick={prevSlide} className="bg-transparent border-0 cursor-pointer hover:scale-110 transition-transform">
+                   <img
+                     src={leftArrow}
+                     className="w-10 lg:w-12"
+                     alt="Précédent"
+                   />
+                 </button>
                 <button
                   onClick={handleAddToCart}
                   className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
@@ -351,15 +349,13 @@ export default function BookDetailPage() {
                 >
                   Acheter - {book.price}
                 </button>
-                <button onClick={nextSlide} className="bg-transparent border-0">
-                  <img
-                    src={rightArrow}
-                    className={`w-10 lg:w-12 transition-all duration-200 ${
-                      arrowClicked.right ? "brightness-0 invert" : ""
-                    }`}
-                    alt="Suivant"
-                  />
-                </button>
+                <button onClick={nextSlide} className="bg-transparent border-0 cursor-pointer hover:scale-110 transition-transform">
+                   <img
+                     src={rightArrow}
+                     className="w-10 lg:w-12"
+                     alt="Suivant"
+                   />
+                 </button>
               </div>
             )}
           </div>
