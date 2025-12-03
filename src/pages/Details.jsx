@@ -263,7 +263,7 @@ export default function BookDetailPage() {
           {book.backImg ? (
             <img
               src={book.backImg}
-              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
+              className="w-48 lg:w-64 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity"
               alt="Quatrième de couverture"
               onClick={() => handleImageClick(book.backImg)}
             />
@@ -277,29 +277,29 @@ export default function BookDetailPage() {
           <div className="relative max-w-3xl xl:max-w-4xl">
             {slides.length > 0 && (
               <div className="flex gap-2">
-                {slides[currentSlide].page1 ? (
-                  <img
-                    src={slides[currentSlide].page1}
-                    className="w-1/2 shadow-lg"
-                    alt={`Page ${currentSlide * 2 + 1}`}
-                  />
-                ) : (
-                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
-                    No image
-                  </div>
-                )}
+                 {slides[currentSlide].page1 ? (
+                   <img
+                     src={slides[currentSlide].page1}
+                     className="w-2/3 shadow-lg"
+                     alt={`Page ${currentSlide * 2 + 1}`}
+                   />
+                 ) : (
+                   <div className="w-2/3 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                     No image
+                   </div>
+                 )}
 
-                {slides[currentSlide].page2 ? (
-                  <img
-                    src={slides[currentSlide].page2}
-                    className="w-1/2 shadow-lg"
-                    alt={`Page ${currentSlide * 2 + 2}`}
-                  />
-                ) : (
-                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
-                    No image
-                  </div>
-                )}
+                 {slides[currentSlide].page2 ? (
+                   <img
+                     src={slides[currentSlide].page2}
+                     className="w-2/3 shadow-lg"
+                     alt={`Page ${currentSlide * 2 + 2}`}
+                   />
+                 ) : (
+                   <div className="w-2/3 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                     No image
+                   </div>
+                 )}
               </div>
             )}
 
@@ -315,31 +315,31 @@ export default function BookDetailPage() {
             {/* Flèches et bouton acheter */}
             {slides.length > 1 && (
               <div className="flex justify-center items-center gap-4 mt-4">
-                <button onClick={prevSlide} className="bg-transparent border-0">
-                  <img
-                    src={leftArrow}
-                    className={`w-10 lg:w-12 transition-all duration-200 ${
-                      arrowClicked.left ? "brightness-0 invert" : ""
-                    }`}
-                    alt="Précédent"
-                  />
-                </button>
-                <button
-                  onClick={handleAddToCart}
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  Acheter - {book.price}
-                </button>
-                <button onClick={nextSlide} className="bg-transparent border-0">
-                  <img
-                    src={rightArrow}
-                    className={`w-10 lg:w-12 transition-all duration-200 ${
-                      arrowClicked.right ? "brightness-0 invert" : ""
-                    }`}
-                    alt="Suivant"
-                  />
-                </button>
+                <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
+                   <img
+                     src={leftArrow}
+                     className={`w-10 lg:w-12 transition-all duration-200 ${
+                       arrowClicked.left ? "brightness-0 invert" : ""
+                     }`}
+                     alt="Précédent"
+                   />
+                 </button>
+                 <button
+                   onClick={handleAddToCart}
+                   className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                   style={{ fontFamily: "'Montserrat', sans-serif" }}
+                 >
+                   Acheter - {book.price}
+                 </button>
+                 <button onClick={nextSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
+                   <img
+                     src={rightArrow}
+                     className={`w-10 lg:w-12 transition-all duration-200 ${
+                       arrowClicked.right ? "brightness-0 invert" : ""
+                     }`}
+                     alt="Suivant"
+                   />
+                 </button>
               </div>
             )}
           </div>
@@ -348,7 +348,7 @@ export default function BookDetailPage() {
           {book.coverImg ? (
             <img
               src={book.coverImg}
-              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
+              className="w-48 lg:w-64 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity"
               alt="Première de couverture"
               onClick={() => handleImageClick(book.coverImg)}
             />
@@ -366,7 +366,7 @@ export default function BookDetailPage() {
             {book.coverImg && (
               <img
                 src={book.coverImg}
-                className="w-40 cursor-pointer hover:opacity-80 transition-opacity shadow-lg"
+                className="w-32 cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Première de couverture"
                 onClick={() => handleImageClick(book.coverImg)}
               />
@@ -374,7 +374,7 @@ export default function BookDetailPage() {
             {book.backImg && (
               <img
                 src={book.backImg}
-                className="w-40 cursor-pointer hover:opacity-80 transition-opacity shadow-lg"
+                className="w-32 cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
               />
@@ -419,7 +419,7 @@ export default function BookDetailPage() {
                                 200
                               );
                             }}
-                            className="bg-transparent border-0"
+                            className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200"
                           >
                             <img
                               src={leftArrow}
@@ -431,7 +431,7 @@ export default function BookDetailPage() {
                           </button>
                           <button
                             onClick={handleAddToCart}
-                            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
+                            className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
                             style={{ fontFamily: "'Montserrat', sans-serif" }}
                           >
                             Acheter - {book.price}
@@ -451,7 +451,7 @@ export default function BookDetailPage() {
                                 200
                               );
                             }}
-                            className="bg-transparent border-0"
+                            className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200"
                           >
                             <img
                               src={rightArrow}
@@ -537,7 +537,7 @@ export default function BookDetailPage() {
             <div>
               <button
                 onClick={handleAddToCartOnly}
-                className="bg-transparent border-0 cursor-pointer hover:scale-110 transition-transform"
+                className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-4"
               >
                 <img
                   src={basket}
