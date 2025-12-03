@@ -264,7 +264,7 @@ export default function BookDetailPage() {
              {book.backImg ? (
                <img
                  src={book.backImg}
-                 className="w-40 lg:w-52 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity rounded shadow-xl"
+                 className="w-40 lg:w-52 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity rounded"
                  alt="Quatrième de couverture"
                  onClick={() => handleImageClick(book.backImg)}
                />
@@ -282,11 +282,11 @@ export default function BookDetailPage() {
                  {slides[currentSlide].page1 ? (
                    <img
                      src={slides[currentSlide].page1}
-                     className="flex-1 shadow-lg"
+                     className="h-40 shadow-lg"
                      alt={`Page ${currentSlide * 2 + 1}`}
                    />
                  ) : (
-                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-5">
                      No image
                    </div>
                  )}
@@ -294,11 +294,11 @@ export default function BookDetailPage() {
                  {slides[currentSlide].page2 ? (
                    <img
                      src={slides[currentSlide].page2}
-                     className="flex-1 shadow-lg"
+                     className="h-40 shadow-lg"
                      alt={`Page ${currentSlide * 2 + 2}`}
                    />
                  ) : (
-                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-5">
                      No image
                    </div>
                  )}
@@ -308,7 +308,7 @@ export default function BookDetailPage() {
              {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
              {slides.length === 0 && (
                <div className="flex gap-0">
-                 <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                 <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-5">
                    No content images
                  </div>
                </div>
