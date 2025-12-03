@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import castor from "../assets/figures/castor.png";
 import flamant from "../assets/figures/Flamant.png";
+import instagram from "../../assets/reseau/instagram1.png";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -371,7 +372,8 @@ const ContactPage = () => {
                     rel="noopener noreferrer"
                     className="text-pink-600 hover:underline flex items-center gap-1"
                   >
-                    📷 Instagram
+                    <img src={instagram} alt="" className="h-24" />
+                    Instagram
                   </a>
                 </div>
               </div>
