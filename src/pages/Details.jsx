@@ -46,6 +46,8 @@ export default function BookDetailPage() {
   });
   const [selectedImage, setSelectedImage] = useState(null);
   const [showCoversModal, setShowCoversModal] = useState(false);
+  const [selectedCover, setSelectedCover] = useState(null);
+  const [showCoverPreview, setShowCoverPreview] = useState(false);
 
   // helper: normalize backend/book object to the shape the UI expects
   const normalizeBook = (raw) => {
@@ -308,7 +310,7 @@ export default function BookDetailPage() {
                 src={book.backImg}
                 className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
                 alt="Quatrième de couverture"
-                onClick={() => handleImageClick(book.backImg)}
+                onClick={() => setShowCoverPreview(true)}
               />
             ) : (
               <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
@@ -317,17 +319,18 @@ export default function BookDetailPage() {
             )}
 
             {/* Carousel des pages - CENTRE */}
-            <div className="relative flex-1 max-w-3xl">
+            <div className="relative flex-1 max-w-2xl">
               {slides.length > 0 && (
-                <div className="flex gap-4 md:gap-6 lg:gap-8 justify-center">
+                <div className="flex gap-2 md:gap-3 lg:gap-4 justify-center">
                   {slides[currentSlide].page1 ? (
                     <img
                       src={slides[currentSlide].page1}
-                      className="flex-1 max-h-[650px] lg:max-h-[750px] object-contain"
+                      className="flex-1 max-h-[400px] lg:max-h-[480px] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                       alt={`Page ${currentSlide * 2 + 1}`}
+                      onClick={() => handleImageClick(slides[currentSlide].page1)}
                     />
                   ) : (
-                    <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                    <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-64">
                       No image
                     </div>
                   )}
@@ -335,11 +338,12 @@ export default function BookDetailPage() {
                   {slides[currentSlide].page2 ? (
                     <img
                       src={slides[currentSlide].page2}
-                      className="flex-1 max-h-[650px] lg:max-h-[750px] object-contain"
+                      className="flex-1 max-h-[400px] lg:max-h-[480px] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                       alt={`Page ${currentSlide * 2 + 2}`}
+                      onClick={() => handleImageClick(slides[currentSlide].page2)}
                     />
                   ) : (
-                    <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                    <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-64">
                       No image
                     </div>
                   )}
@@ -362,7 +366,7 @@ export default function BookDetailPage() {
                 src={book.coverImg}
                 className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
                 alt="Première de couverture"
-                onClick={() => handleImageClick(book.coverImg)}
+                onClick={() => setShowCoverPreview(true)}
               />
             ) : (
               <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
@@ -412,6 +416,35 @@ export default function BookDetailPage() {
             </div>
           )}
         </div>
+
+        {/* Affichage de la couverture cliquée en grand (DESKTOP ET TABLETTE) */}
+        {showCoverPreview && (
+          <div className="hidden md:flex flex-col items-center justify-center mt-12 mb-12">
+            <button
+              onClick={() => setShowCoverPreview(false)}
+              className="mb-6 bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-6 rounded-full transition-all"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+            >
+              Fermer
+            </button>
+            <div className="flex gap-12 justify-center flex-wrap max-w-6xl">
+              {book.coverImg && (
+                <img
+                  src={book.coverImg}
+                  className="max-w-sm max-h-[700px] lg:max-h-[850px] object-contain rounded-lg shadow-lg"
+                  alt="Couverture avant agrandie"
+                />
+              )}
+              {book.backImg && (
+                <img
+                  src={book.backImg}
+                  className="max-w-sm max-h-[700px] lg:max-h-[850px] object-contain rounded-lg shadow-lg"
+                  alt="Couverture arrière agrandie"
+                />
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Carousel Mobile */}
         <div className="md:hidden mb-8">
