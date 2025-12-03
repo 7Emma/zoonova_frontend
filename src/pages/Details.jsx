@@ -37,6 +37,19 @@ export default function BookDetailPage() {
     const [arrowClicked, setArrowClicked] = useState({ left: false, right: false });
     const [selectedImage, setSelectedImage] = useState(null);
 
+    // helper: format date to show month in letters and year
+    const formatDatePublication = (dateStr) => {
+        if (!dateStr) return 'N/A';
+        
+        const date = new Date(dateStr);
+        const months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 
+                       'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        
+        return `${month} ${year}`;
+    };
+
     // helper: normalize backend/book object to the shape the UI expects
     const normalizeBook = (raw) => {
         if (!raw) return null;
@@ -91,6 +104,10 @@ export default function BookDetailPage() {
         if (finalBackImg) finalMobileSlides.push(finalBackImg);
         finalMobileSlides.push(...contentImages);
 
+        // 6. Format dimensions: use largeur_cm x hauteur_cm
+        const dimensionsDisplay = (raw.largeur_cm && raw.hauteur_cm) 
+            ? `${raw.largeur_cm} × ${raw.hauteur_cm}` 
+            : (raw.dimensions || 'N/A');
 
         return {
             id: raw.id,
@@ -108,10 +125,10 @@ export default function BookDetailPage() {
 
             // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
             isbn: raw.code_bare || raw.isbn || '',
-            // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
-            dimensions: raw.dimensions || `${raw.largeur_cm || ''} × ${raw.hauteur_cm || ''} × ${raw.epaisseur_cm || ''}`.trim(),
+            // Utilisation des champs largeur_cm x hauteur_cm seulement
+            dimensions: dimensionsDisplay,
             pages: raw.nombre_pages || raw.pages || '',
-            releaseDate: raw.date_publication || raw.releaseDate || '',
+            releaseDate: formatDatePublication(raw.date_publication || raw.releaseDate),
             price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || '',
             addToCartLink: raw.addToCartLink || null,
             videos: Array.isArray(raw.videos) ? raw.videos : [],
@@ -236,11 +253,16 @@ export default function BookDetailPage() {
                     {book.title}
                 </h1>
                 <h1
-                    className="text-center text-xl md:text-2xl mb-8"
+                    className="text-center text-xl md:text-2xl mb-4"
                     style={{ color: "#C2DEEA" }}
                 >
                     {book.subtitle}
                 </h1>
+                {book.description && (
+                    <p className="text-center text-base md:text-lg mb-8 max-w-2xl mx-auto text-slate-700">
+                        {book.description}
+                    </p>
+                )}
 
                 {/* Carousel Desktop */}
                 <div className="hidden md:flex items-center justify-center mb-8 gap-4">
