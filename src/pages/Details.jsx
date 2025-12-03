@@ -213,19 +213,7 @@ export default function BookDetailPage() {
     setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
   };
 
-  const nextMobileSlide = () => {
-    setCurrentMobileSlide((prev) => (prev + 1) % mobileSlides.length);
-    setArrowClicked({ left: false, right: true });
-    setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
-  };
 
-  const prevMobileSlide = () => {
-    setCurrentMobileSlide(
-      (prev) => (prev - 1 + mobileSlides.length) % mobileSlides.length
-    );
-    setArrowClicked({ left: true, right: false });
-    setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
-  };
 
   const handleAddToCart = () => {
     if (book) {
