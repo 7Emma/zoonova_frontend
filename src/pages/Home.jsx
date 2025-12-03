@@ -21,6 +21,8 @@ const Home = () => {
         );
 
         const detailedBooks = await Promise.all(detailedBooksPromises);
+        console.log('DEBUG - detailedBooks:', detailedBooks);
+        if (detailedBooks[0]?.videos) console.log('DEBUG - first book videos:', detailedBooks[0].videos);
         const finalBooks = detailedBooks.slice(0, 8);
         if (mounted) setBooks(finalBooks);
       } catch (e) {

@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <>
       <header className="relative z-50 bg-gradient-to-r from-slate-600 to-slate-300 shadow-md">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-6 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between h-16 md:h-20">
             {/* --- SECTION CENTRE (Logo Absolu) --- */}
             <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
@@ -92,14 +92,14 @@ export default function Navbar() {
                 aria-label="Panier"
               >
                 <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-white text-slate-400 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               </Link>
 
               {/* Instagram Icone */}
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/zoonova_book/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:scale-110 transition-transform p-1"
@@ -119,7 +119,7 @@ export default function Navbar() {
                 px-4 py-2 text-base 
                 rounded-lg font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-md whitespace-nowrap"
               >
-                Commander
+               Ma Commander
               </Link>
             </div>
           </div>
@@ -193,7 +193,11 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+      {/* Espace blanc */}
+      <div className="h-1 bg-white"></div>
 
+      {/* Trait noir */}
+      <div className="border-b-2 border-black"></div>
       {/* Overlay sombre */}
       {isMenuOpen && (
         <div
