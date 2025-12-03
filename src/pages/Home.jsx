@@ -15,7 +15,13 @@ const Home = () => {
         const data = await booksService.getBooks({ page_size: 8 });
         const items = Array.isArray(data) ? data : data.results || [];
 
-        const finalBooks = items.slice(0, 8);
+        // Charger les détails complets (avec les vidéos) pour chaque livre
+        const detailedBooksPromises = items.map((book) =>
+          booksService.getBookBySlug(book.slug || book.id).catch(() => book)
+        );
+
+        const detailedBooks = await Promise.all(detailedBooksPromises);
+        const finalBooks = detailedBooks.slice(0, 8);
         if (mounted) setBooks(finalBooks);
       } catch (e) {
         console.error(e);
