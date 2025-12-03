@@ -2,11 +2,15 @@ import { useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import { useEffect, useState } from "react";
 import booksService from "../services/booksService";
+import videoService from "../services/videoService";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const [books, setBooks] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [loadingVideos, setLoadingVideos] = useState(true);
+  const [videoError, setVideoError] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -29,6 +33,33 @@ const Home = () => {
     };
 
     load();
+    return () => (mounted = false);
+  }, []);
+
+  // Charger les vidéos en vedette
+  useEffect(() => {
+    let mounted = true;
+    const loadVideos = async () => {
+      try {
+        setLoadingVideos(true);
+        const videosData = await videoService.getFeaturedVideos({ page_size: 4 });
+        const formattedVideos = videoService.formatVideos(videosData);
+        if (mounted) {
+          setVideos(formattedVideos);
+          setVideoError(null);
+        }
+      } catch (err) {
+        console.error('Erreur lors du chargement des vidéos:', err);
+        if (mounted) {
+          setVideoError('Impossible de charger les vidéos');
+          setVideos([]);
+        }
+      } finally {
+        if (mounted) setLoadingVideos(false);
+      }
+    };
+
+    loadVideos();
     return () => (mounted = false);
   }, []);
   const handleBookClick = (book) => {
@@ -116,8 +147,93 @@ const Home = () => {
         ))}
       </div>
 
+      {/* Videos Section */}
+      {videos.length > 0 && (
+        <div className="mt-16 pb-12">
+          <div className="text-center mb-12">
+            <h2
+              className="text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-slate-700 leading-relaxed"
+              style={{ fontFamily: "'Alfa Slab One', cursive" }}
+            >
+              Découvrez nos vidéos
+            </h2>
+          </div>
+
+          {/* Videos Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {videos.map((video) => (
+              <div
+                key={video.id}
+                className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow bg-white"
+              >
+                {/* YouTube Embed */}
+                {video.youtubeId ? (
+                  <div className="relative w-full aspect-video bg-black">
+                    <iframe
+                      className="w-full h-full"
+                      src={`https://www.youtube.com/embed/${video.youtubeId}`}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ) : video.thumbnail ? (
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-64 object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-64 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                    <span className="text-slate-500">Vidéo</span>
+                  </div>
+                )}
+
+                {/* Video Info */}
+                <div className="p-4">
+                  <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-2">
+                    {video.title}
+                  </h3>
+                  {video.description && (
+                    <p className="text-sm text-slate-600 line-clamp-2">
+                      {video.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {loadingVideos && (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-700"></div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {videoError && !loadingVideos && (
+        <div className="text-center py-8 text-red-600">
+          <p>{videoError}</p>
+        </div>
+      )}
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto:wght@400;600;700&family=Baloo+2:wght@400;600;700&display=swap');
+        
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .aspect-video {
+          aspect-ratio: 16 / 9;
+        }
       `}</style>
     </main>
   );

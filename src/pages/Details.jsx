@@ -300,7 +300,7 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="w-80 h-96 object-cover"
+                    className="w-1/2"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
@@ -312,7 +312,7 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="w-80 h-96 object-cover"
+                    className="w-1/2"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
@@ -333,8 +333,8 @@ export default function BookDetailPage() {
             )}
 
             {/* Flèches et bouton acheter */}
-            {slides.length > 1 && (
-              <div className="flex justify-center items-center gap-4 mt-4">
+            <div className="flex justify-center items-center gap-4 mt-4">
+              {slides.length > 1 && (
                 <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                   <img
                     src={leftArrow}
@@ -344,13 +344,15 @@ export default function BookDetailPage() {
                     alt="Précédent"
                   />
                 </button>
-                <button
-                  onClick={handleAddToCart}
-                  className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  Acheter - {book.price}
-                </button>
+              )}
+              <button
+                onClick={handleAddToCart}
+                className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                Acheter - {book.price}
+              </button>
+              {slides.length > 1 && (
                 <button onClick={nextSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                   <img
                     src={rightArrow}
@@ -360,8 +362,8 @@ export default function BookDetailPage() {
                     alt="Suivant"
                   />
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Image cover (couverture avant) */}
@@ -491,12 +493,12 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-24 mb-8">
+        <div className="flex flex-nowrap justify-center items-center gap-2 sm:gap-4 md:gap-8 lg:gap-12 xl:gap-16 mb-8 overflow-x-auto">
           {/* Code barre (ISBN) */}
-          <div className="text-center">
+          <div className="text-center flex-shrink-0">
             <img
               src={barCode}
-              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
+              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
               alt="Code barre"
             />
             <h5
@@ -508,10 +510,10 @@ export default function BookDetailPage() {
           </div>
 
           {/* Dimensions */}
-          <div className="text-center">
+          <div className="text-center flex-shrink-0">
             <img
               src={bookOfBlackCover}
-              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
+              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
               alt="Dimensions"
             />
             <h5
@@ -523,10 +525,10 @@ export default function BookDetailPage() {
           </div>
 
           {/* Pages */}
-          <div className="text-center">
+          <div className="text-center flex-shrink-0">
             <img
               src={openBook}
-              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
+              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
               alt="Pages"
             />
             <h5
@@ -538,10 +540,10 @@ export default function BookDetailPage() {
           </div>
 
           {/* Date */}
-          <div className="text-center">
+          <div className="text-center flex-shrink-0">
             <img
               src={calendar}
-              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
+              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
               alt="Date"
             />
             <h5
@@ -553,25 +555,23 @@ export default function BookDetailPage() {
           </div>
 
           {/* Panier */}
-          <div className="text-center">
-            <div>
-              <button
-                onClick={handleAddToCartOnly}
-                className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-4"
+          <div className="text-center flex-shrink-0">
+            <button
+              onClick={handleAddToCartOnly}
+              className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-2 sm:p-3"
+            >
+              <img
+                src={basket}
+                className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
+                alt="Ajouter au panier"
+              />
+              <h5
+                className="text-xs sm:text-sm font-bold italic"
+                style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
               >
-                <img
-                  src={basket}
-                  className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
-                  alt="Ajouter au panier"
-                />
-                <h5
-                  className="text-xs sm:text-sm font-bold italic"
-                  style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-                >
-                  {book.price || "Prix N/A"}
-                </h5>
-              </button>
-            </div>
+                {book.price || "Prix N/A"}
+              </h5>
+            </button>
           </div>
         </div>
 
