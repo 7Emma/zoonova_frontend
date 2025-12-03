@@ -28,11 +28,11 @@ const Home = () => {
         });
 
         const detailedBooks = await Promise.all(detailedBooksPromises);
-        // On filtre les résultats null et on remplace les objets de la liste
-        const finalBooks = detailedBooks.filter((b) => b).slice(0, 8);
-        // -------------------------------------------------------------
+         // On filtre les résultats null et les livres sans vidéos
+         const finalBooks = detailedBooks.filter((b) => b && b.videos && b.videos.length > 0).slice(0, 8);
+         // -------------------------------------------------------------
 
-        if (mounted) setBooks(finalBooks);
+         if (mounted) setBooks(finalBooks);
       } catch (e) {
         console.error(e);
       }
