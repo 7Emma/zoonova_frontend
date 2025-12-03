@@ -13,8 +13,26 @@ const Home = () => {
     const load = async () => {
       try {
         const data = await booksService.getBooks({ page_size: 8 });
-        const items = Array.isArray(data) ? data : (data.results || []);
-        if (mounted) setBooks(items);
+        const items = Array.isArray(data) ? data : data.results || [];
+
+        // --- NOUVELLE LOGIQUE POUR CHARGER LES DÉTAILS AVEC LES VIDÉOS ---
+        const detailedBooksPromises = items.map((book) => {
+          // Utiliser getBookBySlug pour obtenir les détails complets (avec les vidéos)
+          return booksService.getBookBySlug(book.slug || book.id).catch((e) => {
+            console.error(
+              `Failed to load details for ${book.slug || book.id}`,
+              e
+            );
+            return book; // Retourne l'objet de base si l'appel échoue
+          });
+        });
+
+        const detailedBooks = await Promise.all(detailedBooksPromises);
+        // On filtre les résultats null et on remplace les objets de la liste
+        const finalBooks = detailedBooks.filter((b) => b).slice(0, 8);
+        // -------------------------------------------------------------
+
+        if (mounted) setBooks(finalBooks);
       } catch (e) {
         console.error(e);
       }
@@ -22,8 +40,10 @@ const Home = () => {
 
     load();
     return () => (mounted = false);
-  }, []);  const handleBookClick = (book) => {
-    const slug = book.slug || (book.link || '').split('/book/')[1] || book.title || '';
+  }, []);
+  const handleBookClick = (book) => {
+    const slug =
+      book.slug || (book.link || "").split("/book/")[1] || book.title || "";
     navigate(`/book/${slug}`);
   };
 
@@ -53,8 +73,8 @@ const Home = () => {
           className="text-center text-xl md:text-2xl lg:text-3xl font-bold uppercase mb-6 text-slate-700 leading-relaxed"
           style={{ fontFamily: "'Baloo 2', cursive" }}
         >
-          EST UNE COLLECTION DE LIVRES JEUNESSE
-          DESTINÉE AUX ENFANTS DE 4 À 10 ANS.
+          EST UNE COLLECTION DE LIVRES JEUNESSE DESTINÉE AUX ENFANTS DE 4 À 10
+          ANS.
         </h2>
 
         {/* Description */}
@@ -75,7 +95,11 @@ const Home = () => {
       {/* First Row of Books */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
         {books.slice(0, 4).map((book) => (
-          <BookCard key={book.id || book.slug} book={book} onClick={() => handleBookClick(book)} />
+          <BookCard
+            key={book.id || book.slug}
+            book={book}
+            onClick={() => handleBookClick(book)}
+          />
         ))}
       </div>
 
@@ -94,7 +118,11 @@ const Home = () => {
       {/* Second Row of Books */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-12">
         {books.slice(4, 8).map((book) => (
-          <BookCard key={book.id || book.slug} book={book} onClick={() => handleBookClick(book)} />
+          <BookCard
+            key={book.id || book.slug}
+            book={book}
+            onClick={() => handleBookClick(book)}
+          />
         ))}
       </div>
 
