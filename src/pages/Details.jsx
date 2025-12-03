@@ -257,34 +257,36 @@ export default function BookDetailPage() {
           {book.description}
         </h1>
 
-        {/* Carousel Desktop */}
-        <div className="hidden md:flex items-center justify-center mb-8 gap-4 lg:gap-8">
-          {/* Image back (Dynamique) - Cliquable */}
-          {book.backImg ? (
-            <img
-              src={book.backImg}
-              className="w-48 lg:w-64 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity"
-              alt="Quatrième de couverture"
-              onClick={() => handleImageClick(book.backImg)}
-            />
-          ) : (
-            <div className="w-72 lg:w-96 xl:w-[450px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
-              No image
-            </div>
-          )}
+        {/* Carousel Desktop - Livre Ouvert */}
+         <div className="hidden md:flex items-center justify-center mb-8 gap-2 lg:gap-4 px-4">
+           {/* Image back (couverture arrière) */}
+           <div className="flex-shrink-0">
+             {book.backImg ? (
+               <img
+                 src={book.backImg}
+                 className="w-40 lg:w-52 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity rounded shadow-xl"
+                 alt="Quatrième de couverture"
+                 onClick={() => handleImageClick(book.backImg)}
+               />
+             ) : (
+               <div className="w-40 lg:w-52 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 rounded shadow-xl">
+                 No image
+               </div>
+             )}
+           </div>
 
-          {/* Carousel des pages */}
-          <div className="relative max-w-3xl xl:max-w-4xl">
-            {slides.length > 0 && (
-              <div className="flex gap-2">
+           {/* Carousel des pages - Centre du livre */}
+           <div className="relative flex-1 max-w-4xl">
+             {slides.length > 0 && (
+               <div className="flex gap-0">
                  {slides[currentSlide].page1 ? (
                    <img
                      src={slides[currentSlide].page1}
-                     className="w-2/3 shadow-lg"
+                     className="flex-1 shadow-lg"
                      alt={`Page ${currentSlide * 2 + 1}`}
                    />
                  ) : (
-                   <div className="w-2/3 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                      No image
                    </div>
                  )}
@@ -292,30 +294,30 @@ export default function BookDetailPage() {
                  {slides[currentSlide].page2 ? (
                    <img
                      src={slides[currentSlide].page2}
-                     className="w-2/3 shadow-lg"
+                     className="flex-1 shadow-lg"
                      alt={`Page ${currentSlide * 2 + 2}`}
                    />
                  ) : (
-                   <div className="w-2/3 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                   <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                      No image
                    </div>
                  )}
-              </div>
-            )}
+               </div>
+             )}
 
-            {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
-            {slides.length === 0 && (
-              <div className="flex gap-2">
-                <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
-                  No content images
-                </div>
-              </div>
-            )}
+             {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
+             {slides.length === 0 && (
+               <div className="flex gap-0">
+                 <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                   No content images
+                 </div>
+               </div>
+             )}
 
-            {/* Flèches et bouton acheter */}
-            {slides.length > 1 && (
-              <div className="flex justify-center items-center gap-4 mt-4">
-                <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
+             {/* Flèches et bouton acheter */}
+             {slides.length > 1 && (
+               <div className="flex justify-center items-center gap-4 mt-4">
+                 <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
                    <img
                      src={leftArrow}
                      className={`w-10 lg:w-12 transition-all duration-200 ${
@@ -340,24 +342,26 @@ export default function BookDetailPage() {
                      alt="Suivant"
                    />
                  </button>
-              </div>
-            )}
-          </div>
+               </div>
+             )}
+           </div>
 
-          {/* Image cover (Dynamique) - Cliquable */}
-          {book.coverImg ? (
-            <img
-              src={book.coverImg}
-              className="w-48 lg:w-64 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity"
-              alt="Première de couverture"
-              onClick={() => handleImageClick(book.coverImg)}
-            />
-          ) : (
-            <div className="w-72 lg:w-96 xl:w-[450px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
-              No image
-            </div>
-          )}
-        </div>
+           {/* Image cover (couverture avant) */}
+           <div className="flex-shrink-0">
+             {book.coverImg ? (
+               <img
+                 src={book.coverImg}
+                 className="w-40 lg:w-52 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity rounded shadow-xl"
+                 alt="Première de couverture"
+                 onClick={() => handleImageClick(book.coverImg)}
+               />
+             ) : (
+               <div className="w-40 lg:w-52 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 rounded shadow-xl">
+                 No image
+               </div>
+             )}
+           </div>
+         </div>
 
         {/* Carousel Mobile */}
         <div className="md:hidden mb-8">
