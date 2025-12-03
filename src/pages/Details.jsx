@@ -136,9 +136,29 @@ export default function BookDetailPage() {
       // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
       isbn: raw.code_bare || raw.isbn || "",
       // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
-      dimensions:
-        raw.dimensions ||
-        `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
+      dimensions: (() => {
+        // 1. Tente de récupérer les champs largeur et hauteur
+        const largeur = raw.largeur_cm;
+        const hauteur = raw.hauteur_cm;
+
+        if (largeur && hauteur) {
+          return `${largeur} x ${hauteur}`;
+        }
+
+        // 2. Fallback: si les champs sont manquants, utilise le champ dimensions brut
+        const rawDim = raw.dimensions || "";
+
+        // 3. Si le champ brut ressemble à '21 x 24 x 2', on tente de le nettoyer
+        const cleanedDim = rawDim.split("×")[0].split("*")[0].trim();
+
+        // Si la chaîne nettoyée contient un format simple, on l'utilise
+        if (cleanedDim.includes("x") && cleanedDim.length > 3) {
+          return cleanedDim.endsWith("cm") ? cleanedDim : `${cleanedDim}`;
+        }
+
+        // 4. Dernier recours (N/A)
+        return "N/A";
+      })(),
       pages: raw.nombre_pages || raw.pages || "",
       releaseDate: formattedDate,
       price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || "",
