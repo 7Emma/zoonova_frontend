@@ -112,7 +112,7 @@ export default function BookDetailPage() {
         formattedDate = rawReleaseDate;
       }
     }
-    
+
     // 5. Slides mobiles : Couverture avant + Couverture arrière + Contenu
     const finalMobileSlides = [];
     if (finalCoverImg) finalMobileSlides.push(finalCoverImg);
@@ -136,7 +136,9 @@ export default function BookDetailPage() {
       // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
       isbn: raw.code_bare || raw.isbn || "",
       // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
-      dimensions: raw.dimensions || `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
+      dimensions:
+        raw.dimensions ||
+        `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
       pages: raw.nombre_pages || raw.pages || "",
       releaseDate: formattedDate,
       price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || "",
@@ -184,8 +186,6 @@ export default function BookDetailPage() {
     setArrowClicked({ left: true, right: false });
     setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
   };
-
-
 
   const handleAddToCart = () => {
     if (book) {
@@ -254,7 +254,7 @@ export default function BookDetailPage() {
           className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic"
           style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
         >
-          {book.subtitle}
+          {book.description}
         </h1>
 
         {/* Carousel Desktop */}
@@ -555,25 +555,22 @@ export default function BookDetailPage() {
           </div>
         </div>
 
-        {/* Affichage de l'image sélectionnée en grand format */}
+        {/* Affichage de l'image sélectionnée en grand format en bas */}
         {selectedImage && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            <div className="relative max-w-[95vw] max-h-[95vh]">
-              <img
-                src={selectedImage}
-                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
-                alt="Image agrandie"
-                onClick={(e) => e.stopPropagation()}
-              />
+          <div className="mt-16 mb-12 border-t-4 pt-12">
+            <div className="flex flex-col items-center">
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-2 right-2 md:top-4 md:right-4 bg-white bg-opacity-90 text-black rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-opacity-100 transition text-xl md:text-2xl font-bold shadow-lg"
+                className="mt-8 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 md:py-4 md:px-12 rounded-full shadow-lg transition-all duration-200"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
               >
-                ✕
+                Fermer
               </button>
+              <img
+                src={selectedImage}
+                className="w-full max-w-4xl lg:max-w-6xl object-contain rounded-lg"
+                alt="Image agrandie"
+              />
             </div>
           </div>
         )}
