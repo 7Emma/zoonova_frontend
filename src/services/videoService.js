@@ -2,62 +2,93 @@
 
 import axiosInstance from './axiosInstance';
 import ApiError from './ApiError';
+import booksService from './booksService';
 
 const prefix = 'videos/';
 
 /**
- * Récupère toutes les vidéos avec pagination et filtres optionnels
+ * Récupère toutes les vidéos en récupérant les livres et extrayant leurs vidéos
  * @param {Object} params - Paramètres de requête (page, page_size, search, etc.)
- * @returns {Promise<Array|Object>} - Liste des vidéos ou objet paginé
+ * @returns {Promise<Array>} - Liste de toutes les vidéos de tous les livres
  */
 const getVideos = async (params = {}) => {
   try {
-    const res = await axiosInstance.get(prefix, { params });
-    return res.data;
+    // Récupérer tous les livres avec leurs vidéos
+    const booksData = await booksService.getBooks({ page_size: 100, ...params });
+    const books = Array.isArray(booksData) ? booksData : booksData.results || [];
+
+    // Extraire toutes les vidéos
+    const allVideos = [];
+    books.forEach((book) => {
+      if (book.videos && Array.isArray(book.videos)) {
+        book.videos.forEach((video) => {
+          allVideos.push({
+            ...video,
+            book: book.id,
+            bookSlug: book.slug,
+            bookTitle: book.title,
+          });
+        });
+      }
+    });
+
+    return allVideos;
   } catch (err) {
     throw new ApiError('Failed to fetch videos', err?.response?.status || 500, err?.response?.data);
   }
 };
 
 /**
- * Récupère une vidéo spécifique par ID
- * @param {number} id - ID de la vidéo
- * @returns {Promise<Object>} - Détails de la vidéo
- */
-const getVideoById = async (id) => {
-  try {
-    const res = await axiosInstance.get(`${prefix}${id}/`);
-    return res.data;
-  } catch (err) {
-    throw new ApiError('Failed to fetch video', err?.response?.status || 500, err?.response?.data);
-  }
-};
-
-/**
- * Récupère les vidéos associées à un livre spécifique
+ * Récupère les vidéos d'un livre spécifique
  * @param {number} bookId - ID du livre
  * @returns {Promise<Array>} - Liste des vidéos du livre
  */
 const getVideosByBook = async (bookId) => {
   try {
-    const res = await axiosInstance.get(prefix, { params: { book: bookId } });
-    return res.data;
+    const res = await booksService.getBookById(bookId);
+    if (res && res.videos && Array.isArray(res.videos)) {
+      return res.videos.map((video) => ({
+        ...video,
+        book: bookId,
+      }));
+    }
+    return [];
   } catch (err) {
     throw new ApiError('Failed to fetch videos for book', err?.response?.status || 500, err?.response?.data);
   }
 };
 
 /**
- * Récupère toutes les vidéos en vedette (featured)
+ * Récupère toutes les vidéos en vedette (featured) depuis les livres
  * @param {Object} params - Paramètres de requête additionnels
- * @returns {Promise<Array|Object>} - Liste des vidéos en vedette
+ * @returns {Promise<Array>} - Liste des vidéos en vedette
  */
 const getFeaturedVideos = async (params = {}) => {
   try {
-    const res = await axiosInstance.get(prefix, { 
-      params: { featured: true, ...params } 
+    // Récupérer tous les livres
+    const booksData = await booksService.getBooks({ page_size: 100, ...params });
+    const books = Array.isArray(booksData) ? booksData : booksData.results || [];
+
+    // Extraire les vidéos en vedette
+    const featuredVideos = [];
+    books.forEach((book) => {
+      if (book.videos && Array.isArray(book.videos)) {
+        book.videos.forEach((video) => {
+          // Si la vidéo a un champ featured ou si le livre est featured
+          if (video.featured || book.featured) {
+            featuredVideos.push({
+              ...video,
+              featured: video.featured !== false,
+              book: book.id,
+              bookSlug: book.slug,
+              bookTitle: book.title,
+            });
+          }
+        });
+      }
     });
-    return res.data;
+
+    return featuredVideos;
   } catch (err) {
     throw new ApiError('Failed to fetch featured videos', err?.response?.status || 500, err?.response?.data);
   }
@@ -192,7 +223,6 @@ const formatVideos = (videos) => {
 
 export default {
   getVideos,
-  getVideoById,
   getVideosByBook,
   getFeaturedVideos,
   createVideo,
