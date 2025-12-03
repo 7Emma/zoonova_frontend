@@ -37,19 +37,6 @@ export default function BookDetailPage() {
     const [arrowClicked, setArrowClicked] = useState({ left: false, right: false });
     const [selectedImage, setSelectedImage] = useState(null);
 
-    // helper: format date to show month in letters and year
-    const formatDatePublication = (dateStr) => {
-        if (!dateStr) return 'N/A';
-        
-        const date = new Date(dateStr);
-        const months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 
-                       'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-        const month = months[date.getMonth()];
-        const year = date.getFullYear();
-        
-        return `${month} ${year}`;
-    };
-
     // helper: normalize backend/book object to the shape the UI expects
     const normalizeBook = (raw) => {
         if (!raw) return null;
@@ -104,10 +91,6 @@ export default function BookDetailPage() {
         if (finalBackImg) finalMobileSlides.push(finalBackImg);
         finalMobileSlides.push(...contentImages);
 
-        // 6. Format dimensions: use largeur_cm x hauteur_cm
-        const dimensionsDisplay = (raw.largeur_cm && raw.hauteur_cm) 
-            ? `${raw.largeur_cm} × ${raw.hauteur_cm}` 
-            : (raw.dimensions || 'N/A');
 
         return {
             id: raw.id,
@@ -125,10 +108,10 @@ export default function BookDetailPage() {
 
             // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
             isbn: raw.code_bare || raw.isbn || '',
-            // Utilisation des champs largeur_cm x hauteur_cm seulement
-            dimensions: dimensionsDisplay,
+            // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
+            dimensions: raw.dimensions || `${raw.largeur_cm || ''} × ${raw.hauteur_cm || ''} × ${raw.epaisseur_cm || ''}`.trim(),
             pages: raw.nombre_pages || raw.pages || '',
-            releaseDate: formatDatePublication(raw.date_publication || raw.releaseDate),
+            releaseDate: raw.date_publication || raw.releaseDate || '',
             price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || '',
             addToCartLink: raw.addToCartLink || null,
             videos: Array.isArray(raw.videos) ? raw.videos : [],
@@ -247,45 +230,40 @@ export default function BookDetailPage() {
             <div className="container mx-auto px-4 py-8">
                 {/* Titres (Désormais dynamiques) */}
                 <h1
-                    className="text-center text-3xl md:text-4xl font-bold mb-4"
-                    style={{ color: "#F4B383" }}
+                    className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+                    style={{ color: "#F4B383", fontFamily: "'Playfair Display', serif" }}
                 >
                     {book.title}
                 </h1>
                 <h1
-                    className="text-center text-xl md:text-2xl mb-4"
-                    style={{ color: "#C2DEEA" }}
+                    className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic"
+                    style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
                 >
                     {book.subtitle}
                 </h1>
-                {book.description && (
-                    <p className="text-center text-base md:text-lg mb-8 max-w-2xl mx-auto text-slate-700">
-                        {book.description}
-                    </p>
-                )}
 
                 {/* Carousel Desktop */}
-                <div className="hidden md:flex items-center justify-center mb-8 gap-4">
+                <div className="hidden md:flex items-center justify-center mb-8 gap-4 lg:gap-8">
                     {/* Image back (Dynamique) - Cliquable */}
                     {book.backImg ? (
                         <img
                             src={book.backImg}
-                            className="w-64 lg:w-80 cursor-pointer hover:opacity-80 transition-opacity"
+                            className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
                             alt="Quatrième de couverture"
                             onClick={() => handleImageClick(book.backImg)}
                         />
                     ) : (
-                        <div className="w-64 lg:w-80 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">No image</div>
+                        <div className="w-72 lg:w-96 xl:w-[450px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">No image</div>
                     )}
 
                     {/* Carousel des pages */}
-                    <div className="relative max-w-3xl">
+                    <div className="relative max-w-3xl xl:max-w-4xl">
                         {slides.length > 0 && (
                             <div className="flex gap-2">
                                 {slides[currentSlide].page1 ? (
                                     <img
                                         src={slides[currentSlide].page1}
-                                        className="w-1/2"
+                                        className="w-1/2 shadow-lg"
                                         alt={`Page ${currentSlide * 2 + 1}`}
                                     />
                                 ) : (
@@ -295,7 +273,7 @@ export default function BookDetailPage() {
                                 {slides[currentSlide].page2 ? (
                                     <img
                                         src={slides[currentSlide].page2}
-                                        className="w-1/2"
+                                        className="w-1/2 shadow-lg"
                                         alt={`Page ${currentSlide * 2 + 2}`}
                                     />
                                 ) : (
@@ -317,20 +295,21 @@ export default function BookDetailPage() {
                                 <button onClick={prevSlide} className="bg-transparent border-0">
                                     <img
                                         src={leftArrow}
-                                        className={`w-12 transition-all duration-200 ${arrowClicked.left ? 'brightness-0 invert' : ''}`}
+                                        className={`w-10 lg:w-12 transition-all duration-200 ${arrowClicked.left ? 'brightness-0 invert' : ''}`}
                                         alt="Précédent"
                                     />
                                 </button>
                                 <button
                                     onClick={handleAddToCart}
-                                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                                 >
                                     Acheter - {book.price}
                                 </button>
                                 <button onClick={nextSlide} className="bg-transparent border-0">
                                     <img
                                         src={rightArrow}
-                                        className={`w-12 transition-all duration-200 ${arrowClicked.right ? 'brightness-0 invert' : ''}`}
+                                        className={`w-10 lg:w-12 transition-all duration-200 ${arrowClicked.right ? 'brightness-0 invert' : ''}`}
                                         alt="Suivant"
                                     />
                                 </button>
@@ -342,113 +321,147 @@ export default function BookDetailPage() {
                     {book.coverImg ? (
                         <img
                             src={book.coverImg}
-                            className="w-64 lg:w-80 cursor-pointer hover:opacity-80 transition-opacity"
+                            className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
                             alt="Première de couverture"
                             onClick={() => handleImageClick(book.coverImg)}
                         />
                     ) : (
-                        <div className="w-64 lg:w-80 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">No image</div>
+                        <div className="w-72 lg:w-96 xl:w-[450px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">No image</div>
                     )}
                 </div>
 
                 {/* Carousel Mobile */}
                 <div className="md:hidden mb-8">
-                    <div className="relative max-w-md mx-auto">
-                        {mobileSlides.length > 0 && (
-                            (mobileSlides[currentMobileSlide]) ? (
-                                <img
-                                    src={mobileSlides[currentMobileSlide]}
-                                    className="w-full"
-                                    alt={`page ${currentMobileSlide + 1}`}
-                                />
-                            ) : (
-                                <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">No image</div>
-                            )
+                    {/* Affichage des couvertures en haut */}
+                    <div className="flex gap-4 justify-center mb-6">
+                        {book.coverImg && (
+                            <img
+                                src={book.coverImg}
+                                className="w-40 cursor-pointer hover:opacity-80 transition-opacity shadow-lg"
+                                alt="Première de couverture"
+                                onClick={() => handleImageClick(book.coverImg)}
+                            />
                         )}
-
-                        {/* Cas où mobileSlides.length est 0 */}
-                        {mobileSlides.length === 0 && (
-                            <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">No image</div>
-                        )}
-
-
-                        {/* Flèches Mobile et bouton acheter */}
-                        {mobileSlides.length > 1 && (
-                            <div className="flex justify-center items-center gap-4 mt-4">
-                                <button
-                                    onClick={prevMobileSlide}
-                                    className="bg-transparent border-0"
-                                >
-                                    <img
-                                        src={leftArrow}
-                                        className={`w-12 transition-all duration-200 ${arrowClicked.left ? 'brightness-0 invert' : ''}`}
-                                        alt="Précédent"
-                                    />
-                                </button>
-                                <button
-                                    onClick={handleAddToCart}
-                                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
-                                >
-                                    Acheter - {book.price}
-                                </button>
-                                <button
-                                    onClick={nextMobileSlide}
-                                    className="bg-transparent border-0"
-                                >
-                                    <img
-                                        src={rightArrow}
-                                        className={`w-12 transition-all duration-200 ${arrowClicked.right ? 'brightness-0 invert' : ''}`}
-                                        alt="Suivant"
-                                    />
-                                </button>
-                            </div>
+                        {book.backImg && (
+                            <img
+                                src={book.backImg}
+                                className="w-40 cursor-pointer hover:opacity-80 transition-opacity shadow-lg"
+                                alt="Quatrième de couverture"
+                                onClick={() => handleImageClick(book.backImg)}
+                            />
                         )}
                     </div>
+
+                    {/* Carousel du contenu (pages intérieures une par une) */}
+                    {slides.length > 0 && slides.flatMap(s => [s.page1, s.page2].filter(Boolean)).length > 0 && (
+                        <div className="relative max-w-md mx-auto">
+                            {(() => {
+                                const contentPages = slides.flatMap(s => [s.page1, s.page2].filter(Boolean));
+                                return (
+                                    <>
+                                        <img
+                                            src={contentPages[currentMobileSlide % contentPages.length]}
+                                            className="w-full shadow-lg"
+                                            alt={`page ${currentMobileSlide + 1}`}
+                                        />
+                                        
+                                        {contentPages.length > 1 && (
+                                            <div className="flex justify-center items-center gap-4 mt-4">
+                                                <button
+                                                    onClick={() => {
+                                                        setCurrentMobileSlide((prev) => (prev - 1 + contentPages.length) % contentPages.length);
+                                                        setArrowClicked({ left: true, right: false });
+                                                        setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
+                                                    }}
+                                                    className="bg-transparent border-0"
+                                                >
+                                                    <img
+                                                        src={leftArrow}
+                                                        className={`w-10 transition-all duration-200 ${arrowClicked.left ? 'brightness-0 invert' : ''}`}
+                                                        alt="Précédent"
+                                                    />
+                                                </button>
+                                                <button
+                                                    onClick={handleAddToCart}
+                                                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
+                                                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                                                >
+                                                    Acheter - {book.price}
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setCurrentMobileSlide((prev) => (prev + 1) % contentPages.length);
+                                                        setArrowClicked({ left: false, right: true });
+                                                        setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
+                                                    }}
+                                                    className="bg-transparent border-0"
+                                                >
+                                                    <img
+                                                        src={rightArrow}
+                                                        className={`w-10 transition-all duration-200 ${arrowClicked.right ? 'brightness-0 invert' : ''}`}
+                                                        alt="Suivant"
+                                                    />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
+                                );
+                            })()}
+                        </div>
+                    )}
                 </div>
 
-                {/* Section informations et panier (Désormais dynamiques grâce aux nouvelles données) */}
-                <div className="flex flex-wrap justify-center gap-52 mb-8 ">
+                {/* Section informations et panier */}
+                <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-24 mb-8">
                     {/* Code barre (ISBN) */}
                     <div className="text-center">
                         <img
                             src={barCode}
-                            className="w-16 mx-auto mb-2"
+                            className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
                             alt="Code barre"
                         />
-                        <h5 className="text-sm">{book.isbn || 'N/A'}</h5>
+                        <h5 className="text-xs sm:text-sm font-bold italic" style={{ fontFamily: "'Roboto Condensed', sans-serif" }}>
+                            {book.isbn || 'N/A'}
+                        </h5>
                     </div>
 
                     {/* Dimensions */}
                     <div className="text-center">
                         <img
                             src={bookOfBlackCover}
-                            className="w-16 mx-auto mb-2"
+                            className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
                             alt="Dimensions"
                         />
-                        <h5 className="text-sm">{book.dimensions || 'N/A'}</h5>
+                        <h5 className="text-xs sm:text-sm font-bold italic" style={{ fontFamily: "'Roboto Condensed', sans-serif" }}>
+                            {book.dimensions || 'N/A'}
+                        </h5>
                     </div>
 
                     {/* Pages */}
                     <div className="text-center">
                         <img
                             src={openBook}
-                            className="w-16 mx-auto mb-2"
+                            className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
                             alt="Pages"
                         />
-                        <h5 className="text-sm">{book.pages ? `${book.pages} pages` : 'N/A'}</h5>
+                        <h5 className="text-xs sm:text-sm font-bold italic" style={{ fontFamily: "'Roboto Condensed', sans-serif" }}>
+                            {book.pages ? `${book.pages} pages` : 'N/A'}
+                        </h5>
                     </div>
 
                     {/* Date */}
                     <div className="text-center">
                         <img
                             src={calendar}
-                            className="w-16 mx-auto mb-2"
+                            className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
                             alt="Date"
                         />
-                        <h5 className="text-sm">{book.releaseDate || 'N/A'}</h5>
+                        <h5 className="text-xs sm:text-sm font-bold italic" style={{ fontFamily: "'Roboto Condensed', sans-serif" }}>
+                            {book.releaseDate || 'N/A'}
+                        </h5>
                     </div>
 
-                    {/* Panier - Ajoute au panier sans redirection */}
+                    {/* Panier */}
                     <div className="text-center">
                         <div>
                             <button
@@ -457,10 +470,12 @@ export default function BookDetailPage() {
                             >
                                 <img
                                     src={basket}
-                                    className="w-16 mx-auto mb-2"
+                                    className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
                                     alt="Ajouter au panier"
                                 />
-                                <h5 className="text-sm">{book.price || 'Prix N/A'}</h5>
+                                <h5 className="text-xs sm:text-sm font-bold italic" style={{ fontFamily: "'Roboto Condensed', sans-serif" }}>
+                                    {book.price || 'Prix N/A'}
+                                </h5>
                             </button>
                         </div>
                     </div>
@@ -468,16 +483,20 @@ export default function BookDetailPage() {
 
                 {/* Affichage de l'image sélectionnée en grand format */}
                 {selectedImage && (
-                    <div className="mt-8 flex flex-col items-center">
-                        <div className="relative">
+                    <div 
+                        className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        <div className="relative max-w-[95vw] max-h-[95vh]">
                             <img
                                 src={selectedImage}
-                                className="max-w-full max-h-[600px] rounded-lg shadow-2xl"
+                                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
                                 alt="Image agrandie"
+                                onClick={(e) => e.stopPropagation()}
                             />
                             <button
                                 onClick={() => setSelectedImage(null)}
-                                className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-70 transition"
+                                className="absolute top-2 right-2 md:top-4 md:right-4 bg-white bg-opacity-90 text-black rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-opacity-100 transition text-xl md:text-2xl font-bold shadow-lg"
                             >
                                 ✕
                             </button>

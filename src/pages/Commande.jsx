@@ -11,15 +11,17 @@ const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { cartItems: cartFromHook, getCartCount } = useCart();
-  
+
   // Récupérer les données du panier depuis la navigation ou le hook
   const cartData = location.state || {};
   const cartItems = cartData.cartItems || cartFromHook;
-  const [selectedCountry, setSelectedCountry] = useState(cartData.selectedCountry || null);
-  
+  const [selectedCountry, setSelectedCountry] = useState(
+    cartData.selectedCountry || null
+  );
+
   const [countries, setCountries] = useState([]);
   const [loadingCountries, setLoadingCountries] = useState(true);
-  
+
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -44,10 +46,10 @@ const CheckoutPage = () => {
         const response = await ordersService.getCountries();
         const countriesList = response.results || response;
         setCountries(countriesList);
-        
+
         // Si pas de pays sélectionné, prendre France par défaut
         if (!selectedCountry) {
-          const france = countriesList.find(c => c.code === 'FR');
+          const france = countriesList.find((c) => c.code === "FR");
           if (france) {
             setSelectedCountry(france);
           } else if (countriesList.length > 0) {
@@ -55,7 +57,7 @@ const CheckoutPage = () => {
           }
         }
       } catch (error) {
-        console.error('Erreur lors du chargement des pays:', error);
+        console.error("Erreur lors du chargement des pays:", error);
       } finally {
         setLoadingCountries(false);
       }
@@ -66,13 +68,16 @@ const CheckoutPage = () => {
   // Rediriger si le panier est vide
   useEffect(() => {
     if (cartItems.length === 0) {
-      navigate('/cart');
+      navigate("/cart");
     }
   }, [cartItems, navigate]);
 
   const getShippingCost = () => {
     if (!selectedCountry) return 0;
-    return parseFloat(selectedCountry.shipping_cost_euros) || (selectedCountry.shipping_cost / 100);
+    return (
+      parseFloat(selectedCountry.shipping_cost_euros) ||
+      selectedCountry.shipping_cost / 100
+    );
   };
 
   const calculateSubtotal = () => {
@@ -106,7 +111,7 @@ const CheckoutPage = () => {
   };
 
   const handleCountryChange = (e) => {
-    const country = countries.find(c => c.id === parseInt(e.target.value));
+    const country = countries.find((c) => c.id === parseInt(e.target.value));
     setSelectedCountry(country);
   };
 
@@ -121,8 +126,10 @@ const CheckoutPage = () => {
       newErrors.email = "Email invalide";
     }
     if (!formData.voie.trim()) newErrors.voie = "La voie est requise";
-    if (!formData.numeroVoie) newErrors.numeroVoie = "Le numéro de voie est requis";
-    if (!formData.codePostal.trim()) newErrors.codePostal = "Le code postal est requis";
+    if (!formData.numeroVoie)
+      newErrors.numeroVoie = "Le numéro de voie est requis";
+    if (!formData.codePostal.trim())
+      newErrors.codePostal = "Le code postal est requis";
     if (!formData.ville.trim()) newErrors.ville = "La ville est requise";
     if (!selectedCountry) newErrors.pays = "Le pays est requis";
 
@@ -153,10 +160,10 @@ const CheckoutPage = () => {
         code_postal: formData.codePostal,
         ville: formData.ville,
         country: selectedCountry.id,
-        items: cartItems.map(item => ({
+        items: cartItems.map((item) => ({
           book_id: item.id,
-          quantity: item.quantity
-        }))
+          quantity: item.quantity,
+        })),
       };
 
       console.log("Création de la commande:", orderPayload);
@@ -164,31 +171,32 @@ const CheckoutPage = () => {
       console.log("Commande créée:", orderResponse);
 
       const orderId = orderResponse.order?.id || orderResponse.id;
-      
+
       if (!orderId) {
         throw new Error("ID de commande non reçu");
       }
 
       // 2. Créer une session Stripe Checkout
       console.log("Création de la session Stripe pour commande:", orderId);
-      const checkoutResponse = await paymentsService.createCheckoutSession(orderId);
+      const checkoutResponse = await paymentsService.createCheckoutSession(
+        orderId
+      );
       console.log("Session Stripe créée:", checkoutResponse);
 
       // 3. Rediriger vers Stripe Checkout
       if (checkoutResponse.checkout_url) {
         // Vider le panier avant la redirection
-        localStorage.removeItem('cart');
-        window.dispatchEvent(new Event('cart-updated'));
-        
+        localStorage.removeItem("cart");
+        window.dispatchEvent(new Event("cart-updated"));
+
         // Rediriger vers Stripe
         window.location.href = checkoutResponse.checkout_url;
       } else {
         throw new Error("URL de checkout non reçue");
       }
-
     } catch (error) {
       console.error("Erreur lors de la commande:", error);
-      
+
       // Afficher un message d'erreur convivial
       if (error.data?.items) {
         setSubmitError(error.data.items.join(", "));
@@ -197,7 +205,9 @@ const CheckoutPage = () => {
       } else if (error.message) {
         setSubmitError(error.message);
       } else {
-        setSubmitError("Une erreur est survenue lors de la création de la commande. Veuillez réessayer.");
+        setSubmitError(
+          "Une erreur est survenue lors de la création de la commande. Veuillez réessayer."
+        );
       }
     } finally {
       setIsSubmitting(false);
@@ -226,7 +236,14 @@ const CheckoutPage = () => {
       }}
     >
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-10 text-slate-700">
+        <h1
+          className="text-4xl font-bold text-center mb-10 text-slate-700"
+          style={{
+            fontFamily: "'Alfa Slab One', cursive",
+            color: "white",
+            WebkitTextStroke: "1px #000000",
+          }}
+        >
           Finaliser la commande
         </h1>
 
@@ -242,7 +259,10 @@ const CheckoutPage = () => {
                 {/* Nom et Prénom */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="nom" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="nom"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Nom <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -255,11 +275,16 @@ const CheckoutPage = () => {
                         errors.nom ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.nom && <p className="text-red-600 text-sm mt-1">{errors.nom}</p>}
+                    {errors.nom && (
+                      <p className="text-red-600 text-sm mt-1">{errors.nom}</p>
+                    )}
                   </div>
 
                   <div>
-                    <label htmlFor="prenom" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="prenom"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Prénom <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -272,14 +297,21 @@ const CheckoutPage = () => {
                         errors.prenom ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.prenom && <p className="text-red-600 text-sm mt-1">{errors.prenom}</p>}
+                    {errors.prenom && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.prenom}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 {/* Email et Téléphone */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Email <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -292,11 +324,18 @@ const CheckoutPage = () => {
                         errors.email ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
+                    {errors.email && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Téléphone
                     </label>
                     <input
@@ -314,7 +353,10 @@ const CheckoutPage = () => {
                 {/* Voie et Numéro */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className="md:col-span-3">
-                    <label htmlFor="voie" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="voie"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Voie <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -328,11 +370,16 @@ const CheckoutPage = () => {
                         errors.voie ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.voie && <p className="text-red-600 text-sm mt-1">{errors.voie}</p>}
+                    {errors.voie && (
+                      <p className="text-red-600 text-sm mt-1">{errors.voie}</p>
+                    )}
                   </div>
 
                   <div>
-                    <label htmlFor="numeroVoie" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="numeroVoie"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       N° <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -345,13 +392,20 @@ const CheckoutPage = () => {
                         errors.numeroVoie ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.numeroVoie && <p className="text-red-600 text-sm mt-1">{errors.numeroVoie}</p>}
+                    {errors.numeroVoie && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.numeroVoie}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 {/* Complément d'adresse */}
                 <div>
-                  <label htmlFor="complementAdresse" className="block text-sm font-semibold text-slate-700 mb-2">
+                  <label
+                    htmlFor="complementAdresse"
+                    className="block text-sm font-semibold text-slate-700 mb-2"
+                  >
                     Complément d'adresse
                   </label>
                   <input
@@ -368,7 +422,10 @@ const CheckoutPage = () => {
                 {/* Code Postal, Ville et Pays */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label htmlFor="codePostal" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="codePostal"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Code postal <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -381,11 +438,18 @@ const CheckoutPage = () => {
                         errors.codePostal ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.codePostal && <p className="text-red-600 text-sm mt-1">{errors.codePostal}</p>}
+                    {errors.codePostal && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.codePostal}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <label htmlFor="ville" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="ville"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Ville <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -398,11 +462,18 @@ const CheckoutPage = () => {
                         errors.ville ? "border-red-500" : "border-gray-300"
                       }`}
                     />
-                    {errors.ville && <p className="text-red-600 text-sm mt-1">{errors.ville}</p>}
+                    {errors.ville && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.ville}
+                      </p>
+                    )}
                   </div>
 
                   <div>
-                    <label htmlFor="pays" className="block text-sm font-semibold text-slate-700 mb-2">
+                    <label
+                      htmlFor="pays"
+                      className="block text-sm font-semibold text-slate-700 mb-2"
+                    >
                       Pays <span className="text-red-600">*</span>
                     </label>
                     {loadingCountries ? (
@@ -427,7 +498,9 @@ const CheckoutPage = () => {
                         ))}
                       </select>
                     )}
-                    {errors.pays && <p className="text-red-600 text-sm mt-1">{errors.pays}</p>}
+                    {errors.pays && (
+                      <p className="text-red-600 text-sm mt-1">{errors.pays}</p>
+                    )}
                   </div>
                 </div>
 
@@ -436,15 +509,24 @@ const CheckoutPage = () => {
                   <h2 className="text-xl font-bold text-slate-700 mb-4">
                     Paiement sécurisé
                   </h2>
-                  
+
                   <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
                     <div className="flex items-center gap-3 mb-3">
                       <img src={visa} alt="Visa" className="h-8 w-auto" />
-                      <img src={master} alt="Mastercard" className="h-8 w-auto" />
-                      <img src={amex} alt="American Express" className="h-8 w-auto" />
+                      <img
+                        src={master}
+                        alt="Mastercard"
+                        className="h-8 w-auto"
+                      />
+                      <img
+                        src={amex}
+                        alt="American Express"
+                        className="h-8 w-auto"
+                      />
                     </div>
                     <p className="text-sm text-gray-600">
-                      Vous serez redirigé vers la page de paiement sécurisée Stripe pour finaliser votre achat.
+                      Vous serez redirigé vers la page de paiement sécurisée
+                      Stripe pour finaliser votre achat.
                     </p>
                   </div>
                 </div>
@@ -468,8 +550,20 @@ const CheckoutPage = () => {
                   {isSubmitting ? (
                     <span className="flex items-center justify-center gap-2">
                       <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
                       </svg>
                       Traitement en cours...
                     </span>
@@ -480,8 +574,16 @@ const CheckoutPage = () => {
 
                 {/* Sécurité */}
                 <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
-                  <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  <svg
+                    className="w-5 h-5 text-green-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>Paiement 100% sécurisé via Stripe</span>
                 </div>
@@ -530,15 +632,21 @@ const CheckoutPage = () => {
               <div className="border-t border-gray-200 pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Sous-total</span>
-                  <span className="font-semibold">{formatPrice(calculateSubtotal())}</span>
+                  <span className="font-semibold">
+                    {formatPrice(calculateSubtotal())}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Livraison ({selectedCountry?.name || '...'})</span>
-                  <span className="font-semibold">{formatPrice(getShippingCost())}</span>
+                  <span>Livraison ({selectedCountry?.name || "..."})</span>
+                  <span className="font-semibold">
+                    {formatPrice(getShippingCost())}
+                  </span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t border-gray-200 pt-2 mt-2">
                   <span>Total</span>
-                  <span className="text-green-600">{formatPrice(calculateTotal())}</span>
+                  <span className="text-green-600">
+                    {formatPrice(calculateTotal())}
+                  </span>
                 </div>
               </div>
 

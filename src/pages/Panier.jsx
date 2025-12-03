@@ -297,7 +297,7 @@ const CartPage = () => {
                   }}
                   className="border-2 border-slate-300 rounded-lg p-4 hover:bg-slate-100 transition text-center"
                 >
-                  <h5 className="font-bold text-slate-700">
+                  <h5 className="font-bold text-red-600">
                     Transparence frais d'expédition France
                   </h5>
                 </button>
@@ -308,7 +308,7 @@ const CartPage = () => {
                   }}
                   className="border-2 border-slate-300 rounded-lg p-4 hover:bg-slate-100 transition text-center"
                 >
-                  <h5 className="font-bold text-slate-700">
+                  <h5 className="font-bold text-red-600">
                     Transparence frais d'expédition Belgique / Europe
                   </h5>
                 </button>
@@ -446,7 +446,7 @@ const CartPage = () => {
             <div className="flex flex-col md:flex-row justify-center gap-4 mt-8">
               <Link
                 to="/"
-                className="bg-white text-black px-8 py-3 rounded-lg text-center font-semibold border border-gray-300 hover:bg-gray-100 transition"
+                className="bg-white text-black px-8 py-3 rounded-lg text-center font-semibold border border-gray-300 hover:bg-green-500 transition"
               >
                 Continuer mes achats
               </Link>
@@ -459,7 +459,7 @@ const CartPage = () => {
                   shippingCost: getShippingCost(),
                   total: calculateTotal()
                 }}
-                className="bg-green-700 text-white px-8 py-3 rounded-lg text-center font-semibold hover:bg-orange-700 transition"
+                className="bg-white text-black px-8 py-3 rounded-lg text-center border border-gray-300 font-semibold hover:bg-green-700 transition"
               >
                 Passer à l'achat
               </Link>
