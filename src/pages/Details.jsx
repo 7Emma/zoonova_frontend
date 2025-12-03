@@ -298,16 +298,30 @@ export default function BookDetailPage() {
           </h2>
         </div>
 
-        {/* Carousel Desktop - LAYOUT VERTICAL */}
-        <div className="hidden md:flex flex-col items-center justify-center mb-12">
-          {/* Carousel des pages - AU CENTRE */}
-          <div className="relative w-full max-w-6xl mb-12">
+        {/* Carousel Desktop - COUVERTURES GAUCHE/DROITE + CONTENU CENTRE */}
+        <div className="hidden md:flex items-center justify-center mb-12 gap-4 lg:gap-8">
+          {/* Couverture arrière (GAUCHE) */}
+          {book.backImg ? (
+            <img
+              src={book.backImg}
+              className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
+              alt="Quatrième de couverture"
+              onClick={() => handleImageClick(book.backImg)}
+            />
+          ) : (
+            <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
+              No image
+            </div>
+          )}
+
+          {/* Carousel des pages - CENTRE */}
+          <div className="relative flex-1 max-w-3xl">
             {slides.length > 0 && (
               <div className="flex gap-4 md:gap-6 lg:gap-8 justify-center">
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="flex-1 max-h-[750px] lg:max-h-[850px] object-contain"
+                    className="flex-1 max-h-[650px] lg:max-h-[750px] object-contain"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
@@ -319,7 +333,7 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="flex-1 max-h-[750px] lg:max-h-[850px] object-contain"
+                    className="flex-1 max-h-[650px] lg:max-h-[750px] object-contain"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
@@ -381,37 +395,20 @@ export default function BookDetailPage() {
             )}
           </div>
 
-          {/* Couvertures EN BAS (nouvelle ligne) */}
-          <div className="flex items-center justify-center gap-8 lg:gap-12">
-          {/* Image back (Dynamique) - Cliquable - SANS SHADOW */}
-          {book.backImg ? (
-            <img
-              src={book.backImg}
-              className="w-48 lg:w-72 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity"
-              alt="Quatrième de couverture"
-              onClick={() => handleImageClick(book.backImg)}
-            />
-          ) : (
-            <div className="w-48 lg:w-72 xl:w-80 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96">
-              No image
-            </div>
-          )}
-
-          {/* Image cover (Dynamique) - Cliquable - SANS SHADOW */}
+          {/* Couverture avant (DROITE) */}
           {book.coverImg ? (
             <img
               src={book.coverImg}
-              className="w-48 lg:w-72 xl:w-80 cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
               alt="Première de couverture"
               onClick={() => handleImageClick(book.coverImg)}
             />
           ) : (
-            <div className="w-48 lg:w-72 xl:w-80 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96">
+            <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
               No image
             </div>
           )}
-          </div>
-          </div>
+        </div>
 
         {/* Carousel Mobile */}
         <div className="md:hidden mb-8">
