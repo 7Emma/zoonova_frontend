@@ -298,16 +298,16 @@ export default function BookDetailPage() {
           </h2>
         </div>
 
-        {/* Carousel Desktop - PAGES SEULEMENT AU CENTRE */}
-        <div className="hidden md:flex items-center justify-center mb-12 gap-4 lg:gap-8">
-          {/* Carousel des pages */}
-          <div className="relative max-w-3xl xl:max-w-5xl w-full">
+        {/* Carousel Desktop - LAYOUT VERTICAL */}
+        <div className="hidden md:flex flex-col items-center justify-center mb-12">
+          {/* Carousel des pages - AU CENTRE */}
+          <div className="relative w-full max-w-6xl mb-12">
             {slides.length > 0 && (
-              <div className="flex gap-4 md:gap-6 lg:gap-8">
+              <div className="flex gap-4 md:gap-6 lg:gap-8 justify-center">
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="flex-1 max-h-[600px] lg:max-h-[700px] object-contain"
+                    className="flex-1 max-h-[750px] lg:max-h-[850px] object-contain"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
@@ -319,7 +319,7 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="flex-1 max-h-[600px] lg:max-h-[700px] object-contain"
+                    className="flex-1 max-h-[750px] lg:max-h-[850px] object-contain"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
@@ -380,10 +380,9 @@ export default function BookDetailPage() {
               </div>
             )}
           </div>
-        </div>
 
-        {/* Couvertures en bas du contenu (DESKTOP/TABLETTE) */}
-        <div className="hidden md:flex items-center justify-center gap-8 lg:gap-12 mb-12">
+          {/* Couvertures EN BAS (nouvelle ligne) */}
+          <div className="flex items-center justify-center gap-8 lg:gap-12">
           {/* Image back (Dynamique) - Cliquable - SANS SHADOW */}
           {book.backImg ? (
             <img
@@ -411,19 +410,29 @@ export default function BookDetailPage() {
               No image
             </div>
           )}
-        </div>
+          </div>
+          </div>
 
         {/* Carousel Mobile */}
         <div className="md:hidden mb-8">
-          {/* Bouton pour voir les couvertures en modal */}
-          <div className="flex justify-center mb-6">
-            <button
-              onClick={() => setShowCoversModal(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-200"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Voir les couvertures
-            </button>
+          {/* Couvertures en haut côte à côte */}
+          <div className="flex gap-4 justify-center mb-8">
+            {book.coverImg && (
+              <img
+                src={book.coverImg}
+                className="w-32 sm:w-40 cursor-pointer hover:opacity-80 transition-opacity"
+                alt="Première de couverture"
+                onClick={() => handleImageClick(book.coverImg)}
+              />
+            )}
+            {book.backImg && (
+              <img
+                src={book.backImg}
+                className="w-32 sm:w-40 cursor-pointer hover:opacity-80 transition-opacity"
+                alt="Quatrième de couverture"
+                onClick={() => handleImageClick(book.backImg)}
+              />
+            )}
           </div>
 
           {/* Carousel du contenu (pages intérieures une par une) */}
