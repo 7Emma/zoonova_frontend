@@ -40,13 +40,7 @@ export default function BookDetailPage() {
     left: false,
     right: false,
   });
-  const [arrowHovered, setArrowHovered] = useState({
-    left: false,
-    right: false,
-  });
   const [selectedImage, setSelectedImage] = useState(null);
-  const [showCoversModal, setShowCoversModal] = useState(false);
-  const [selectedCoverForPreview, setSelectedCoverForPreview] = useState(null);
 
   // helper: normalize backend/book object to the shape the UI expects
   const normalizeBook = (raw) => {
@@ -118,7 +112,7 @@ export default function BookDetailPage() {
         formattedDate = rawReleaseDate;
       }
     }
-
+    
     // 5. Slides mobiles : Couverture avant + Couverture arrière + Contenu
     const finalMobileSlides = [];
     if (finalCoverImg) finalMobileSlides.push(finalCoverImg);
@@ -142,29 +136,7 @@ export default function BookDetailPage() {
       // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
       isbn: raw.code_bare || raw.isbn || "",
       // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
-      dimensions: (() => {
-        // 1. Tente de récupérer les champs largeur et hauteur
-        const largeur = raw.largeur_cm;
-        const hauteur = raw.hauteur_cm;
-
-        if (largeur && hauteur) {
-          return `${largeur} x ${hauteur}`;
-        }
-
-        // 2. Fallback: si les champs sont manquants, utilise le champ dimensions brut
-        const rawDim = raw.dimensions || "";
-
-        // 3. Si le champ brut ressemble à '21 x 24 x 2', on tente de le nettoyer
-        const cleanedDim = rawDim.split("×")[0].split("*")[0].trim();
-
-        // Si la chaîne nettoyée contient un format simple, on l'utilise
-        if (cleanedDim.includes("x") && cleanedDim.length > 3) {
-          return cleanedDim.endsWith("cm") ? cleanedDim : `${cleanedDim} cm`;
-        }
-
-        // 4. Dernier recours (N/A)
-        return "N/A";
-      })(),
+      dimensions: raw.dimensions || `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
       pages: raw.nombre_pages || raw.pages || "",
       releaseDate: formattedDate,
       price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || "",
@@ -272,166 +244,129 @@ export default function BookDetailPage() {
     >
       <div className="container mx-auto px-4 py-8">
         {/* Titres (Désormais dynamiques) */}
-         <div className="text-center mb-8">
-           <h1
-             className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2"
-             style={{ color: "#F4B383", fontFamily: "'Playfair Display', serif" }}
-           >
-             {book.title}
-           </h1>
-           {book.subtitle && (
-             <h2
-               className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl italic"
-               style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
-             >
-               {book.subtitle}
-             </h2>
-           )}
-         </div>
+        <h1
+          className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+          style={{ color: "#F4B383", fontFamily: "'Playfair Display', serif" }}
+        >
+          {book.title}
+        </h1>
+        <h1
+          className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic"
+          style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
+        >
+          {book.subtitle}
+        </h1>
 
-        {/* Carousel Desktop - LAYOUT HORIZONTAL */}
-        <div className="hidden md:flex flex-col items-center justify-center mb-12">
-          {/* Ligne 1: Couvertures + Pages (alignées au centre) */}
-          <div className="flex items-center justify-center gap-4 lg:gap-8 mb-6">
-            {/* Couverture arrière (GAUCHE) */}
-            {book.backImg ? (
-              <img
-                src={book.backImg}
-                className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
-                alt="Quatrième de couverture"
-                onClick={() => setSelectedCoverForPreview(book.backImg)}
-              />
-            ) : (
-              <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
-                No image
+        {/* Carousel Desktop */}
+        <div className="hidden md:flex items-center justify-center mb-8 gap-4 lg:gap-8">
+          {/* Image back (Dynamique) - Cliquable */}
+          {book.backImg ? (
+            <img
+              src={book.backImg}
+              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
+              alt="Quatrième de couverture"
+              onClick={() => handleImageClick(book.backImg)}
+            />
+          ) : (
+            <div className="w-72 lg:w-96 xl:w-[450px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+              No image
+            </div>
+          )}
+
+          {/* Carousel des pages */}
+          <div className="relative max-w-3xl xl:max-w-4xl">
+            {slides.length > 0 && (
+              <div className="flex gap-2">
+                {slides[currentSlide].page1 ? (
+                  <img
+                    src={slides[currentSlide].page1}
+                    className="w-1/2 shadow-lg"
+                    alt={`Page ${currentSlide * 2 + 1}`}
+                  />
+                ) : (
+                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                    No image
+                  </div>
+                )}
+
+                {slides[currentSlide].page2 ? (
+                  <img
+                    src={slides[currentSlide].page2}
+                    className="w-1/2 shadow-lg"
+                    alt={`Page ${currentSlide * 2 + 2}`}
+                  />
+                ) : (
+                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                    No image
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Carousel des pages - CENTRE */}
-            <div className="relative flex-1 max-w-2xl">
-              {slides.length > 0 && (
-                <div className="flex gap-2 md:gap-3 lg:gap-4 justify-center">
-                  {slides[currentSlide].page1 ? (
-                    <img
-                      src={slides[currentSlide].page1}
-                      className="flex-1 max-h-[400px] lg:max-h-[480px] object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                      alt={`Page ${currentSlide * 2 + 1}`}
-                      onClick={() => handleImageClick(slides[currentSlide].page1)}
-                    />
-                  ) : (
-                    <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-64">
-                      No image
-                    </div>
-                  )}
-
-                  {slides[currentSlide].page2 ? (
-                    <img
-                      src={slides[currentSlide].page2}
-                      className="flex-1 max-h-[400px] lg:max-h-[480px] object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                      alt={`Page ${currentSlide * 2 + 2}`}
-                      onClick={() => handleImageClick(slides[currentSlide].page2)}
-                    />
-                  ) : (
-                    <div className="flex-1 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-64">
-                      No image
-                    </div>
-                  )}
+            {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
+            {slides.length === 0 && (
+              <div className="flex gap-2">
+                <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+                  No content images
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
-              {slides.length === 0 && (
-                <div className="flex gap-4">
-                  <div className="w-full bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
-                    No content images
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Couverture avant (DROITE) */}
-            {book.coverImg ? (
-              <img
-                src={book.coverImg}
-                className="w-40 lg:w-56 xl:w-64 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
-                alt="Première de couverture"
-                onClick={() => setSelectedCoverForPreview(book.coverImg)}
-              />
-            ) : (
-              <div className="w-40 lg:w-56 xl:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-72 lg:h-96 flex-shrink-0">
-                No image
+            {/* Flèches et bouton acheter */}
+            {slides.length > 1 && (
+              <div className="flex justify-center items-center gap-4 mt-4">
+                <button onClick={prevSlide} className="bg-transparent border-0">
+                  <img
+                    src={leftArrow}
+                    className={`w-10 lg:w-12 transition-all duration-200 ${
+                      arrowClicked.left ? "brightness-0 invert" : ""
+                    }`}
+                    alt="Précédent"
+                  />
+                </button>
+                <button
+                  onClick={handleAddToCart}
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Acheter - {book.price}
+                </button>
+                <button onClick={nextSlide} className="bg-transparent border-0">
+                  <img
+                    src={rightArrow}
+                    className={`w-10 lg:w-12 transition-all duration-200 ${
+                      arrowClicked.right ? "brightness-0 invert" : ""
+                    }`}
+                    alt="Suivant"
+                  />
+                </button>
               </div>
             )}
           </div>
 
-          {/* Ligne 2: Flèches et bouton acheter */}
-          {slides.length > 1 && (
-            <div className="flex justify-center items-center gap-6">
-              <button
-                onClick={prevSlide}
-                className="bg-transparent border-0 cursor-pointer"
-                onMouseEnter={() => setArrowHovered({ ...arrowHovered, left: true })}
-                onMouseLeave={() => setArrowHovered({ ...arrowHovered, left: false })}
-              >
-                <img
-                  src={leftArrow}
-                  className={`w-12 lg:w-16 transition-all duration-200 ${
-                    arrowHovered.left ? "brightness-0 invert" : ""
-                  }`}
-                  alt="Précédent"
-                />
-              </button>
-              <button
-                onClick={handleAddToCart}
-                className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-4 px-8 lg:py-5 lg:px-10 text-lg rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Acheter - {book.price}
-              </button>
-              <button
-                onClick={nextSlide}
-                className="bg-transparent border-0 cursor-pointer"
-                onMouseEnter={() => setArrowHovered({ ...arrowHovered, right: true })}
-                onMouseLeave={() => setArrowHovered({ ...arrowHovered, right: false })}
-              >
-                <img
-                  src={rightArrow}
-                  className={`w-12 lg:w-16 transition-all duration-200 ${
-                    arrowHovered.right ? "brightness-0 invert" : ""
-                  }`}
-                  alt="Suivant"
-                />
-              </button>
+          {/* Image cover (Dynamique) - Cliquable */}
+          {book.coverImg ? (
+            <img
+              src={book.coverImg}
+              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
+              alt="Première de couverture"
+              onClick={() => handleImageClick(book.coverImg)}
+            />
+          ) : (
+            <div className="w-72 lg:w-96 xl:w-[450px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+              No image
             </div>
           )}
         </div>
 
-        {/* Affichage de la couverture cliquée en grand (DESKTOP ET TABLETTE) */}
-        {selectedCoverForPreview && (
-          <div className="hidden md:flex flex-col items-center justify-center mt-12 mb-12">
-            <button
-              onClick={() => setSelectedCoverForPreview(null)}
-              className="mb-6 bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-6 rounded-full transition-all"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
-            >
-              Fermer
-            </button>
-            <img
-              src={selectedCoverForPreview}
-              className="max-w-2xl max-h-[700px] lg:max-h-[900px] object-contain rounded-lg shadow-lg"
-              alt="Couverture agrandie"
-            />
-          </div>
-        )}
-
         {/* Carousel Mobile */}
         <div className="md:hidden mb-8">
-          {/* Couvertures en haut côte à côte */}
-          <div className="flex gap-4 justify-center mb-8">
+          {/* Affichage des couvertures en haut */}
+          <div className="flex gap-4 justify-center mb-6">
             {book.coverImg && (
               <img
                 src={book.coverImg}
-                className="w-32 sm:w-40 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-40 cursor-pointer hover:opacity-80 transition-opacity shadow-lg"
                 alt="Première de couverture"
                 onClick={() => handleImageClick(book.coverImg)}
               />
@@ -439,7 +374,7 @@ export default function BookDetailPage() {
             {book.backImg && (
               <img
                 src={book.backImg}
-                className="w-32 sm:w-40 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-40 cursor-pointer hover:opacity-80 transition-opacity shadow-lg"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
               />
@@ -450,7 +385,7 @@ export default function BookDetailPage() {
           {slides.length > 0 &&
             slides.flatMap((s) => [s.page1, s.page2].filter(Boolean)).length >
               0 && (
-              <div className="relative w-full max-w-2xl mx-auto">
+              <div className="relative max-w-md mx-auto">
                 {(() => {
                   const contentPages = slides.flatMap((s) =>
                     [s.page1, s.page2].filter(Boolean)
@@ -461,7 +396,7 @@ export default function BookDetailPage() {
                         src={
                           contentPages[currentMobileSlide % contentPages.length]
                         }
-                        className="w-full max-h-[70vh] object-contain"
+                        className="w-full shadow-lg"
                         alt={`page ${currentMobileSlide + 1}`}
                       />
 
@@ -496,7 +431,7 @@ export default function BookDetailPage() {
                           </button>
                           <button
                             onClick={handleAddToCart}
-                            className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
+                            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
                             style={{ fontFamily: "'Montserrat', sans-serif" }}
                           >
                             Acheter - {book.price}
@@ -536,16 +471,16 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 md:gap-12 lg:gap-16 xl:gap-24 mb-12">
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 md:gap-12 lg:gap-16 xl:gap-24 mb-8">
           {/* Code barre (ISBN) */}
           <div className="text-center">
             <img
               src={barCode}
-              className="w-12 sm:w-14 md:w-16 lg:w-20 mx-auto mb-3"
+              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
               alt="Code barre"
             />
             <h5
-              className="text-sm sm:text-base md:text-lg font-bold italic"
+              className="text-xs sm:text-sm font-bold italic"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.isbn || "N/A"}
@@ -556,11 +491,11 @@ export default function BookDetailPage() {
           <div className="text-center">
             <img
               src={bookOfBlackCover}
-              className="w-12 sm:w-14 md:w-16 lg:w-20 mx-auto mb-3"
+              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
               alt="Dimensions"
             />
             <h5
-              className="text-sm sm:text-base md:text-lg font-bold italic"
+              className="text-xs sm:text-sm font-bold italic"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.dimensions || "N/A"}
@@ -571,11 +506,11 @@ export default function BookDetailPage() {
           <div className="text-center">
             <img
               src={openBook}
-              className="w-12 sm:w-14 md:w-16 lg:w-20 mx-auto mb-3"
+              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
               alt="Pages"
             />
             <h5
-              className="text-sm sm:text-base md:text-lg font-bold italic"
+              className="text-xs sm:text-sm font-bold italic"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.pages ? `${book.pages} pages` : "N/A"}
@@ -586,11 +521,11 @@ export default function BookDetailPage() {
           <div className="text-center">
             <img
               src={calendar}
-              className="w-12 sm:w-14 md:w-16 lg:w-20 mx-auto mb-3"
+              className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
               alt="Date"
             />
             <h5
-              className="text-sm sm:text-base md:text-lg font-bold italic"
+              className="text-xs sm:text-sm font-bold italic"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.releaseDate || "N/A"}
@@ -606,11 +541,11 @@ export default function BookDetailPage() {
               >
                 <img
                   src={basket}
-                  className="w-12 sm:w-14 md:w-16 lg:w-20 mx-auto mb-3"
+                  className="w-10 sm:w-12 md:w-14 lg:w-16 mx-auto mb-2"
                   alt="Ajouter au panier"
                 />
                 <h5
-                  className="text-sm sm:text-base md:text-lg font-bold italic"
+                  className="text-xs sm:text-sm font-bold italic"
                   style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
                 >
                   {book.price || "Prix N/A"}
@@ -619,40 +554,6 @@ export default function BookDetailPage() {
             </div>
           </div>
         </div>
-
-        {/* Modale des couvertures (Mobile) */}
-        {showCoversModal && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
-            onClick={() => setShowCoversModal(false)}
-          >
-            <div className="relative max-w-[95vw] max-h-[95vh] flex flex-col items-center gap-6">
-              <button
-                onClick={() => setShowCoversModal(false)}
-                className="absolute top-2 right-2 bg-white bg-opacity-90 text-black rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-100 transition text-xl font-bold shadow-lg"
-              >
-                ✕
-              </button>
-
-              <div className="flex gap-6 justify-center flex-wrap mt-8">
-                {book.coverImg && (
-                  <img
-                    src={book.coverImg}
-                    className="max-h-[80vh] object-contain rounded-lg shadow-2xl"
-                    alt="Première de couverture"
-                  />
-                )}
-                {book.backImg && (
-                  <img
-                    src={book.backImg}
-                    className="max-h-[80vh] object-contain rounded-lg shadow-2xl"
-                    alt="Quatrième de couverture"
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Affichage de l'image sélectionnée en grand format */}
         {selectedImage && (
