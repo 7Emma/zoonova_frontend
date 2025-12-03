@@ -15,24 +15,8 @@ const Home = () => {
         const data = await booksService.getBooks({ page_size: 8 });
         const items = Array.isArray(data) ? data : data.results || [];
 
-        // --- NOUVELLE LOGIQUE POUR CHARGER LES DÉTAILS AVEC LES VIDÉOS ---
-        const detailedBooksPromises = items.map((book) => {
-          // Utiliser getBookBySlug pour obtenir les détails complets (avec les vidéos)
-          return booksService.getBookBySlug(book.slug || book.id).catch((e) => {
-            console.error(
-              `Failed to load details for ${book.slug || book.id}`,
-              e
-            );
-            return book; // Retourne l'objet de base si l'appel échoue
-          });
-        });
-
-        const detailedBooks = await Promise.all(detailedBooksPromises);
-         // On filtre les résultats null et les livres sans vidéos
-         const finalBooks = detailedBooks.filter((b) => b && b.videos && b.videos.length > 0).slice(0, 8);
-         // -------------------------------------------------------------
-
-         if (mounted) setBooks(finalBooks);
+        const finalBooks = items.slice(0, 8);
+        if (mounted) setBooks(finalBooks);
       } catch (e) {
         console.error(e);
       }

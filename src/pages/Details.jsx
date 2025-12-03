@@ -284,20 +284,22 @@ export default function BookDetailPage() {
     >
       <div className="container mx-auto px-4 py-8">
         {/* Titres (Désormais dynamiques) */}
-        <div className="text-center mb-8">
-          <h1
-            className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2"
-            style={{ color: "#F4B383", fontFamily: "'Playfair Display', serif" }}
-          >
-            {book.title}
-          </h1>
-          <h2
-            className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl italic"
-            style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
-          >
-            {book.subtitle}
-          </h2>
-        </div>
+         <div className="text-center mb-8">
+           <h1
+             className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2"
+             style={{ color: "#F4B383", fontFamily: "'Playfair Display', serif" }}
+           >
+             {book.title}
+           </h1>
+           {book.subtitle && (
+             <h2
+               className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl italic"
+               style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
+             >
+               {book.subtitle}
+             </h2>
+           )}
+         </div>
 
         {/* Carousel Desktop - LAYOUT HORIZONTAL */}
         <div className="hidden md:flex flex-col items-center justify-center mb-12">

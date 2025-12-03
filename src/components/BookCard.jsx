@@ -46,8 +46,6 @@ const BookCard = ({ book, onClick }) => {
         style={{ fontFamily: "'Baloo 2', cursive" }}
       >
         {book.titre || book.title}
-        <br />
-        {book.legende || book.subtitle || book.nom}
       </h3>
     </div>
   );
