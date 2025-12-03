@@ -264,7 +264,7 @@ export default function BookDetailPage() {
              {book.backImg ? (
                <img
                  src={book.backImg}
-                 className="w-16 lg:w-20 xl:w-24 cursor-pointer hover:opacity-80 transition-opacity h-40 object-cover"
+                 className="w-32 lg:w-40 xl:w-52 cursor-pointer hover:opacity-80 transition-opacity h-52 object-cover"
                  alt="Quatrième de couverture"
                  onClick={() => handleImageClick(book.backImg)}
                />
@@ -278,11 +278,11 @@ export default function BookDetailPage() {
            {/* Carousel des pages - Centre du livre */}
            <div className="relative flex-shrink-0">
              {slides.length > 0 && (
-               <div className="flex gap-0 h-40">
+               <div className="flex gap-0 h-60">
                  {slides[currentSlide].page1 ? (
                    <img
                      src={slides[currentSlide].page1}
-                     className="h-40 object-cover"
+                     className="h-60 object-cover"
                      alt={`Page ${currentSlide * 2 + 1}`}
                    />
                  ) : (
@@ -294,7 +294,7 @@ export default function BookDetailPage() {
                  {slides[currentSlide].page2 ? (
                    <img
                      src={slides[currentSlide].page2}
-                     className="h-40 object-cover"
+                     className="h-60 object-cover"
                      alt={`Page ${currentSlide * 2 + 2}`}
                    />
                  ) : (
