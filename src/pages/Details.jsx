@@ -112,7 +112,7 @@ export default function BookDetailPage() {
         formattedDate = rawReleaseDate;
       }
     }
-
+    
     // 5. Slides mobiles : Couverture avant + Couverture arrière + Contenu
     const finalMobileSlides = [];
     if (finalCoverImg) finalMobileSlides.push(finalCoverImg);
@@ -136,29 +136,7 @@ export default function BookDetailPage() {
       // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
       isbn: raw.code_bare || raw.isbn || "",
       // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
-      dimensions: (() => {
-        // 1. Tente de récupérer les champs largeur et hauteur
-        const largeur = raw.largeur_cm;
-        const hauteur = raw.hauteur_cm;
-
-        if (largeur && hauteur) {
-          return `${largeur} x ${hauteur}`;
-        }
-
-        // 2. Fallback: si les champs sont manquants, utilise le champ dimensions brut
-        const rawDim = raw.dimensions || "";
-
-        // 3. Si le champ brut ressemble à '21 x 24 x 2', on tente de le nettoyer
-        const cleanedDim = rawDim.split("×")[0].split("*")[0].trim();
-
-        // Si la chaîne nettoyée contient un format simple, on l'utilise
-        if (cleanedDim.includes("x") && cleanedDim.length > 3) {
-          return cleanedDim.endsWith("cm") ? cleanedDim : `${cleanedDim}`;
-        }
-
-        // 4. Dernier recours (N/A)
-        return "N/A";
-      })(),
+      dimensions: raw.dimensions || `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
       pages: raw.nombre_pages || raw.pages || "",
       releaseDate: formattedDate,
       price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || "",
@@ -206,6 +184,8 @@ export default function BookDetailPage() {
     setArrowClicked({ left: true, right: false });
     setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
   };
+
+
 
   const handleAddToCart = () => {
     if (book) {
@@ -270,12 +250,12 @@ export default function BookDetailPage() {
         >
           {book.title}
         </h1>
-        <p
+        <h1
           className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic"
           style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
         >
-          {book.description}
-        </p>
+          {book.subtitle}
+        </h1>
 
         {/* Carousel Desktop */}
         <div className="hidden md:flex items-center justify-center mb-8 gap-4 lg:gap-8">
@@ -283,7 +263,7 @@ export default function BookDetailPage() {
           {book.backImg ? (
             <img
               src={book.backImg}
-              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
               alt="Quatrième de couverture"
               onClick={() => handleImageClick(book.backImg)}
             />
@@ -294,17 +274,17 @@ export default function BookDetailPage() {
           )}
 
           {/* Carousel des pages */}
-          <div className="relative w-full flex justify-center">
+          <div className="relative max-w-3xl xl:max-w-4xl">
             {slides.length > 0 && (
-              <div className="flex gap-6">
+              <div className="flex gap-2">
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="h-[700px] object-contain shadow-lg"
+                    className="w-1/2 shadow-lg"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
-                  <div className="h-[700px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 w-80">
+                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                     No image
                   </div>
                 )}
@@ -312,11 +292,11 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="h-[700px] object-contain shadow-lg"
+                    className="w-1/2 shadow-lg"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
-                  <div className="h-[700px] bg-slate-100 flex items-center justify-center text-xs text-slate-400 w-80">
+                  <div className="w-1/2 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
                     No image
                   </div>
                 )}
@@ -335,13 +315,15 @@ export default function BookDetailPage() {
             {/* Flèches et bouton acheter */}
             {slides.length > 1 && (
               <div className="flex justify-center items-center gap-4 mt-4">
-                <button onClick={prevSlide} className="bg-transparent border-0 cursor-pointer hover:scale-110 transition-transform">
-                   <img
-                     src={leftArrow}
-                     className="w-10 lg:w-12"
-                     alt="Précédent"
-                   />
-                 </button>
+                <button onClick={prevSlide} className="bg-transparent border-0">
+                  <img
+                    src={leftArrow}
+                    className={`w-10 lg:w-12 transition-all duration-200 ${
+                      arrowClicked.left ? "brightness-0 invert" : ""
+                    }`}
+                    alt="Précédent"
+                  />
+                </button>
                 <button
                   onClick={handleAddToCart}
                   className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
@@ -349,13 +331,15 @@ export default function BookDetailPage() {
                 >
                   Acheter - {book.price}
                 </button>
-                <button onClick={nextSlide} className="bg-transparent border-0 cursor-pointer hover:scale-110 transition-transform">
-                   <img
-                     src={rightArrow}
-                     className="w-10 lg:w-12"
-                     alt="Suivant"
-                   />
-                 </button>
+                <button onClick={nextSlide} className="bg-transparent border-0">
+                  <img
+                    src={rightArrow}
+                    className={`w-10 lg:w-12 transition-all duration-200 ${
+                      arrowClicked.right ? "brightness-0 invert" : ""
+                    }`}
+                    alt="Suivant"
+                  />
+                </button>
               </div>
             )}
           </div>
@@ -364,7 +348,7 @@ export default function BookDetailPage() {
           {book.coverImg ? (
             <img
               src={book.coverImg}
-              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-72 lg:w-96 xl:w-[450px] cursor-pointer hover:opacity-80 transition-opacity shadow-xl hover:shadow-2xl"
               alt="Première de couverture"
               onClick={() => handleImageClick(book.coverImg)}
             />
@@ -571,22 +555,25 @@ export default function BookDetailPage() {
           </div>
         </div>
 
-        {/* Affichage de l'image sélectionnée en grand format en bas */}
+        {/* Affichage de l'image sélectionnée en grand format */}
         {selectedImage && (
-          <div className="mt-12 mb-8 border-t-4 pt-8">
-            <div className="flex flex-col items-center">
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="mt-6 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded-full shadow-lg transition-all duration-200"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Fermer
-              </button>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="relative max-w-[95vw] max-h-[95vh]">
               <img
                 src={selectedImage}
-                className="w-full max-w-2xl md:max-w-4xl lg:max-w-5xl object-contain rounded-lg"
+                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
                 alt="Image agrandie"
+                onClick={(e) => e.stopPropagation()}
               />
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-2 right-2 md:top-4 md:right-4 bg-white bg-opacity-90 text-black rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-opacity-100 transition text-xl md:text-2xl font-bold shadow-lg"
+              >
+                ✕
+              </button>
             </div>
           </div>
         )}
