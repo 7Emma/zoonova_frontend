@@ -4,7 +4,9 @@ import React, { useState } from "react";
 const BookCard = ({ book, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const src = book?.main_image || book?.coverImg || book?.image || book?.image_url || null;
+  // Get first video from videos array if exists, priority: videos array > main_image
+  const firstVideo = book?.videos && book.videos.length > 0 ? book.videos[0]?.video_url : null;
+  const mainImage = book?.main_image || book?.coverImg || book?.image || book?.image_url || null;
 
   return (
     <div className="flex flex-col items-center">
@@ -16,7 +18,7 @@ const BookCard = ({ book, onClick }) => {
         onMouseLeave={() => setIsHovered(false)}
         onClick={onClick}
       >
-        {book.main_video || book.video ? (
+        {firstVideo ? (
           <video
             className="w-full h-full object-cover"
             style={{ background: "transparent" }}
@@ -25,12 +27,12 @@ const BookCard = ({ book, onClick }) => {
             playsInline
             loop
           >
-            <source src={book.main_video || book.video} type="video/mp4" />
+            <source src={firstVideo} type="video/mp4" />
           </video>
         ) : (
-          src ? (
+          mainImage ? (
             <img
-              src={src}
+              src={mainImage}
               alt={book?.titre || book?.title || ''}
               className="w-full h-full object-cover"
             />
