@@ -96,11 +96,9 @@ const ContactPage = () => {
       }}
     >
       {/* Decorative Elements */}
-      <div className="absolute top-10 left-10 text-8xl opacity-20 hidden lg:block">
-        <img src={flamant} alt="" />
-      </div>
-      <div className="absolute bottom-10 right-10 text-8xl opacity-20 hidden lg:block">
-        <img src={castor} alt="" className="h- " />
+      <div className="flex justify-center gap-8 mb-8 hidden lg:flex">
+        <img src={flamant} alt="flamant" className="h-32 opacity-30" />
+        <img src={castor} alt="castor" className="h-32 opacity-30" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
