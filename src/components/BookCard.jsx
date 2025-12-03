@@ -5,8 +5,14 @@ const BookCard = ({ book, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // Get first video from videos array if exists, priority: videos array > main_image
-  const firstVideo = book?.videos && book.videos.length > 0 ? book.videos[0]?.video_url : null;
-  const mainImage = book?.main_image || book?.coverImg || book?.image || book?.image_url || null;
+  const firstVideo =
+    book?.videos && book.videos.length > 0 ? book.videos[0]?.video_url : null;
+  const mainImage =
+    book?.main_image ||
+    book?.coverImg ||
+    book?.image ||
+    book?.image_url ||
+    null;
 
   return (
     <div className="flex flex-col items-center">
@@ -29,16 +35,16 @@ const BookCard = ({ book, onClick }) => {
           >
             <source src={firstVideo} type="video/mp4" />
           </video>
+        ) : mainImage ? (
+          <img
+            src={mainImage}
+            alt={book?.titre || book?.title || ""}
+            className="w-full h-full object-cover"
+          />
         ) : (
-          mainImage ? (
-            <img
-              src={mainImage}
-              alt={book?.titre || book?.title || ''}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-slate-100 flex items-center justify-center text-xs text-slate-400">No image</div>
-          )
+          <div className="w-full h-full bg-slate-100 flex items-center justify-center text-xs text-slate-400">
+            No image
+          </div>
         )}
       </div>
       <h3
@@ -46,6 +52,8 @@ const BookCard = ({ book, onClick }) => {
         style={{ fontFamily: "'Baloo 2', cursive" }}
       >
         {book.titre || book.title}
+        <br />
+        {book.legende || book.subtitle || book.nom}
       </h3>
     </div>
   );
