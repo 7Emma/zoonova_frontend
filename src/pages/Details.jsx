@@ -112,7 +112,7 @@ export default function BookDetailPage() {
         formattedDate = rawReleaseDate;
       }
     }
-    
+
     // 5. Slides mobiles : Couverture avant + Couverture arrière + Contenu
     const finalMobileSlides = [];
     if (finalCoverImg) finalMobileSlides.push(finalCoverImg);
@@ -136,7 +136,9 @@ export default function BookDetailPage() {
       // Métadonnées (MAINTEANT PRÉSENTES DANS LES DONNÉES)
       isbn: raw.code_bare || raw.isbn || "",
       // Utilisation des champs largeur_cm, hauteur_cm, epaisseur_cm ou du champ dimensions complet
-      dimensions: raw.dimensions || `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
+      dimensions:
+        raw.dimensions ||
+        `${raw.largeur_cm || ""} × ${raw.hauteur_cm || ""}`.trim(),
       pages: raw.nombre_pages || raw.pages || "",
       releaseDate: formattedDate,
       price: raw.prix_euros ? `${raw.prix_euros} €` : raw.prix || "",
@@ -184,8 +186,6 @@ export default function BookDetailPage() {
     setArrowClicked({ left: true, right: false });
     setTimeout(() => setArrowClicked({ left: false, right: false }), 200);
   };
-
-
 
   const handleAddToCart = () => {
     if (book) {
@@ -274,13 +274,13 @@ export default function BookDetailPage() {
           )}
 
           {/* Carousel des pages */}
-          <div className="relative max-w-3xl xl:max-w-4xl">
+          <div className="relative max-w-4xl xl:max-w-5xl">
             {slides.length > 0 && (
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 {slides[currentSlide].page1 ? (
                   <img
                     src={slides[currentSlide].page1}
-                    className="w-1/2 shadow-lg"
+                    className="w-1/2 h-96 object-cover shadow-lg"
                     alt={`Page ${currentSlide * 2 + 1}`}
                   />
                 ) : (
@@ -292,7 +292,7 @@ export default function BookDetailPage() {
                 {slides[currentSlide].page2 ? (
                   <img
                     src={slides[currentSlide].page2}
-                    className="w-1/2 shadow-lg"
+                    className="w-1/2 h-96 object-cover shadow-lg"
                     alt={`Page ${currentSlide * 2 + 2}`}
                   />
                 ) : (
@@ -559,11 +559,6 @@ export default function BookDetailPage() {
         {selectedImage && (
           <div className="mt-12 mb-8 border-t-4 pt-8">
             <div className="flex flex-col items-center">
-              <img
-                src={selectedImage}
-                className="w-full max-w-2xl md:max-w-4xl lg:max-w-5xl object-contain rounded-lg"
-                alt="Image agrandie"
-              />
               <button
                 onClick={() => setSelectedImage(null)}
                 className="mt-6 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded-full shadow-lg transition-all duration-200"
@@ -571,6 +566,11 @@ export default function BookDetailPage() {
               >
                 Fermer
               </button>
+              <img
+                src={selectedImage}
+                className="w-full max-w-2xl md:max-w-4xl lg:max-w-5xl object-contain rounded-lg"
+                alt="Image agrandie"
+              />
             </div>
           </div>
         )}
