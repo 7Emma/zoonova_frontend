@@ -72,8 +72,44 @@ const CheckoutPage = () => {
     }
   }, [cartItems, navigate]);
 
+  const getTotalQuantity = () => {
+    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  };
+
   const getShippingCost = () => {
     if (!selectedCountry) return 0;
+    
+    const totalQuantity = getTotalQuantity();
+    const bookWeight = 103; // grammes
+    const bubbleWeight = Math.ceil(totalQuantity / 2) * 15; // 15g per bubble sheet
+    const totalWeight = totalQuantity * bookWeight + bubbleWeight;
+    
+    // France tarifs (as of 2025-01-01)
+    if (selectedCountry.code === "FR" || selectedCountry.name === "France") {
+      if (totalQuantity === 1) return 4.71;
+      if (totalQuantity === 2) return 4.71;
+      if (totalQuantity === 3) return 6.77;
+      if (totalQuantity === 4) return 5.13;
+      if (totalQuantity === 5) return 8.94;
+      if (totalQuantity === 6) return 8.40;
+      if (totalQuantity === 7) return 8.42;
+      if (totalQuantity >= 8) {
+        // 8,30 € + 0,02€ par tranche de 10g au-delà de 500g
+        const basePrice = 8.30;
+        const additionalWeight = Math.max(0, totalWeight - 500);
+        const additionalTranches = Math.ceil(additionalWeight / 10);
+        return basePrice + (additionalTranches * 0.02);
+      }
+    }
+    
+    // Europe/Belgium tarifs
+    if (totalQuantity === 1) return 10.48;
+    if (totalQuantity === 2) return 10.48;
+    if (totalQuantity === 3) return 15.24;
+    if (totalQuantity === 4) return 15.24;
+    if (totalQuantity >= 5) return 28.62;
+    
+    // Fallback
     return (
       parseFloat(selectedCountry.shipping_cost_euros) ||
       selectedCountry.shipping_cost / 100
