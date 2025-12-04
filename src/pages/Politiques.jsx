@@ -9,15 +9,21 @@ const PrivacyPolicyPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 lg:p-16">
-          <h1 className="text-4xl md:text-5xl font-bowlby text-center mb-12 text-slate-700">
+      <div className="">
+        <div className=" p-8 md:p-12 lg:p-16">
+          <h1
+            className="text-4xl md:text-5xl font-bowlby text-center mb-12 text-slate-700"
+            style={{
+              color: "white",
+              WebkitTextStroke: "1px #000000",
+            }}
+          >
             Conditions de ventes NACREALE ÉDITIONS
           </h1>
 
           <div className="space-y-8 text-slate-700 leading-relaxed">
             {/* Section 1 */}
-            <section className="border-l-4 border-blue-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 1. Objet
               </h2>
@@ -33,7 +39,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 2 */}
-            <section className="border-l-4 border-green-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 2. Disponibilité des produits
               </h2>
@@ -62,7 +68,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 3 */}
-            <section className="border-l-4 border-purple-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 3. Prix
               </h2>
@@ -85,7 +91,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 4 */}
-            <section className="border-l-4 border-orange-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 4. Paiement et sécurité
               </h2>
@@ -131,7 +137,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 5 */}
-            <section className="border-l-4 border-red-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 5. Livraison
               </h2>
@@ -161,7 +167,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 6 */}
-            <section className="border-l-4 border-indigo-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 6. Responsabilités
               </h2>
@@ -197,7 +203,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 7 */}
-            <section className="border-l-4 border-teal-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 7. Rétractation
               </h2>
@@ -233,7 +239,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 8 */}
-            <section className="border-l-4 border-pink-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 8. Informations légales
               </h2>
@@ -270,7 +276,7 @@ const PrivacyPolicyPage = () => {
             </section>
 
             {/* Section 9 */}
-            <section className="border-l-4 border-slate-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 9. Droits applicables
               </h2>
@@ -301,46 +307,6 @@ const PrivacyPolicyPage = () => {
                 </div>
               </div>
             </section>
-          </div>
-
-          {/* Footer info card */}
-          <div className="mt-12 pt-8 border-t border-gray-300">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
-              <p className="text-slate-700">
-                <strong>Dernière mise à jour :</strong> Janvier 2025
-              </p>
-              <p className="text-slate-600 mt-2">
-                Pour toute question concernant ces conditions de vente,
-                contactez-nous à{" "}
-                <a
-                  href="mailto:hello@zoonova.fr"
-                  className="text-blue-600 hover:underline font-semibold"
-                >
-                  hello@zoonova.fr
-                </a>
-              </p>
-            </div>
-
-            {/* Payment methods reminder */}
-            <div className="mt-6 flex items-center justify-center gap-3 flex-wrap">
-              <span className="text-sm text-slate-600">
-                Moyens de paiement acceptés :
-              </span>
-              <div className="flex gap-2">
-                <div className="bg-blue-900 text-white px-3 py-1 rounded text-xs font-bold">
-                  VISA
-                </div>
-                <div className="bg-red-600 text-white px-3 py-1 rounded text-xs font-bold">
-                  MC
-                </div>
-                <div className="bg-blue-600 text-white px-3 py-1 rounded text-xs font-bold">
-                  AMEX
-                </div>
-                <div className="bg-blue-700 text-white px-3 py-1 rounded text-xs font-bold">
-                  CB
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

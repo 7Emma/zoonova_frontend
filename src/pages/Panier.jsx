@@ -19,12 +19,15 @@ const CartPage = () => {
       try {
         setLoadingCountries(true);
         const response = await ordersService.getCountries();
-        const countriesList = response.results || response;
+        console.log('API Response:', response);
+        const countriesList = Array.isArray(response) ? response : response.results || [];
+        console.log('Countries List:', countriesList);
         setCountries(countriesList);
         // Sélectionner France par défaut si disponible
-        const france = countriesList.find(c => c.code === 'FR');
+        const france = countriesList.find(c => c.code === 'FR' || c.name === 'France');
         if (france) {
           setSelectedCountry(france);
+          console.log('France selected:', france);
         } else if (countriesList.length > 0) {
           setSelectedCountry(countriesList[0]);
         }
@@ -74,7 +77,7 @@ const CartPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-6 md:p-8">
+      <div className="max-w-6xl mx-auto p-6 md:p-8">
         <h1
           className="text-4xl font-bowlby text-center mb-8 text-slate-700"
           style={{
@@ -87,7 +90,7 @@ const CartPage = () => {
 
         {/* Sélecteur de pays de livraison */}
         <div className="mb-6 flex items-center gap-3 flex-wrap">
-          <label className="font-semibold text-slate-700">Pays de livraison:</label>
+          <label className="font-semibold text-slate-700">Choisir votre zone de livraison:</label>
           {loadingCountries ? (
             <span className="text-gray-500">Chargement...</span>
           ) : (
@@ -294,22 +297,26 @@ const CartPage = () => {
                     setShowFranceDetails(!showFranceDetails);
                     setShowEuropeDetails(false);
                   }}
-                  className="border-2 border-slate-300 rounded-lg p-4 hover:bg-slate-100 transition text-center"
+                  className={`border-2 rounded-lg p-4 transition text-center font-bold ${
+                    showFranceDetails
+                      ? "border-red-600 bg-red-50 text-red-700"
+                      : "border-slate-300 hover:bg-slate-100 text-red-600"
+                  }`}
                 >
-                  <h5 className="font-bold text-red-600">
-                    Transparence frais d'expédition France
-                  </h5>
+                  Transparence frais d'expédition France
                 </button>
                 <button
                   onClick={() => {
                     setShowEuropeDetails(!showEuropeDetails);
                     setShowFranceDetails(false);
                   }}
-                  className="border-2 border-slate-300 rounded-lg p-4 hover:bg-slate-100 transition text-center"
+                  className={`border-2 rounded-lg p-4 transition text-center font-bold ${
+                    showEuropeDetails
+                      ? "border-red-600 bg-red-50 text-red-700"
+                      : "border-slate-300 hover:bg-slate-100 text-red-600"
+                  }`}
                 >
-                  <h5 className="font-bold text-red-600">
-                    Transparence frais d'expédition Belgique / Europe
-                  </h5>
+                  Transparence frais d'expédition Belgique / Europe
                 </button>
               </div>
 

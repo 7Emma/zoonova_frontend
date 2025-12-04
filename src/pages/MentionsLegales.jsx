@@ -9,8 +9,8 @@ const LegalMentionsPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 lg:p-16">
+      <div className="">
+        <div className="p-8 md:p-12 lg:p-16">
           <h1
             className="text-4xl md:text-5xl font-bowlby text-center mb-12 text-slate-700"
             style={{
@@ -23,7 +23,7 @@ const LegalMentionsPage = () => {
 
           <div className="space-y-8 text-slate-700 leading-relaxed">
             {/* Section 1 */}
-            <section className="border-l-4 border-blue-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 1. Informations légales
               </h2>
@@ -53,7 +53,7 @@ const LegalMentionsPage = () => {
             </section>
 
             {/* Section 2 */}
-            <section className="border-l-4 border-green-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 2. Service Client
               </h2>
@@ -69,7 +69,7 @@ const LegalMentionsPage = () => {
             </section>
 
             {/* Section 3 */}
-            <section className="border-l-4 border-purple-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 3. Protection des données personnelles
               </h2>
@@ -124,7 +124,7 @@ const LegalMentionsPage = () => {
             </section>
 
             {/* Section 4 */}
-            <section className="border-l-4 border-orange-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 4. Cookies
               </h2>
@@ -145,7 +145,7 @@ const LegalMentionsPage = () => {
             </section>
 
             {/* Section 5 */}
-            <section className="border-l-4 border-red-500 pl-6">
+            <section className="">
               <h2 className="text-2xl font-bold mb-4 text-slate-800">
                 5. Propriété intellectuelle
               </h2>
@@ -168,25 +168,6 @@ const LegalMentionsPage = () => {
                 </p>
               </div>
             </section>
-          </div>
-
-          {/* Footer info card */}
-          <div className="mt-12 pt-8 border-t border-gray-300">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
-              <p className="text-slate-700">
-                <strong>Dernière mise à jour :</strong> Janvier 2025
-              </p>
-              <p className="text-slate-600 mt-2">
-                Pour toute question concernant ces mentions légales,
-                contactez-nous à{" "}
-                <a
-                  href="mailto:hello@zoonova.fr"
-                  className="text-blue-600 hover:underline font-semibold"
-                >
-                  hello@zoonova.fr
-                </a>
-              </p>
-            </div>
           </div>
         </div>
       </div>

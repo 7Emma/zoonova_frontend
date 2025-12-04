@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import visa from "../assets/png/visa.png";
-import master from "../assets/png//Master.png";
-import amex from "../assets/png/amex2.jpg";
+import visa from "../assets/png_rez/visa.png";
+import master from "../assets/png_rez//Master2.png";
+import amex from "../assets/png_rez/amex2.png";
 import ordersService from "../services/ordersService";
 import paymentsService from "../services/paymentsService";
 import useCart from "../hooks/useCart";

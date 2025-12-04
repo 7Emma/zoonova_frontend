@@ -1,8 +1,8 @@
 import logo2 from "../../assets/logo/logo_copie.png";
 import instagram from "../../assets/reseau/instagram1.png";
-import visa from "../../assets/png/visa.png";
-import mastercard from "../../assets/png/Master2.png";
-import amex from "../../assets/png/amex2.jpg";
+import visa from "../../assets/png_rez/visa.png";
+import mastercard from "../../assets/png_rez/Master2.png";
+import amex from "../../assets/png_rez/amex2.png";
 import { Link } from "react-router-dom";
 
 // ============ FOOTER COMPONENT ============
@@ -17,7 +17,7 @@ const Footer = () => {
           {/* Section 1 - Zoonova */}
           <div className="text-sm">
             <Link to="/" className="mb-4">
-              <img src={logo2} alt="Zoonova Logo" className="h-12 w-auto" />
+              <img src={logo2} alt="Zoonova Logo" className="h-4 w-auto" />
             </Link>
             <p className="mb-2">
               <Link to="/nacreale" className="hover:underline">
@@ -43,7 +43,7 @@ const Footer = () => {
 
           {/* Section 2 - A propos */}
           <div className="text-sm">
-            <h5 className="font-bold mb-4 text-base">A propos</h5>
+            <h5 className="font-bold mb-4 text-xl">A propos</h5>
             <Link
               to="/nacreale"
               className="flex items-center gap-2 mb-3 hover:underline group"
@@ -62,7 +62,7 @@ const Footer = () => {
 
           {/* Section 3 - Informations */}
           <div className="text-sm">
-            <h5 className="font-bold mb-4 text-base">Informations</h5>
+            <h5 className="font-bold mb-4 text-xl">Informations</h5>
             <Link
               to="/politiques"
               className="flex items-center gap-2 mb-3 hover:underline group"
@@ -81,7 +81,7 @@ const Footer = () => {
 
           {/* Section 4 - Ma commande */}
           <div className="text-sm">
-            <h5 className="font-bold mb-4 text-base">Ma commande</h5>
+            <h5 className="font-bold mb-4 text-xl">Ma commande</h5>
             <Link
               to="/order"
               className="flex items-center gap-2 mb-3 hover:underline group"
@@ -99,23 +99,23 @@ const Footer = () => {
 
             {/* Payment Methods */}
             <div className="mt-6">
-              <p className="mb-3 font-semibold text-sm">Paiement sécurisé</p>
+              <p className="mb-3 font-semibold text-xl">Paiement sécurisé</p>
               <div className="flex gap-3 items-center">
-                <div className="bg-white rounded px-2 py-1 flex items-center justify-center">
-                  <img src={visa} alt="Visa" className="h-5 w-auto" />
+                <div className="px-2 py-1 h-6 flex items-center justify-center">
+                  <img src={visa} alt="Visa" className="h-10 w-auto" />
                 </div>
-                <div className="bg-white rounded px-2 py-1 flex items-center justify-center">
+                <div className="px-2 py-1 flex items-center justify-center">
                   <img
                     src={mastercard}
                     alt="Mastercard"
-                    className="h-5 w-auto"
+                    className="h-10 w-auto"
                   />
                 </div>
-                <div className="bg-white rounded px-2 py-1 flex items-center justify-center">
+                <div className="px-2 py-1 flex items-center justify-center">
                   <img
                     src={amex}
                     alt="American Express"
-                    className="h-5 w-auto"
+                    className="h-10 w-auto"
                   />
                 </div>
               </div>

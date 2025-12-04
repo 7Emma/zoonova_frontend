@@ -4,6 +4,19 @@ import React, { useState } from "react";
 const BookCard = ({ book, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Debug: log book data structure
+  if (!window.__bookCardDebugLogged) {
+    console.log('BookCard - Book data structure:', {
+      id: book.id,
+      titre: book.titre,
+      videos: book.videos,
+      videos_count: book.videos?.length,
+      firstVideo: book.videos?.[0],
+      main_image: book.main_image,
+    });
+    window.__bookCardDebugLogged = true;
+  }
+
   // Get first video from videos array if exists, priority: videos array > main_image
   const firstVideo =
     book?.videos && book.videos.length > 0 ? book.videos[0]?.video_url : null;
@@ -13,6 +26,13 @@ const BookCard = ({ book, onClick }) => {
     book?.image ||
     book?.image_url ||
     null;
+
+  console.log(`BookCard (${book.titre}) - Using:`, {
+    hasVideo: !!firstVideo,
+    videoUrl: firstVideo,
+    hasImage: !!mainImage,
+    imageUrl: mainImage,
+  });
 
   return (
     <div className="flex flex-col items-center">

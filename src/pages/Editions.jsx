@@ -1,5 +1,5 @@
 import React from "react";
-import nacreale from "../assets/png/NACREALE.jpeg";
+import nacreale from "../assets/png_rez/NACREALE.jpeg";
 
 const NacrealePage = () => {
   return (
@@ -7,11 +7,11 @@ const NacrealePage = () => {
       className="min-h-screen py-10 px-6 md:px-12 lg:px-20"
       style={{
         background:
-          "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
+          "linear-gradient(135deg, #f0feda 0%, #f7fbe4 25%, #f4eae8 50%, #f0d2dc 75%, #ecd2c1 100%)",
       }}
     >
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 lg:p-16">
+      <div className="">
+        <div className="p-8 md:p-12 lg:p-16">
           <div className="mt-2">
             <h1
               className="text-4xl md:text-5xl font-bowlby text-center mb-8 text-slate-700"
@@ -23,7 +23,7 @@ const NacrealePage = () => {
               Découvrir Nacreale Editions
             </h1>
 
-            <div className="mt-5 text-slate-700 leading-relaxed">
+            <div className="mt-5 text-slate-700 leading-relaxed font-bold">
               <p>
                 Bienvenue chez Nacreale Editions Nous sommes une
                 micro-entreprise dédiée à l'imaginaire, à la créativité et au
@@ -43,15 +43,18 @@ const NacrealePage = () => {
                 <br />
                 Notre approche repose sur trois valeurs fondamentales :<br />
                 <br />
-                •&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Créativité :
+                <span style={{ color: "#e63946", fontSize: "1.5rem" }}>•</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Créativité :
                 Imaginer des univers originaux et des jeux innovants qui
                 éveillent l'imagination.
                 <br />
-                •&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Qualité :
-                Offrir des œuvres et des objets conçus avec soin, où chaque
-                détail compte.
+                <span style={{ color: "#22c55e", fontSize: "1.5rem" }}>•</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Qualité : Offrir
+                des œuvres et des objets conçus avec soin, où chaque détail
+                compte.
                 <br />
-                •&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Partage : Créer
+                <span style={{ color: "#3b82f6", fontSize: "1.5rem" }}>•</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Partage : Créer
                 des supports qui rassemblent, que ce soit autour d'une table de
                 jeu ou au fil des pages d'un livre.
                 <br />
