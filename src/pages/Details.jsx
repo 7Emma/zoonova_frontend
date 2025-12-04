@@ -586,13 +586,8 @@ export default function BookDetailPage() {
           <div className="md:hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-2 sm:p-4">
             <div className="bg-white rounded-lg shadow-2xl max-w-full max-h-[90vh] overflow-auto flex flex-col">
               {/* Bouton Fermer */}
-              <div className="sticky top-0 bg-white flex justify-between items-center p-2 sm:p-4 border-b-2 border-gray-300 z-10">
-                <h3 
-                  className="text-base sm:text-lg font-bold flex-1"
-                  style={{ fontFamily: "'Montserrat', sans-serif" }}
-                >
-                  Aperçu de l'image
-                </h3>
+              <div className="sticky top-0 flex justify-between items-center p-2 sm:p-4 border-b-2 border-gray-300 z-10">
+                
                 <button
                   onClick={() => setSelectedImage(null)}
                   className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 sm:py-2 sm:px-4 rounded text-sm sm:text-base transition-all duration-200"
