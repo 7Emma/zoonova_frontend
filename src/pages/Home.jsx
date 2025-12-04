@@ -12,24 +12,16 @@ const Home = () => {
     let mounted = true;
     const load = async () => {
       try {
-        // Récupère les livres avec pagination
+        // Récupère les livres avec vidéos et images déjà incluses
         const data = await booksService.getBooks({ page_size: 8 });
         const items = Array.isArray(data) ? data : data.results || [];
         
-        console.log('Home - Books from API:', items);
+        console.log('Home - Books from API (avec videos et main_image):', items);
 
-        // Charger les détails complets (avec les vidéos) pour chaque livre
-        const detailedBooksPromises = items.map((book) =>
-          booksService.getBookBySlug(book.slug || book.id).catch((err) => {
-            console.warn(`Failed to fetch details for book ${book.slug}:`, err);
-            return book;
-          })
-        );
-
-        const detailedBooks = await Promise.all(detailedBooksPromises);
-        const finalBooks = detailedBooks.slice(0, 8);
+        // Les données incluent déjà videos et main_image, pas besoin de recharger
+        const finalBooks = items.slice(0, 8);
         
-        console.log('Home - Final books with details:', finalBooks);
+        console.log('Home - Books ready to display:', finalBooks);
         
         if (mounted) setBooks(finalBooks);
       } catch (e) {

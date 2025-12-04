@@ -142,7 +142,7 @@ export default function BookDetailPage() {
         const hauteur = raw.hauteur_cm;
 
         if (largeur && hauteur) {
-          return `${largeur} x ${hauteur} `;
+          return `${Math.round(largeur)} x ${Math.round(hauteur)}`;
         }
 
         // 2. Fallback: si les champs sont manquants, utilise le champ dimensions brut

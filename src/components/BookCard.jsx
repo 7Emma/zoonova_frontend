@@ -6,7 +6,7 @@ const BookCard = ({ book, onClick }) => {
 
   // Debug: log book data structure
   if (!window.__bookCardDebugLogged) {
-    console.log('BookCard - Book data structure:', {
+    console.log("BookCard - Book data structure:", {
       id: book.id,
       titre: book.titre,
       videos: book.videos,
@@ -47,7 +47,7 @@ const BookCard = ({ book, onClick }) => {
         {firstVideo ? (
           <video
             className="w-full h-full object-cover"
-            style={{ background: "transparent" }}
+            style={{ background: "transparent", transform: "scale(1.32)" }}
             autoPlay
             muted
             playsInline
@@ -68,12 +68,10 @@ const BookCard = ({ book, onClick }) => {
         )}
       </div>
       <h3
-        className="mt-4 text-base md:text-lg font-semibold text-center text-slate-700 bg-white rounded-3xl"
-        style={{ fontFamily: "'Baloo 2', cursive" }}
+        className="mt-4 text-sm font-baloo font-bold text-center text-slate-700 border-2 border-white rounded-3xl px-2 py-1 break-words whitespace-normal"
+        style={{  backgroundColor: "transparent", maxWidth: "220px" }}
       >
         {book.titre || book.title}
-        <br />
-        {book.legende || book.subtitle || book.nom}
       </h3>
     </div>
   );
