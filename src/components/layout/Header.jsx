@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../../assets/logo/logo_copie.png";
 import A from "../../assets/A_Z/Zoonova_burger_A.png";
 import Z from "../../assets/A_Z/Zoonova_burger_Z.png";
@@ -16,11 +16,21 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Gère le scroll quand le menu est ouvert
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => (document.body.style.overflow = '');
+  }, [isMenuOpen]);
+
   return (
     <>
-      <header className="relative z-50 bg-gradient-to-r from-slate-600 to-slate-300 shadow-md">
-        <div className="container mx-auto px-6 sm:px-6 lg:px-8">
-          <div className="relative flex items-center justify-between h-16 md:h-20">
+      <header className={`${isMenuOpen ? 'fixed top-0 left-0 right-0' : 'relative'} z-50 bg-gradient-to-r from-slate-600 to-slate-300 shadow-md`}>
+         <div className="container mx-auto px-6 sm:px-6 lg:px-8">
+           <div className="relative flex items-center justify-between h-16 md:h-20 space-x-8">
             {/* --- SECTION CENTRE (Logo Absolu) --- */}
             <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
               <Link

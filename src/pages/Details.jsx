@@ -554,7 +554,7 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-nowrap justify-center items-center gap-1.5 xs:gap-2 sm:gap-3 md:gap-8 lg:gap-12 xl:gap-16 mb-8 px-2">
+        <div className="flex flex-nowrap justify-center items-center gap-6 xs:gap-10 sm:gap-20 md:gap-32 lg:gap-44 xl:gap-52 mb-8 px-2">
           {/* Code barre (ISBN) */}
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
@@ -619,7 +619,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <button
               onClick={handleAddToCartOnly}
-              className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-1 xs:p-1.5 sm:p-2 md:p-3"
+              className=" border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-1 xs:p-1.5 sm:p-2 md:p-3"
             >
               <img
                 src={basket}
