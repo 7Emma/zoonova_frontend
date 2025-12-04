@@ -3,14 +3,14 @@ import React from "react";
 const LegalMentionsPage = () => {
   return (
     <div
-      className="min-h-screen py-10 px-6 md:px-12 lg:px-20"
+      className="min-h-screen py-10 px-0"
       style={{
         background:
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
       <div className="">
-        <div className="p-8 md:p-12 lg:p-16">
+        <div className="p-8 md:p-12 lg:p-16 max-w-full">
           <h1
             className="text-4xl md:text-5xl font-bowlby text-center mb-12 text-slate-700"
             style={{
@@ -29,10 +29,9 @@ const LegalMentionsPage = () => {
               </h2>
               <div className="space-y-3">
                 <p>
-                  Le site{" "}
-                  <strong className="text-blue-600">www.zoonova.fr</strong> est
-                  édité par <strong>NACREALE</strong>, SAS enregistrée au
-                  registre du commerce et des sociétés de Bobigny sous le numéro{" "}
+                  Le site <strong>www.zoonova.fr</strong> est édité par{" "}
+                  <strong>NACREALE</strong>, SAS enregistrée au registre du
+                  commerce et des sociétés de Bobigny sous le numéro{" "}
                   <strong>517 466 058</strong>.
                 </p>
                 <p>
@@ -59,12 +58,7 @@ const LegalMentionsPage = () => {
               </h2>
               <p>
                 <strong>Contact :</strong>{" "}
-                <a
-                  href="mailto:hello@zoonova.fr"
-                  className="text-blue-600 hover:underline font-semibold"
-                >
-                  hello@zoonova.fr
-                </a>
+                <a href="mailto:hello@zoonova.fr">hello@zoonova.fr</a>
               </p>
             </section>
 
@@ -92,10 +86,8 @@ const LegalMentionsPage = () => {
                   nous contactant aux coordonnées indiquées ci-dessus.
                 </p>
 
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mt-4">
-                  <h3 className="text-xl font-bold mb-3 text-purple-900">
-                    Loi RGPD
-                  </h3>
+                <div className="">
+                  <h3 className="text-xl font-bold mb-3">Loi RGPD</h3>
                   <p>
                     Pour vous permettre d'acheter sur{" "}
                     <strong>www.zoonova.fr</strong>, nous devons collecter votre
@@ -109,15 +101,12 @@ const LegalMentionsPage = () => {
                     (règlement européen n° 2016/679). Dans le cadre de ce
                     nouveau règlement, <strong>NACREALE ÉDITIONS</strong> vous
                     confirme que vos données personnelles ne sont{" "}
-                    <span className="text-red-600 font-bold">JAMAIS</span>{" "}
-                    transmises à des tiers, car confidentielles.
-                  </p>
-                  <p className="mt-3">
-                    Notre base de données ne servira{" "}
-                    <span className="text-red-600 font-bold">JAMAIS</span> à des
-                    fins commerciales, et ne sera{" "}
-                    <span className="text-red-600 font-bold">JAMAIS</span>{" "}
-                    échangée, vendue ni cédée.
+                    <span className="font-bold">JAMAIS</span> transmises à des
+                    tiers, car confidentielles. Notre base de données ne servira{" "}
+                    <span className=" font-bold">JAMAIS</span> à des fins
+                    commerciales, et ne sera{" "}
+                    <span className=" font-bold">JAMAIS</span> échangée, vendue
+                    ni cédée.
                   </p>
                 </div>
               </div>
@@ -146,25 +135,20 @@ const LegalMentionsPage = () => {
 
             {/* Section 5 */}
             <section className="">
-              <h2 className="text-2xl font-bold mb-4 text-slate-800">
+              <h2 className="text-2xl font-bold mb-4">
                 5. Propriété intellectuelle
               </h2>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+              <div className="">
                 <p className="mb-3">
                   Tous les éléments du site sont et restent la{" "}
                   <strong>
                     propriété intellectuelle et exclusive de NACREALE ÉDITIONS
                   </strong>
-                  .
-                </p>
-                <p>
-                  Toute reproduction, exploitation, rediffusion ou utilisation à
-                  quelque titre que ce soit, même partiellement, des éléments du
-                  site qu'ils soient logiciels, visuels ou sonores est{" "}
-                  <span className="text-red-600 font-bold">
-                    formellement interdit
-                  </span>{" "}
-                  ; sans un accord explicite de NACREALE ÉDITIONS.
+                  . Toute reproduction, exploitation, rediffusion ou utilisation
+                  à quelque titre que ce soit, même partiellement, des éléments
+                  du site qu'ils soient logiciels, visuels ou sonores est{" "}
+                  <span className="">formellement interdit</span> ; sans un
+                  accord explicite de NACREALE ÉDITIONS.
                 </p>
               </div>
             </section>

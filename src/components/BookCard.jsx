@@ -35,9 +35,9 @@ const BookCard = ({ book, onClick }) => {
   });
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center px-0">
       <div
-        className={`w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden shadow-lg cursor-pointer transition-transform duration-300 ${
+        className={`w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden shadow-lg cursor-pointer transition-transform duration-300 ${
           isHovered ? "scale-105" : "scale-100"
         }`}
         onMouseEnter={() => setIsHovered(true)}

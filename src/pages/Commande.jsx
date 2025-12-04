@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import visa from "../assets/png_rez/visa.png";
 import master from "../assets/png_rez//Master2.png";
 import amex from "../assets/png_rez/amex2.png";
@@ -9,8 +9,7 @@ import useCart from "../hooks/useCart";
 
 const CheckoutPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { cartItems: cartFromHook, getCartCount } = useCart();
+  const { cartItems: cartFromHook } = useCart();
 
   // Récupérer les données du panier depuis la navigation ou le hook
   const cartData = location.state || {};
@@ -65,12 +64,7 @@ const CheckoutPage = () => {
     fetchCountries();
   }, [selectedCountry]);
 
-  // Rediriger si le panier est vide
-  useEffect(() => {
-    if (cartItems.length === 0) {
-      navigate("/cart");
-    }
-  }, [cartItems, navigate]);
+  // Note: Permet l'affichage de la page Commande même avec panier vide
 
   const getTotalQuantity = () => {
     return cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -221,11 +215,7 @@ const CheckoutPage = () => {
 
       // 3. Rediriger vers Stripe Checkout
       if (checkoutResponse.checkout_url) {
-        // Vider le panier avant la redirection
-        localStorage.removeItem("cart");
-        window.dispatchEvent(new Event("cart-updated"));
-
-        // Rediriger vers Stripe
+        // Rediriger vers Stripe (ne pas vider le panier ici - il sera vidé après paiement réussi dans Success.jsx)
         window.location.href = checkoutResponse.checkout_url;
       } else {
         throw new Error("URL de checkout non reçue");
@@ -250,18 +240,7 @@ const CheckoutPage = () => {
     }
   };
 
-  if (cartItems.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-xl text-gray-600 mb-4">Votre panier est vide</p>
-          <Link to="/" className="text-blue-600 hover:underline">
-            Retour à la boutique
-          </Link>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div

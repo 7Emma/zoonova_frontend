@@ -4,14 +4,14 @@ import nacreale from "../assets/png_rez/NACREALE.jpeg";
 const NacrealePage = () => {
   return (
     <div
-      className="min-h-screen py-10 px-6 md:px-12 lg:px-20"
+      className="min-h-screen py-10 px-0"
       style={{
         background:
           "linear-gradient(135deg, #f0feda 0%, #f7fbe4 25%, #f4eae8 50%, #f0d2dc 75%, #ecd2c1 100%)",
       }}
     >
       <div className="">
-        <div className="p-8 md:p-12 lg:p-16">
+        <div className="p-8 md:p-12 lg:p-16 max-w-full">
           <div className="mt-2">
             <h1
               className="text-4xl md:text-5xl font-bowlby text-center mb-8 text-slate-700"
@@ -76,7 +76,7 @@ const NacrealePage = () => {
               <div className="text-center">
                 <img
                   src={nacreale}
-                  width="600"
+                  width="1000"
                   alt="Image Nacréale"
                   className="max-w-full h-auto"
                 />

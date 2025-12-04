@@ -3,14 +3,14 @@ import React from "react";
 const PrivacyPolicyPage = () => {
   return (
     <div
-      className="min-h-screen py-10 px-6 md:px-12 lg:px-20"
+      className="min-h-screen py-10 px-0"
       style={{
         background:
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
       <div className="">
-        <div className=" p-8 md:p-12 lg:p-16">
+        <div className="p-8 md:p-12 lg:p-16 max-w-full">
           <h1
             className="text-4xl md:text-5xl font-bowlby text-center mb-12 text-slate-700"
             style={{
@@ -30,7 +30,7 @@ const PrivacyPolicyPage = () => {
               <p>
                 Les présentes conditions générales de vente s'appliquent à toute
                 commande passée sur le site Internet{" "}
-                <strong className="text-blue-600">www.zoonova.fr</strong>.
+                <strong className="font-bold">www.zoonova.fr</strong>.
                 NACREALE ÉDITIONS se réserve le droit de les adapter ou les
                 modifier sans préavis. En cas de modification, ce sont ces
                 nouvelles conditions générales de vente qui seront appliquées à
@@ -105,10 +105,10 @@ const PrivacyPolicyPage = () => {
                   </strong>
                   .
                 </p>
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                <div className=" ">
                   <p className="mb-3">
                     Les données des cartes crédit sont cryptées en{" "}
-                    <strong className="text-orange-700">
+                    <strong className="">
                       SSL 128 (Secure Socket Layer)
                     </strong>
                     . Elles ne transitent donc jamais en clair sur le réseau et
@@ -186,15 +186,15 @@ const PrivacyPolicyPage = () => {
                   dédommagement s'il ne pouvait après son achat en faire l'usage
                   auquel le produit est destiné.
                 </p>
-                <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
+                <div className="">
                   <p>
                     Lorsqu'un produit commandé est non livré, ou livré avec des
                     produits manquants, l'acheteur doit se manifester dans un
                     délai de{" "}
-                    <strong className="text-indigo-700">30 jours</strong> (à
+                    <strong className="">30 jours</strong> (à
                     compter de la date de la passation de commande).
                   </p>
-                  <p className="mt-3 font-semibold text-indigo-900">
+                  <p >
                     Au-delà de ce délai NACREALE ÉDITIONS ne pourra accepter
                     aucune réclamation.
                   </p>
@@ -210,22 +210,22 @@ const PrivacyPolicyPage = () => {
               <div className="space-y-3">
                 <p>
                   NACREALE ÉDITIONS accorde à l'utilisateur un délai de{" "}
-                  <strong className="text-teal-600">14 jours ouvrables</strong>{" "}
+                  <strong >14 jours ouvrables</strong>{" "}
                   à compter de la réception des produits commandés pour
                   retourner à ses frais ceux qui ne lui conviendraient pas. Il
                   doit cependant communiquer au préalable cette volonté de
                   retour à l'adresse mail :{" "}
                   <a
                     href="mailto:hello@zoonova.fr"
-                    className="text-blue-600 hover:underline font-semibold"
+                    className="hover:underline font-semibold"
                   >
                     hello@zoonova.fr
                   </a>
                 </p>
-                <div className="bg-teal-50 border border-teal-200 rounded-lg p-6">
+                <div className="">
                   <p className="mb-3">
                     Bien évidemment, les produits retournés doivent être{" "}
-                    <strong className="text-teal-700">à l'état neuf</strong>. En
+                    <strong className="">à l'état neuf</strong>. En
                     effet, tout produit détérioré, incomplet ou sali ne sera ni
                     repris ni échangé.
                   </p>
@@ -265,8 +265,8 @@ const PrivacyPolicyPage = () => {
                   le concernant, qu'il peut exercer auprès de NACREALE ÉDITIONS
                   (article 34 de la loi du 6 janvier 1978).
                 </p>
-                <div className="bg-pink-50 border border-pink-200 rounded-lg p-6">
-                  <p className="font-semibold text-pink-900">
+                <div >
+                  <p >
                     NACREALE ÉDITIONS s'engage à ne pas communiquer ou céder les
                     coordonnées de ses clients à un tiers, de manière gratuite
                     ou avec contrepartie.
@@ -294,12 +294,11 @@ const PrivacyPolicyPage = () => {
                   compétent pour arbitrer, quels que soient le lieu de livraison
                   et le mode de paiement accepté.
                 </p>
-                <div className="bg-slate-100 border border-slate-300 rounded-lg p-6 mt-4">
-                  <p className="font-semibold text-slate-800">
+                <div >
+                  <p >
                     Contact :{" "}
                     <a
                       href="mailto:hello@zoonova.fr"
-                      className="text-blue-600 hover:underline"
                     >
                       hello@zoonova.fr
                     </a>

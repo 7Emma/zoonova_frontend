@@ -154,7 +154,6 @@ const ContactPage = () => {
                     className={`w-full px-0 py-3 border-b-2 border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0 transition bg-transparent ${
                       errors.prenom ? "border-b-red-500" : "border-b-gray-300"
                     }`}
-                    placeholder="Votre prénom"
                   />
                   {errors.prenom && (
                     <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
@@ -190,7 +189,6 @@ const ContactPage = () => {
                     className={`w-full px-0 py-3 border-b-2 border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0 transition bg-transparent ${
                       errors.nom ? "border-b-red-500" : "border-b-gray-300"
                     }`}
-                    placeholder="Votre nom"
                   />
                   {errors.nom && (
                     <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
@@ -228,7 +226,6 @@ const ContactPage = () => {
                   className={`w-full px-0 py-3 border-b-2 border-t-0 border-l-0 border-r-0 focus:outline-none focus:ring-0 transition bg-transparent ${
                     errors.email ? "border-b-red-500" : "border-b-gray-300"
                   }`}
-                  placeholder="votre.email@exemple.com"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1 flex items-center gap-1">

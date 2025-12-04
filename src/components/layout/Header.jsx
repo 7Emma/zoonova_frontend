@@ -97,6 +97,16 @@ export default function Navbar() {
                 </span>
               </Link>
 
+              {/* Bouton Commander - MASQUÉ SUR MOBILE */}
+              <Link
+                to="/order"
+                className="hidden sm:flex items-center justify-center border border-white text-white 
+                px-4 py-2 text-base 
+                rounded-lg font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-md whitespace-nowrap"
+              >
+                Ma Commander
+              </Link>
+
               {/* Instagram Icone */}
               <a
                 href="https://www.instagram.com/zoonova_book/"
@@ -111,16 +121,6 @@ export default function Navbar() {
                   alt="Instagram"
                 />
               </a>
-
-              {/* Bouton Commander - MASQUÉ SUR MOBILE */}
-              <Link
-                to="/order"
-                className="hidden sm:flex items-center justify-center border border-white text-white 
-                px-4 py-2 text-base 
-                rounded-lg font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-md whitespace-nowrap"
-              >
-                Ma Commander
-              </Link>
             </div>
           </div>
         </div>

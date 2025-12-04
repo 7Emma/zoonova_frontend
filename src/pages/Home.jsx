@@ -78,7 +78,7 @@ const Home = () => {
       </div>
 
       {/* First Row of Books */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-0 mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
         {books.slice(0, 4).map((book) => (
           <BookCard
             key={book.id || book.slug}
@@ -98,7 +98,7 @@ const Home = () => {
       </div>
 
       {/* Second Row of Books */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-0 pb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 pb-12">
         {books.slice(4, 8).map((book) => (
           <BookCard
             key={book.id || book.slug}

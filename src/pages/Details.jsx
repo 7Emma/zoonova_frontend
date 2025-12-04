@@ -265,15 +265,15 @@ export default function BookDetailPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Titres (Désormais dynamiques) */}
         <h1
-          className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
-          style={{ color: "#F4B383", fontFamily: "'Playfair Display', serif" }}
+          className="text-center text-3xl md:text-4xl lg:text-5xl mb-4 font-baloo font-bold"
+          style={{
+            color: "white",
+            WebkitTextStroke: "1px #F0B5B4FF",
+          }}
         >
           {book.title}
         </h1>
-        <h1
-          className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic"
-          style={{ color: "#C2DEEA", fontFamily: "'Playfair Display', serif" }}
-        >
+        <h1 className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic font-baloo">
           {book.description}
         </h1>
 
@@ -350,10 +350,9 @@ export default function BookDetailPage() {
               )}
               <button
                 onClick={handleAddToCart}
-                className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
+                className="bg-white hover:bg-green-500 text-black hover:text-white font-baloo py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
               >
-                Acheter - {book.price}
+                Acheter
               </button>
               {slides.length > 1 && (
                 <button
@@ -459,10 +458,9 @@ export default function BookDetailPage() {
                           </button>
                           <button
                             onClick={handleAddToCart}
-                            className="bg-white hover:bg-green-500 text-black hover:text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
-                            style={{ fontFamily: "'Montserrat', sans-serif" }}
+                            className="bg-white hover:bg-green-500 text-black hover:text-white font-baloo py-2 px-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 text-sm"
                           >
-                            Acheter - {book.price}
+                            Acheter
                           </button>
                           <button
                             onClick={() => {
@@ -499,87 +497,87 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-         <div className="flex flex-nowrap justify-center items-center gap-1.5 xs:gap-2 sm:gap-3 md:gap-8 lg:gap-12 xl:gap-16 mb-8 px-2">
-           {/* Code barre (ISBN) */}
-           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
-             <img
-               src={barCode}
-               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
-               alt="Code barre"
-             />
-             <h5
-               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
-               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-             >
-               {book.isbn || "N/A"}
-             </h5>
-           </div>
+        <div className="flex flex-nowrap justify-center items-center gap-1.5 xs:gap-2 sm:gap-3 md:gap-8 lg:gap-12 xl:gap-16 mb-8 px-2">
+          {/* Code barre (ISBN) */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+            <img
+              src={barCode}
+              className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+              alt="Code barre"
+            />
+            <h5
+              className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+            >
+              {book.isbn || "N/A"}
+            </h5>
+          </div>
 
-           {/* Dimensions */}
-           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
-             <img
-               src={bookOfBlackCover}
-               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
-               alt="Dimensions"
-             />
-             <h5
-               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
-               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-             >
-               {book.dimensions || "N/A"}
-             </h5>
-           </div>
+          {/* Dimensions */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+            <img
+              src={bookOfBlackCover}
+              className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+              alt="Dimensions"
+            />
+            <h5
+              className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+            >
+              {book.dimensions || "N/A"}
+            </h5>
+          </div>
 
-           {/* Pages */}
-           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
-             <img
-               src={openBook}
-               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
-               alt="Pages"
-             />
-             <h5
-               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
-               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-             >
-               {book.pages ? `${book.pages} pages` : "N/A"}
-             </h5>
-           </div>
+          {/* Pages */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+            <img
+              src={openBook}
+              className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+              alt="Pages"
+            />
+            <h5
+              className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+            >
+              {book.pages ? `${book.pages} pages` : "N/A"}
+            </h5>
+          </div>
 
-           {/* Date */}
-           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
-             <img
-               src={calendar}
-               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
-               alt="Date"
-             />
-             <h5
-               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
-               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-             >
-               {book.releaseDate || "N/A"}
-             </h5>
-           </div>
+          {/* Date */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+            <img
+              src={calendar}
+              className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+              alt="Date"
+            />
+            <h5
+              className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+            >
+              {book.releaseDate || "N/A"}
+            </h5>
+          </div>
 
-           {/* Panier */}
-           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
-             <button
-               onClick={handleAddToCartOnly}
-               className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-1 xs:p-1.5 sm:p-2 md:p-3"
-             >
-               <img
-                 src={basket}
-                 className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
-                 alt="Ajouter au panier"
-               />
-               <h5
-                 className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
-                 style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-               >
-                 {book.price || "Prix N/A"}
-               </h5>
-             </button>
-           </div>
-         </div>
+          {/* Panier */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+            <button
+              onClick={handleAddToCartOnly}
+              className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-1 xs:p-1.5 sm:p-2 md:p-3"
+            >
+              <img
+                src={basket}
+                className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+                alt="Ajouter au panier"
+              />
+              <h5
+                className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+                style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+              >
+                {book.price || "Prix N/A"}
+              </h5>
+            </button>
+          </div>
+        </div>
 
         {/* Affichage de l'image sélectionnée - Popup mobile uniquement */}
         {selectedImage && (
@@ -587,7 +585,6 @@ export default function BookDetailPage() {
             <div className="bg-white rounded-lg shadow-2xl max-w-full max-h-[90vh] overflow-auto flex flex-col">
               {/* Bouton Fermer */}
               <div className="sticky top-0 flex justify-between items-center p-2 sm:p-4 border-b-2 border-gray-300 z-10">
-                
                 <button
                   onClick={() => setSelectedImage(null)}
                   className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 sm:py-2 sm:px-4 rounded text-sm sm:text-base transition-all duration-200"

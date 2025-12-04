@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        fredoka: ["Fredoka", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
         chewy: ["Chewy", "system-ui"],
         luckiest: ["Luckiest Guy", "cursive"],
@@ -12,6 +12,7 @@ export default {
         arial: ["Arial", "sans-serif"],
         bowlby: ["Bowlby One SC", "sans-serif"],
         baloo: ["Baloo 2", "cursive"],
+        nunito: ["Nunito", "sans-serif"],
       },
     },
   },
