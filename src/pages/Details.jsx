@@ -499,104 +499,117 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-nowrap justify-center items-center gap-2 sm:gap-4 md:gap-40 lg:gap-48 xl:gap-60 mb-8 overflow-x-auto">
-          {/* Code barre (ISBN) */}
-          <div className="text-center flex-shrink-0 whitespace-nowrap">
-            <img
-              src={barCode}
-              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
-              alt="Code barre"
-            />
-            <h5
-              className="text-xs sm:text-sm font-bold italic"
-              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-            >
-              {book.isbn || "N/A"}
-            </h5>
-          </div>
+         <div className="flex flex-nowrap justify-center items-center gap-1.5 xs:gap-2 sm:gap-3 md:gap-8 lg:gap-12 xl:gap-16 mb-8 px-2">
+           {/* Code barre (ISBN) */}
+           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+             <img
+               src={barCode}
+               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+               alt="Code barre"
+             />
+             <h5
+               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+             >
+               {book.isbn || "N/A"}
+             </h5>
+           </div>
 
-          {/* Dimensions */}
-          <div className="text-center flex-shrink-0 whitespace-nowrap">
-            <img
-              src={bookOfBlackCover}
-              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
-              alt="Dimensions"
-            />
-            <h5
-              className="text-xs sm:text-sm font-bold italic"
-              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-            >
-              {book.dimensions || "N/A"}
-            </h5>
-          </div>
+           {/* Dimensions */}
+           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+             <img
+               src={bookOfBlackCover}
+               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+               alt="Dimensions"
+             />
+             <h5
+               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+             >
+               {book.dimensions || "N/A"}
+             </h5>
+           </div>
 
-          {/* Pages */}
-          <div className="text-center flex-shrink-0 whitespace-nowrap">
-            <img
-              src={openBook}
-              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
-              alt="Pages"
-            />
-            <h5
-              className="text-xs sm:text-sm font-bold italic"
-              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-            >
-              {book.pages ? `${book.pages} pages` : "N/A"}
-            </h5>
-          </div>
+           {/* Pages */}
+           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+             <img
+               src={openBook}
+               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+               alt="Pages"
+             />
+             <h5
+               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+             >
+               {book.pages ? `${book.pages} pages` : "N/A"}
+             </h5>
+           </div>
 
-          {/* Date */}
-          <div className="text-center flex-shrink-0 whitespace-nowrap">
-            <img
-              src={calendar}
-              className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
-              alt="Date"
-            />
-            <h5
-              className="text-xs sm:text-sm font-bold italic"
-              style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-            >
-              {book.releaseDate || "N/A"}
-            </h5>
-          </div>
+           {/* Date */}
+           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+             <img
+               src={calendar}
+               className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+               alt="Date"
+             />
+             <h5
+               className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+             >
+               {book.releaseDate || "N/A"}
+             </h5>
+           </div>
 
-          {/* Panier */}
-          <div className="text-center flex-shrink-0 whitespace-nowrap">
-            <button
-              onClick={handleAddToCartOnly}
-              className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-2 sm:p-3"
-            >
-              <img
-                src={basket}
-                className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
-                alt="Ajouter au panier"
-              />
-              <h5
-                className="text-xs sm:text-sm font-bold italic"
-                style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
-              >
-                {book.price || "Prix N/A"}
-              </h5>
-            </button>
-          </div>
-        </div>
+           {/* Panier */}
+           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+             <button
+               onClick={handleAddToCartOnly}
+               className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-1 xs:p-1.5 sm:p-2 md:p-3"
+             >
+               <img
+                 src={basket}
+                 className="w-6 xs:w-7 sm:w-8 md:w-10 lg:w-12 xl:w-14 mx-auto mb-0.5 xs:mb-1"
+                 alt="Ajouter au panier"
+               />
+               <h5
+                 className="text-[10px] xs:text-xs sm:text-sm md:text-base font-bold italic leading-tight"
+                 style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
+               >
+                 {book.price || "Prix N/A"}
+               </h5>
+             </button>
+           </div>
+         </div>
 
-        {/* Affichage de l'image sélectionnée en grand format en bas */}
+        {/* Affichage de l'image sélectionnée - Popup mobile uniquement */}
         {selectedImage && (
-          <div className="mt-16 mb-12 border-t-4 pt-12">
-            <div className="flex flex-col items-center">
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="mt-8 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 md:py-4 md:px-12 rounded-full shadow-lg transition-all duration-200"
-                style={{ fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Fermer
-              </button>
-              <img
-                src={selectedImage}
-                className="w-full max-w-4xl lg:max-w-6xl object-contain rounded-lg"
-                alt="Image agrandie"
-              />
+          <div className="md:hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-2 sm:p-4">
+            <div className="bg-white rounded-lg shadow-2xl max-w-full max-h-[90vh] overflow-auto flex flex-col">
+              {/* Bouton Fermer */}
+              <div className="sticky top-0 bg-white flex justify-between items-center p-2 sm:p-4 border-b-2 border-gray-300 z-10">
+                <h3 
+                  className="text-base sm:text-lg font-bold flex-1"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Aperçu de l'image
+                </h3>
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 sm:py-2 sm:px-4 rounded text-sm sm:text-base transition-all duration-200"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  ✕ Fermer
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="flex items-center justify-center p-2 sm:p-4">
+                <img
+                  src={selectedImage}
+                  className="w-full h-auto max-w-full max-h-[75vh] object-contain rounded"
+                  alt="Image agrandie"
+                />
+              </div>
             </div>
           </div>
         )}

@@ -17,7 +17,7 @@ const Footer = () => {
           {/* Section 1 - Zoonova */}
           <div className="text-sm">
             <Link to="/" className="mb-4">
-              <img src={logo2} alt="Zoonova Logo" className="h-4 w-auto" />
+              <img src={logo2} alt="Zoonova Logo" className="h-6 w-auto" />
             </Link>
             <p className="mb-2">
               <Link to="/nacreale" className="hover:underline">
@@ -102,20 +102,20 @@ const Footer = () => {
               <p className="mb-3 font-semibold text-xl">Paiement sécurisé</p>
               <div className="flex gap-3 items-center">
                 <div className="px-2 py-1 h-6 flex items-center justify-center">
-                  <img src={visa} alt="Visa" className="h-10 w-auto" />
+                  <img src={visa} alt="Visa" className="h-8 w-auto" />
                 </div>
                 <div className="px-2 py-1 flex items-center justify-center">
                   <img
                     src={mastercard}
                     alt="Mastercard"
-                    className="h-10 w-auto"
+                    className="h-8 w-auto"
                   />
                 </div>
                 <div className="px-2 py-1 flex items-center justify-center">
                   <img
                     src={amex}
                     alt="American Express"
-                    className="h-10 w-auto"
+                    className="h-8 w-auto"
                   />
                 </div>
               </div>
