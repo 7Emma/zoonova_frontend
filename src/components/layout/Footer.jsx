@@ -8,8 +8,11 @@ import { Link } from "react-router-dom";
 // ============ FOOTER COMPONENT ============
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-slate-700 to-[#A8C0C7] text-white px-5 py-10 mt-1" style={{ fontFamily: 'Arial, sans-serif' }}>
-      <div className="max-w-7xl mx-auto">
+    <footer
+      className="bg-gradient-to-r from-slate-700 to-[#A8C0C7] text-white px-5 py-10 mt-1"
+      style={{ fontFamily: "Arial, sans-serif" }}
+    >
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Section 1 - Zoonova */}
           <div className="text-sm">
@@ -41,11 +44,17 @@ const Footer = () => {
           {/* Section 2 - A propos */}
           <div className="text-sm">
             <h5 className="font-bold mb-4 text-base">A propos</h5>
-            <Link to="/nacreale" className="flex items-center gap-2 mb-3 hover:underline group">
+            <Link
+              to="/nacreale"
+              className="flex items-center gap-2 mb-3 hover:underline group"
+            >
               <span className="w-2 h-2 rounded-full bg-pink-500 group-hover:scale-125 transition-transform"></span>
               Découvrir Nacréale Editions
             </Link>
-            <Link to="/contact" className="flex items-center gap-2 mb-3 hover:underline group">
+            <Link
+              to="/contact"
+              className="flex items-center gap-2 mb-3 hover:underline group"
+            >
               <span className="w-2 h-2 rounded-full bg-red-500 group-hover:scale-125 transition-transform"></span>
               Nous contacter
             </Link>
@@ -54,11 +63,17 @@ const Footer = () => {
           {/* Section 3 - Informations */}
           <div className="text-sm">
             <h5 className="font-bold mb-4 text-base">Informations</h5>
-            <Link to="/politiques" className="flex items-center gap-2 mb-3 hover:underline group">
+            <Link
+              to="/politiques"
+              className="flex items-center gap-2 mb-3 hover:underline group"
+            >
               <span className="w-2 h-2 rounded-full bg-green-500 group-hover:scale-125 transition-transform"></span>
               Politique de confidentialité
             </Link>
-            <Link to="/mentions" className="flex items-center gap-2 mb-3 hover:underline group">
+            <Link
+              to="/mentions"
+              className="flex items-center gap-2 mb-3 hover:underline group"
+            >
               <span className="w-2 h-2 rounded-full bg-green-400 group-hover:scale-125 transition-transform"></span>
               Mentions légales
             </Link>
@@ -67,15 +82,21 @@ const Footer = () => {
           {/* Section 4 - Ma commande */}
           <div className="text-sm">
             <h5 className="font-bold mb-4 text-base">Ma commande</h5>
-            <Link to="/order" className="flex items-center gap-2 mb-3 hover:underline group">
+            <Link
+              to="/order"
+              className="flex items-center gap-2 mb-3 hover:underline group"
+            >
               <span className="w-2 h-2 rounded-full bg-blue-500 group-hover:scale-125 transition-transform"></span>
               Mes commandes
             </Link>
-            <Link to="/cart" className="flex items-center gap-2 mb-3 hover:underline group">
+            <Link
+              to="/cart"
+              className="flex items-center gap-2 mb-3 hover:underline group"
+            >
               <span className="w-2 h-2 rounded-full bg-blue-400 group-hover:scale-125 transition-transform"></span>
               Mon panier
             </Link>
-            
+
             {/* Payment Methods */}
             <div className="mt-6">
               <p className="mb-3 font-semibold text-sm">Paiement sécurisé</p>
@@ -84,10 +105,18 @@ const Footer = () => {
                   <img src={visa} alt="Visa" className="h-5 w-auto" />
                 </div>
                 <div className="bg-white rounded px-2 py-1 flex items-center justify-center">
-                  <img src={mastercard} alt="Mastercard" className="h-5 w-auto" />
+                  <img
+                    src={mastercard}
+                    alt="Mastercard"
+                    className="h-5 w-auto"
+                  />
                 </div>
                 <div className="bg-white rounded px-2 py-1 flex items-center justify-center">
-                  <img src={amex} alt="American Express" className="h-5 w-auto" />
+                  <img
+                    src={amex}
+                    alt="American Express"
+                    className="h-5 w-auto"
+                  />
                 </div>
               </div>
             </div>
@@ -96,7 +125,8 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="text-center mt-8 pt-5 border-t border-white/20 text-xs">
-          2025 © Zoonova - Tous droits réservés Nacreale Editions | Conception : @ManuCoder
+          2025 © Zoonova - Tous droits réservés Nacreale Editions | Conception :
+          @ManuCoder
         </div>
       </div>
     </footer>

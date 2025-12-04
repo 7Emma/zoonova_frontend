@@ -335,7 +335,10 @@ export default function BookDetailPage() {
             {/* Flèches et bouton acheter */}
             <div className="flex justify-center items-center gap-4 mt-4">
               {slides.length > 1 && (
-                <button onClick={prevSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
+                <button
+                  onClick={prevSlide}
+                  className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200"
+                >
                   <img
                     src={leftArrow}
                     className={`w-10 lg:w-12 transition-all duration-200 ${
@@ -353,7 +356,10 @@ export default function BookDetailPage() {
                 Acheter - {book.price}
               </button>
               {slides.length > 1 && (
-                <button onClick={nextSlide} className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200">
+                <button
+                  onClick={nextSlide}
+                  className="bg-transparent border-0 hover:brightness-0 hover:invert transition-all duration-200"
+                >
                   <img
                     src={rightArrow}
                     className={`w-10 lg:w-12 transition-all duration-200 ${
@@ -493,9 +499,9 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-nowrap justify-center items-center gap-2 sm:gap-4 md:gap-8 lg:gap-12 xl:gap-16 mb-8 overflow-x-auto">
+        <div className="flex flex-nowrap justify-center items-center gap-2 sm:gap-4 md:gap-40 lg:gap-48 xl:gap-60 mb-8 overflow-x-auto">
           {/* Code barre (ISBN) */}
-          <div className="text-center flex-shrink-0">
+          <div className="text-center flex-shrink-0 whitespace-nowrap">
             <img
               src={barCode}
               className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
@@ -510,7 +516,7 @@ export default function BookDetailPage() {
           </div>
 
           {/* Dimensions */}
-          <div className="text-center flex-shrink-0">
+          <div className="text-center flex-shrink-0 whitespace-nowrap">
             <img
               src={bookOfBlackCover}
               className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
@@ -525,7 +531,7 @@ export default function BookDetailPage() {
           </div>
 
           {/* Pages */}
-          <div className="text-center flex-shrink-0">
+          <div className="text-center flex-shrink-0 whitespace-nowrap">
             <img
               src={openBook}
               className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
@@ -540,7 +546,7 @@ export default function BookDetailPage() {
           </div>
 
           {/* Date */}
-          <div className="text-center flex-shrink-0">
+          <div className="text-center flex-shrink-0 whitespace-nowrap">
             <img
               src={calendar}
               className="w-8 sm:w-10 md:w-12 lg:w-14 mx-auto mb-1"
@@ -555,7 +561,7 @@ export default function BookDetailPage() {
           </div>
 
           {/* Panier */}
-          <div className="text-center flex-shrink-0">
+          <div className="text-center flex-shrink-0 whitespace-nowrap">
             <button
               onClick={handleAddToCartOnly}
               className="bg-yellow-100 border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-2 sm:p-3"

@@ -237,9 +237,8 @@ const CheckoutPage = () => {
     >
       <div className="max-w-4xl mx-auto">
         <h1
-          className="text-4xl font-bold text-center mb-10 text-slate-700"
+          className="text-4xl font-bowlby text-center mb-10 text-slate-700"
           style={{
-            fontFamily: "'Alfa Slab One', cursive",
             color: "white",
             WebkitTextStroke: "1px #000000",
           }}
@@ -250,7 +249,7 @@ const CheckoutPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Formulaire de livraison */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
+            <div className=" p-6 md:p-8">
               <h2 className="text-xl font-bold text-slate-700 mb-6">
                 Adresse de livraison
               </h2>

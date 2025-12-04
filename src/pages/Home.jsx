@@ -21,8 +21,6 @@ const Home = () => {
         );
 
         const detailedBooks = await Promise.all(detailedBooksPromises);
-        console.log('DEBUG - detailedBooks:', detailedBooks);
-        if (detailedBooks[0]?.videos) console.log('DEBUG - first book videos:', detailedBooks[0].videos);
         const finalBooks = detailedBooks.slice(0, 8);
         if (mounted) setBooks(finalBooks);
       } catch (e) {
@@ -33,7 +31,6 @@ const Home = () => {
     load();
     return () => (mounted = false);
   }, []);
-
 
   const handleBookClick = (book) => {
     const slug =
@@ -46,15 +43,14 @@ const Home = () => {
       className="max-w-8xl mx-auto px-5 py-10"
       style={{
         background:
-          "linear-gradient(135deg, #f4f6d4 0%, #fef4e8 25%, #fde8f0 50%, #f0e8f8 75%, #e8f0fc 100%)",
+          "linear-gradient(135deg, #f0feda 0%, #f7fbe4 25%, #f4eae8 50%, #f0d2dc 75%, #ecd2c1 100%)",
       }}
     >
       {/* Main Title */}
       <div className="text-center mb-8">
         <h1
-          className="text-xl md:text-6xl lg:text-4xl  mb-6"
+          className="text-2xl md:text-4xl lg:text-6xl mb-6 font-bowlby"
           style={{
-            fontFamily: "'Alfa Slab One', cursive",
             color: "white",
             WebkitTextStroke: "1px #c45554",
           }}
@@ -63,19 +59,13 @@ const Home = () => {
         </h1>
 
         {/* Subtitle  */}
-        <h2
-          className="text-center text-xl md:text-2xl lg:text-3xl font-bold uppercase mb-6 text-slate-700 leading-relaxed"
-          style={{ fontFamily: "'Baloo 2', cursive" }}
-        >
-          EST UNE COLLECTION DE LIVRES JEUNESSE DESTINÉE AUX ENFANTS DE 4 À 10
-          ANS.
+        <h2 className="text-center md:text-2xl lg:text-3xl uppercase mb-6 text-slate-700 leading-relaxed font-bowlby">
+          EST UNE COLLECTION DE LIVRES JEUNESSE <br /> DESTINÉE AUX ENFANTS DE 4
+          À 10 ANS.
         </h2>
 
         {/* Description */}
-        <p
-          className="text-center text-xl md:text-2xl lg:text-3xl font-bold text-slate-700 leading-relaxed  mb-12"
-          style={{ fontFamily: "'Baloo 2', cursive" }}
-        >
+        <p className="text-center md:text-2xl lg:text-3xl text-slate-700 leading-relaxed  mb-12 font-bowlby">
           DES HISTOIRES QUI RACONTENT LES AVENTURES D'ANIMAUX QUI
           <br />
           SOUHAITENT RENONCER À LEUR NATURE POUR RÉALISER LEURS RÊVES.
@@ -87,7 +77,7 @@ const Home = () => {
       </div>
 
       {/* First Row of Books */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-0 mb-12">
         {books.slice(0, 4).map((book) => (
           <BookCard
             key={book.id || book.slug}
@@ -99,10 +89,7 @@ const Home = () => {
 
       {/* Invitation Text */}
       <div className="text-center my-12">
-        <h2
-          className="text-xl md:text-2xl lg:text-3xl font-bold uppercase text-slate-600 leading-relaxed"
-          style={{ fontFamily: "'Roboto', sans-serif" }}
-        >
+        <h2 className=" md:text-2xl lg:text-2xl font-bowlby uppercase text-slate-600 leading-relaxed">
           ZOONOVA VOUS INVITE À DÉCOUVRIR LES SURPRENANTES AVENTURES
           <br />
           D'ABEILLE.532, BÉLIOS, CASTORIN, DAUPHINOIS, ÉLÉPHANKA...
@@ -110,7 +97,7 @@ const Home = () => {
       </div>
 
       {/* Second Row of Books */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-0 pb-12">
         {books.slice(4, 8).map((book) => (
           <BookCard
             key={book.id || book.slug}
@@ -119,8 +106,6 @@ const Home = () => {
           />
         ))}
       </div>
-
-
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto:wght@400;600;700&family=Baloo+2:wght@400;600;700&display=swap');

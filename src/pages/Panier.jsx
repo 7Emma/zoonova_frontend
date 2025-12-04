@@ -76,9 +76,8 @@ const CartPage = () => {
     >
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-6 md:p-8">
         <h1
-          className="text-4xl font-bold text-center mb-8 text-slate-700"
+          className="text-4xl font-bowlby text-center mb-8 text-slate-700"
           style={{
-            fontFamily: "'Alfa Slab One', cursive",
             color: "white",
             WebkitTextStroke: "1px #000000",
           }}

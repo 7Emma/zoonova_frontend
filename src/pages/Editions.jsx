@@ -13,7 +13,13 @@ const NacrealePage = () => {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 lg:p-16">
           <div className="mt-2">
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-slate-700">
+            <h1
+              className="text-4xl md:text-5xl font-bowlby text-center mb-8 text-slate-700"
+              style={{
+                color: "white",
+                WebkitTextStroke: "1px #000000",
+              }}
+            >
               Découvrir Nacreale Editions
             </h1>
 

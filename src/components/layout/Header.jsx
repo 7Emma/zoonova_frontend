@@ -119,7 +119,7 @@ export default function Navbar() {
                 px-4 py-2 text-base 
                 rounded-lg font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-md whitespace-nowrap"
               >
-               Ma Commander
+                Ma Commander
               </Link>
             </div>
           </div>
@@ -197,7 +197,7 @@ export default function Navbar() {
       <div className="h-1 bg-white"></div>
 
       {/* Trait noir */}
-      <div className="border-b-2 border-black"></div>
+      <div className="border-b-[1px] border-black"></div>
       {/* Overlay sombre */}
       {isMenuOpen && (
         <div

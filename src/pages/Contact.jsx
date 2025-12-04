@@ -102,11 +102,17 @@ const ContactPage = () => {
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-10 text-slate-700">
+        <h2
+          className="text-4xl md:text-5xl font-bowlby text-center mb-10 text-slate-700"
+          style={{
+            color: "white",
+            WebkitTextStroke: "1px #000000",
+          }}
+        >
           Contact
         </h2>
 
-        <div className="bg-white rounded-lg shadow-2xl p-6 md:p-10">
+        <div className="p-6 md:p-10">
           {/* Success Message */}
           {submitSuccess && (
             <div className="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3">
@@ -371,24 +377,13 @@ const ContactPage = () => {
                     rel="noopener noreferrer"
                     className="text-pink-600 hover:underline flex items-center gap-1"
                   >
-                    <img src={instagram} alt="" className="h-24" />
+                    <img src={instagram} alt="" className="w-4" />
                     Instagram
                   </a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Additional Info Card */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
-          <h3 className="text-lg font-bold text-slate-700 mb-2">
-            Vous avez une question ?
-          </h3>
-          <p className="text-slate-600">
-            Notre équipe vous répondra dans les plus brefs délais, généralement
-            sous 24-48 heures.
-          </p>
         </div>
       </div>
     </div>

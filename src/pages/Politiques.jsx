@@ -11,7 +11,7 @@ const PrivacyPolicyPage = () => {
     >
       <div className="max-w-5xl mx-auto">
         <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 lg:p-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-slate-700">
+          <h1 className="text-4xl md:text-5xl font-bowlby text-center mb-12 text-slate-700">
             Conditions de ventes NACREALE ÉDITIONS
           </h1>
 
