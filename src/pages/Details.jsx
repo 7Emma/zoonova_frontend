@@ -613,6 +613,26 @@ export default function BookDetailPage() {
             </div>
           </div>
         )}
+
+        {/* Affichage de l'image sélectionnée en bas - Desktop et tablette uniquement */}
+        {selectedImage && (
+          <div className="hidden md:block mt-16 mb-12 border-t-4 pt-12">
+            <div className="flex flex-col items-center">
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="mb-6 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded text-sm md:text-base transition-all duration-200"
+                style={{ fontFamily: "'Montserrat', sans-serif" }}
+              >
+                ✕ Fermer
+              </button>
+              <img
+                src={selectedImage}
+                className="w-full max-w-4xl lg:max-w-6xl object-contain rounded-lg"
+                alt="Image agrandie"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
