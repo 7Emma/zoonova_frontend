@@ -41,6 +41,46 @@ export default function BookDetailPage() {
     right: false,
   });
   const [selectedImage, setSelectedImage] = useState(null);
+  const [dominantColor, setDominantColor] = useState("#c45554");
+  const [dominantColorBack, setDominantColorBack] = useState("#c45554");
+
+  // Fonction pour extraire la couleur dominante d'une image
+  const extractDominantColor = (imageUrl, setColorFunction) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+
+        let r = 0, g = 0, b = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          r += data[i];
+          g += data[i + 1];
+          b += data[i + 2];
+        }
+
+        const pixelCount = data.length / 4;
+        r = Math.round(r / pixelCount);
+        g = Math.round(g / pixelCount);
+        b = Math.round(b / pixelCount);
+
+        const hex = `#${[r, g, b].map(x => x.toString(16).padStart(2, '0')).join('').toUpperCase()}`;
+        setColorFunction(hex);
+      } catch (e) {
+        console.warn("CORS error extracting color, using default:", e);
+        setColorFunction("#c45554");
+      }
+    };
+    img.onerror = () => setColorFunction("#c45554");
+    img.src = imageUrl;
+  };
 
   // helper: normalize backend/book object to the shape the UI expects
   const normalizeBook = (raw) => {
@@ -177,9 +217,18 @@ export default function BookDetailPage() {
         // VÉRIFIEZ LES DONNÉES ICI
         console.log("Données brutes de l'API :", details);
 
-        setBook(normalizeBook(details));
+        const normalizedBook = normalizeBook(details);
+        setBook(normalizedBook);
         setCurrentSlide(0);
         setCurrentMobileSlide(0);
+        
+        // Extraire les couleurs dominantes des deux couvertures
+        if (normalizedBook?.coverImg) {
+          extractDominantColor(normalizedBook.coverImg, setDominantColor);
+        }
+        if (normalizedBook?.backImg) {
+          extractDominantColor(normalizedBook.backImg, setDominantColorBack);
+        }
       } else {
         setBook(null);
       }
@@ -267,13 +316,21 @@ export default function BookDetailPage() {
         <h1
           className="text-center text-3xl md:text-4xl lg:text-5xl mb-4 font-baloo font-bold"
           style={{
-            color: "white",
-            WebkitTextStroke: "1px #F0B5B4FF",
+            color: dominantColor,
+            WebkitTextStroke: "1px white",
+            textShadow: "0px 4px 0px rgba(0,0,0,0.15)",
           }}
         >
           {book.title}
         </h1>
-        <h1 className="text-center text-xl md:text-2xl lg:text-3xl mb-8 italic font-baloo">
+        <h1
+          className="text-center text-xl md:text-2xl lg:text-3xl mb-8 font-baloo"
+          style={{
+            color: dominantColorBack,
+            WebkitTextStroke: "1px white",
+            textShadow: "0px 3px 0px rgba(0,0,0,0.1)",
+          }}
+        >
           {book.description}
         </h1>
 
