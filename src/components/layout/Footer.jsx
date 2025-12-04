@@ -37,7 +37,6 @@ const Footer = () => {
               className="inline-flex items-center gap-2 hover:scale-105 transition-transform"
             >
               <img src={instagram} alt="Instagram" className="h-8 w-8" />
-              <span className="text-sm">@zoonova_book</span>
             </a>
           </div>
 

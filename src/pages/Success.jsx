@@ -14,43 +14,43 @@ const SuccessPage = () => {
     const loadOrderInfo = async () => {
       try {
         // Récupère l'order_id ou session_id depuis les paramètres
-        let orderId = searchParams.get('order_id');
-        const sessionId = searchParams.get('session_id');
-        
+        let orderId = searchParams.get("order_id");
+        const sessionId = searchParams.get("session_id");
+
         // Si on a un session_id mais pas d'order_id
         if (sessionId && !orderId) {
           orderId = sessionId;
         }
-        
+
         if (!orderId) {
-          setError('Pas de commande trouvée');
+          setError("Pas de commande trouvée");
           setLoading(false);
           return;
         }
 
         // Vérifie le paiement et récupère les infos de la commande
         const paymentInfo = await paymentsService.verifyPayment(orderId);
-        
+
         if (paymentInfo.order) {
           setOrder(paymentInfo.order);
           // Vide le panier une fois la commande confirmée
-          localStorage.removeItem('cart');
-          window.dispatchEvent(new Event('cart-updated'));
+          localStorage.removeItem("cart");
+          window.dispatchEvent(new Event("cart-updated"));
         } else if (paymentInfo.paid) {
           // Si payé mais pas d'order dans la réponse, créer un objet minimal
           setOrder({
             id: orderId,
-            email: paymentInfo.email || '',
+            email: paymentInfo.email || "",
             total: paymentInfo.total || 0,
           });
-          localStorage.removeItem('cart');
-          window.dispatchEvent(new Event('cart-updated'));
+          localStorage.removeItem("cart");
+          window.dispatchEvent(new Event("cart-updated"));
         } else {
-          setError('Commande non trouvée ou paiement non confirmé');
+          setError("Commande non trouvée ou paiement non confirmé");
         }
       } catch (err) {
-        console.error('Erreur lors du chargement de la commande:', err);
-        setError('Erreur lors du chargement des informations');
+        console.error("Erreur lors du chargement de la commande:", err);
+        setError("Erreur lors du chargement des informations");
       } finally {
         setLoading(false);
       }
@@ -66,7 +66,7 @@ const SuccessPage = () => {
     try {
       const blob = await ordersService.downloadInvoice(order.id);
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `facture_${order.id}.pdf`;
       document.body.appendChild(a);
@@ -74,8 +74,8 @@ const SuccessPage = () => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (err) {
-      console.error('Erreur lors du téléchargement de la facture:', err);
-      alert('Erreur lors du téléchargement de la facture. Veuillez réessayer.');
+      console.error("Erreur lors du téléchargement de la facture:", err);
+      alert("Erreur lors du téléchargement de la facture. Veuillez réessayer.");
     } finally {
       setDownloadingInvoice(false);
     }
@@ -148,7 +148,9 @@ const SuccessPage = () => {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-gray-800 mb-2">Erreur</h1>
-          <p className="text-gray-600 mb-6">{error || 'Une erreur est survenue'}</p>
+          <p className="text-gray-600 mb-6">
+            {error || "Une erreur est survenue"}
+          </p>
           <Link
             to="/"
             className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition"
@@ -169,7 +171,7 @@ const SuccessPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-lg w-full text-center">
+      <div className=" p-8 max-w-lg w-full text-center">
         {/* Icône de succès */}
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg
@@ -193,7 +195,8 @@ const SuccessPage = () => {
         <p className="text-gray-600 mb-2">Merci pour votre achat !</p>
         {order.email && (
           <p className="text-gray-600 mb-6">
-            Un email de confirmation a été envoyé à <strong>{order.email}</strong>.
+            Un email de confirmation a été envoyé à{" "}
+            <strong>{order.email}</strong>.
           </p>
         )}
 
@@ -224,13 +227,16 @@ const SuccessPage = () => {
             <p className="text-sm text-gray-600 mb-3">Prochaines étapes</p>
             <ul className="space-y-2 text-sm text-gray-700">
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Traitement de votre commande
+                <span className="text-green-500">✓</span> Traitement de votre
+                commande
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Préparation de l'expédition
+                <span className="text-green-500">✓</span> Préparation de
+                l'expédition
               </li>
               <li className="flex items-center gap-2">
-                <span className="text-green-500">✓</span> Livraison à votre domicile
+                <span className="text-green-500">✓</span> Livraison à votre
+                domicile
               </li>
             </ul>
           </div>
@@ -242,7 +248,7 @@ const SuccessPage = () => {
             onClick={handleDownloadInvoice}
             disabled={downloadingInvoice}
             className={`w-full border-2 border-green-600 text-green-600 py-3 rounded-lg font-semibold hover:bg-green-600 hover:text-white transition flex items-center justify-center gap-2 ${
-              downloadingInvoice ? 'opacity-50 cursor-not-allowed' : ''
+              downloadingInvoice ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {downloadingInvoice ? (

@@ -78,15 +78,15 @@ const Home = () => {
       </div>
 
       {/* First Row of Books */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-        {books.slice(0, 4).map((book) => (
-          <BookCard
-            key={book.id || book.slug}
-            book={book}
-            onClick={() => handleBookClick(book)}
-          />
-        ))}
-      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mb-12 mx-2 sm:mx-4 md:mx-8 lg:mx-16 xl:mx-48">
+         {books.slice(0, 4).map((book) => (
+           <BookCard
+             key={book.id || book.slug}
+             book={book}
+             onClick={() => handleBookClick(book)}
+           />
+         ))}
+       </div>
 
       {/* Invitation Text */}
       <div className="text-center my-12">
@@ -98,15 +98,15 @@ const Home = () => {
       </div>
 
       {/* Second Row of Books */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pb-12">
-        {books.slice(4, 8).map((book) => (
-          <BookCard
-            key={book.id || book.slug}
-            book={book}
-            onClick={() => handleBookClick(book)}
-          />
-        ))}
-      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 pb-12 mx-2 sm:mx-4 md:mx-8 lg:mx-16 xl:mx-48">
+         {books.slice(4, 8).map((book) => (
+           <BookCard
+             key={book.id || book.slug}
+             book={book}
+             onClick={() => handleBookClick(book)}
+           />
+         ))}
+       </div>
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto:wght@400;600;700&family=Baloo+2:wght@400;600;700&display=swap');
