@@ -507,7 +507,7 @@ export default function BookDetailPage() {
               )}
               <button
                 onClick={handleAddToCart}
-                className="bg-white hover:bg-green-500 text-white hover:text-white font-bowlby text-2xl py-3 px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                className="bg-black text-green-500 hover:bg-green-500 hover:text-white font-bowlby text-2xl py-3 px-6 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
               >
                 Acheter
               </button>
@@ -603,7 +603,7 @@ export default function BookDetailPage() {
               )}
               <button
                 onClick={handleAddToCart}
-                className="bg-white hover:bg-green-500 text-black hover:text-white font-bowlby text-2xl py-3 px-6 lg:py-4 lg:px-8 rounded-full opacity-40 shadow-lg transition-all duration-200 transform hover:scale-105"
+                className="bg-white hover:bg-green-500 text-black hover:text-white font-bowlby text-2xl py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
               >
                 Acheter
               </button>
