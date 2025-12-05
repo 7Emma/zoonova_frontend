@@ -10,7 +10,7 @@ const PrivacyPolicyPage = () => {
       }}
     >
       <div className="">
-        <div className="p-8 max-w-full">
+        <div className="p-10 max-w-full">
           <h1
             className="text-4xl font-bowlby text-center mb-8 text-slate-700"
             style={{

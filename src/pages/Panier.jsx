@@ -133,7 +133,7 @@ const CartPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-6xl mx-auto p-6 md:p-8">
+      <div className="max-w-6xl mx-auto p-6 md:p-10">
         <h1
           className="text-4xl font-bowlby text-center mb-8 text-slate-700"
           style={{

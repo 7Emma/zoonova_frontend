@@ -95,7 +95,7 @@ const ContactPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-6xl mx-auto relative z-10 p-8 flex flex-col items-center">
+      <div className="max-w-6xl mx-auto relative z-10 p-10 flex flex-col items-center">
         <h2
           className="text-4xl font-bowlby text-center mb-8 text-slate-700 w-full"
           style={{

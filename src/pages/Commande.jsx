@@ -250,7 +250,7 @@ const CheckoutPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-4xl w-full p-8 mr-10">
+      <div className="max-w-4xl w-full p-10 mr-10">
         <h1
           className="text-4xl font-bowlby text-center mb-8 text-slate-700"
           style={{
@@ -613,7 +613,7 @@ const CheckoutPage = () => {
           </div>
 
           {/* Récapitulatif de commande */}
-          <div className="lg:col-span-1 flex lg:mt-0">
+          <div className="lg:col-span-1 flex mt-28">
             <div className="bg-white rounded-lg shadow-xl p-6 w-full lg:sticky lg:top-8 lg:self-start">
               <h2 className="text-xl font-bold text-slate-700 mb-4">
                 Récapitulatif
