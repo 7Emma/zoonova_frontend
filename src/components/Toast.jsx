@@ -15,12 +15,12 @@ export default function Toast({ message, type = "success", duration = 3000, onCl
 
   if (!isVisible) return null;
 
-  const bgColor = type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : "bg-blue-500";
+  const bgColor = type === "success" ? "bg-cyan-300" : type === "error" ? "bg-red-500" : "bg-cyan-300";
   const icon = type === "success" ? <Check className="w-5 h-5" /> : null;
 
   return (
     <div
-      className={`fixed right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 animate-slide-up z-50 max-w-xs`}
+      className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${bgColor} text-gray-800 px-8 py-6 rounded-lg shadow-lg flex items-center gap-3 z-50 max-w-md`}
     >
       {icon}
       <span className="font-medium">{message}</span>
