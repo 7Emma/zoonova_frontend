@@ -187,7 +187,7 @@ const CartPage = () => {
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="bg-slate-200 text-slate-700">
+                  <tr className="bg-white text-slate-700">
                     <th className="p-3 text-left font-bold">Livre</th>
                     <th className="p-3 text-center font-bold">Quantité</th>
                     <th className="p-3 text-center font-bold">Prix Unitaire</th>
@@ -711,7 +711,7 @@ const CartPage = () => {
                   shippingCost: getShippingCost(),
                   total: calculateTotal(),
                 }}
-                className="bg-white text-black px-8 py-3 rounded-lg text-center border border-gray-300 font-semibold hover:bg-green-700 transition"
+                className="bg-white text-black px-14 py-3 rounded-lg text-center border border-gray-300 font-semibold hover:bg-green-700 transition"
               >
                 Passer à l'achat
               </Link>

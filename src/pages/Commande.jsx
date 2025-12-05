@@ -72,12 +72,12 @@ const CheckoutPage = () => {
 
   const getShippingCost = () => {
     if (!selectedCountry) return 0;
-    
+
     const totalQuantity = getTotalQuantity();
     const bookWeight = 103; // grammes
     const bubbleWeight = Math.ceil(totalQuantity / 2) * 15; // 15g per bubble sheet
     const totalWeight = totalQuantity * bookWeight + bubbleWeight;
-    
+
     // France tarifs (as of 2025-01-01)
     if (selectedCountry.code === "FR" || selectedCountry.name === "France") {
       if (totalQuantity === 1) return 4.71;
@@ -85,24 +85,24 @@ const CheckoutPage = () => {
       if (totalQuantity === 3) return 6.77;
       if (totalQuantity === 4) return 5.13;
       if (totalQuantity === 5) return 8.94;
-      if (totalQuantity === 6) return 8.40;
+      if (totalQuantity === 6) return 8.4;
       if (totalQuantity === 7) return 8.42;
       if (totalQuantity >= 8) {
         // 8,30 € + 0,02€ par tranche de 10g au-delà de 500g
-        const basePrice = 8.30;
+        const basePrice = 8.3;
         const additionalWeight = Math.max(0, totalWeight - 500);
         const additionalTranches = Math.ceil(additionalWeight / 10);
-        return basePrice + (additionalTranches * 0.02);
+        return basePrice + additionalTranches * 0.02;
       }
     }
-    
+
     // Europe/Belgium tarifs
     if (totalQuantity === 1) return 10.48;
     if (totalQuantity === 2) return 10.48;
     if (totalQuantity === 3) return 15.24;
     if (totalQuantity === 4) return 15.24;
     if (totalQuantity >= 5) return 28.62;
-    
+
     // Fallback
     return (
       parseFloat(selectedCountry.shipping_cost_euros) ||
@@ -155,6 +155,8 @@ const CheckoutPage = () => {
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email invalide";
     }
+    if (!formData.phone.trim())
+      newErrors.phone = "Le numéro de téléphone est requis";
     if (!formData.voie.trim()) newErrors.voie = "La voie est requise";
     if (!formData.numeroVoie)
       newErrors.numeroVoie = "Le numéro de voie est requis";
@@ -240,19 +242,17 @@ const CheckoutPage = () => {
     }
   };
 
-
-
   return (
     <div
-      className="min-h-screen py-10 px-4"
+      className="min-h-screen py-10 px-4 flex justify-center"
       style={{
         background:
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl w-full p-8 mr-10">
         <h1
-          className="text-4xl font-bowlby text-center mb-10 text-slate-700"
+          className="text-4xl font-bowlby text-center mb-8 text-slate-700"
           style={{
             color: "white",
             WebkitTextStroke: "1px #000000",
@@ -264,7 +264,7 @@ const CheckoutPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Formulaire de livraison */}
           <div className="lg:col-span-2">
-            <div className=" p-6 md:p-8">
+            <div className=" p-6 md:p-8 px-40">
               <h2 className="text-xl font-bold text-slate-700 mb-6">
                 Adresse de livraison
               </h2>
@@ -350,7 +350,7 @@ const CheckoutPage = () => {
                       htmlFor="phone"
                       className="block text-sm font-semibold text-slate-700 mb-2"
                     >
-                      Téléphone
+                      Téléphone <span className="text-red-600">*</span>
                     </label>
                     <input
                       type="tel"
@@ -359,8 +359,15 @@ const CheckoutPage = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+33 6 12 34 56 78"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        errors.phone ? "border-red-500" : "border-gray-300"
+                      }`}
                     />
+                    {errors.phone && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.phone}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -488,7 +495,7 @@ const CheckoutPage = () => {
                       htmlFor="pays"
                       className="block text-sm font-semibold text-slate-700 mb-2"
                     >
-                      Pays <span className="text-red-600">*</span>
+                      Zone <span className="text-red-600">*</span>
                     </label>
                     {loadingCountries ? (
                       <div className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100">
@@ -504,7 +511,7 @@ const CheckoutPage = () => {
                           errors.pays ? "border-red-500" : "border-gray-300"
                         }`}
                       >
-                        <option value="">Choisir un pays</option>
+                        <option value="">Choisir une Zone</option>
                         {countries.map((country) => (
                           <option key={country.id} value={country.id}>
                             {country.name}
@@ -606,8 +613,8 @@ const CheckoutPage = () => {
           </div>
 
           {/* Récapitulatif de commande */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-xl p-6 sticky top-4">
+          <div className="lg:col-span-1 flex lg:mt-0">
+            <div className="bg-white rounded-lg shadow-xl p-6 w-full lg:sticky lg:top-8 lg:self-start">
               <h2 className="text-xl font-bold text-slate-700 mb-4">
                 Récapitulatif
               </h2>

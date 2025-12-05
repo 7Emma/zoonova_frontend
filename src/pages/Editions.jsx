@@ -11,10 +11,10 @@ const NacrealePage = () => {
       }}
     >
       <div className="">
-        <div className="p-8 md:p-12 lg:p-16 max-w-full">
+        <div className="p-8 max-w-full">
           <div className="mt-2">
             <h1
-              className="text-4xl md:text-5xl font-bowlby text-center mb-8 text-slate-700"
+              className="text-4xl font-bowlby text-center mb-8 text-slate-700"
               style={{
                 color: "white",
                 WebkitTextStroke: "1px #000000",

@@ -19,11 +19,11 @@ const Home = () => {
         console.log('Home - Books from API (avec videos et main_image):', items);
 
         // Les données incluent déjà videos et main_image, pas besoin de recharger
-        const finalBooks = items.slice(0, 8);
-        
-        console.log('Home - Books ready to display:', finalBooks);
-        
-        if (mounted) setBooks(finalBooks);
+         const finalBooks = items.slice(0, 8).reverse();
+         
+         console.log('Home - Books ready to display:', finalBooks);
+         
+         if (mounted) setBooks(finalBooks);
       } catch (e) {
         console.error('Home - Error loading books:', e);
       }
@@ -53,20 +53,20 @@ const Home = () => {
           className="text-2xl md:text-4xl lg:text-6xl mb-6 font-bowlby"
           style={{
             color: "white",
-            WebkitTextStroke: "1px #c45554",
+            WebkitTextStroke: "1.38px #c45554",
           }}
         >
           « JE NE VEUX PLUS ÊTRE... »
         </h1>
 
         {/* Subtitle  */}
-        <h2 className="text-center md:text-2xl lg:text-3xl uppercase mb-6 text-slate-700 leading-relaxed font-bowlby">
+        <h2 className="text-center md:text-2xl lg:text-3xl uppercase mb-6 text-[#666666] leading-relaxed font-bowlby">
           EST UNE COLLECTION DE LIVRES JEUNESSE <br /> DESTINÉE AUX ENFANTS DE 4
           À 10 ANS.
         </h2>
 
         {/* Description */}
-        <p className="text-center md:text-2xl lg:text-3xl text-slate-700 leading-relaxed  mb-12 font-bowlby">
+        <p className="text-center md:text-2xl lg:text-3xl text-[#666666] leading-relaxed  mb-12 font-bowlby">
           DES HISTOIRES QUI RACONTENT LES AVENTURES D'ANIMAUX QUI
           <br />
           SOUHAITENT RENONCER À LEUR NATURE POUR RÉALISER LEURS RÊVES.
@@ -90,7 +90,7 @@ const Home = () => {
 
       {/* Invitation Text */}
       <div className="text-center my-12">
-        <h2 className=" md:text-2xl lg:text-2xl font-bowlby uppercase text-slate-600 leading-relaxed">
+        <h2 className=" md:text-2xl lg:text-2xl font-bowlby uppercase text-[#666666] leading-relaxed">
           ZOONOVA VOUS INVITE À DÉCOUVRIR LES SURPRENANTES AVENTURES
           <br />
           D'ABEILLE.532, BÉLIOS, CASTORIN, DAUPHINOIS, ÉLÉPHANKA...
@@ -99,7 +99,7 @@ const Home = () => {
 
       {/* Second Row of Books */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 pb-12 mx-2 sm:mx-4 md:mx-8 lg:mx-16 xl:mx-48">
-         {books.slice(4, 8).map((book) => (
+         {books.slice(4, 20).map((book) => (
            <BookCard
              key={book.id || book.slug}
              book={book}

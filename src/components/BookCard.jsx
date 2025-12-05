@@ -68,8 +68,8 @@ const BookCard = ({ book, onClick }) => {
         )}
       </div>
       <h3
-        className="mt-4 text-sm font-baloo font-bold text-center text-slate-700 border-2 border-white rounded-3xl px-2 py-1 break-words whitespace-normal"
-        style={{  backgroundColor: "transparent", maxWidth: "220px" }}
+        className="mt-4 text-sm font-baloo font-bold text-center text-slate-700 border-2 border-white rounded-3xl px-4 py-1 break-words whitespace-normal"
+        style={{  backgroundColor: "transparent", maxWidth: "180px" }}
       >
         {book.titre || book.title}
       </h3>

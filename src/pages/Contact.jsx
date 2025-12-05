@@ -95,9 +95,9 @@ const ContactPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 p-8 flex flex-col items-center">
         <h2
-          className="text-4xl md:text-5xl font-bowlby text-center mb-10 text-slate-700"
+          className="text-4xl font-bowlby text-center mb-8 text-slate-700 w-full"
           style={{
             color: "white",
             WebkitTextStroke: "1px #000000",
@@ -106,15 +106,17 @@ const ContactPage = () => {
           Contact
         </h2>
 
-        <div className="flex items-center gap-6 md:gap-8">
+        <div className="w-full flex flex-col lg:flex-row items-end justify-center gap-0 ">
           {/* Image Gauche */}
-          <img
-            src={castor}
-            alt="castor"
-            className="hidden lg:block h-48 opacity-40 flex-shrink-0"
-          />
+          <div className="hidden lg:flex lg:w-1/5 justify-center items-end">
+            <img
+              src={castor}
+              alt="castor"
+              className="h-48 flex-shrink-0 mb-10 "
+            />
+          </div>
 
-          <div className="p-6 md:p-10 flex-1">
+          <div className="p-6 md:p-10 w-full lg:w-3/5">
             {/* Success Message */}
             {submitSuccess && (
               <div className="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3">
@@ -292,7 +294,7 @@ const ContactPage = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className={`w-full bg-slate-800 text-yellow-400 py-4 rounded-lg font-bold text-lg hover:bg-slate-900 transition flex items-center justify-center gap-2 ${
+                className={`w-full bg-black text-yellow-400 py-4  font-bold text-lg hover:bg-slate-900 transition flex items-center justify-center gap-2 ${
                   isSubmitting ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
@@ -318,19 +320,7 @@ const ContactPage = () => {
                   </>
                 ) : (
                   <>
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
+
                     Envoyer
                   </>
                 )}
@@ -339,11 +329,13 @@ const ContactPage = () => {
           </div>
 
           {/* Image Droite */}
-          <img
-            src={flamant}
-            alt="castor"
-            className="hidden lg:block h-48 opacity-40 flex-shrink-0"
-          />
+          <div className="hidden lg:flex lg:w-1/5 justify-center items-end">
+            <img
+              src={flamant}
+              alt="flamant"
+              className="h-60 flex-shrink-0 mb-10"
+            />
+          </div>
         </div>
       </div>
     </div>

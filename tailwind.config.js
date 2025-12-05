@@ -4,6 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        alfa: ["Alfa Slab One", "serif"],
+        roboto: ["Roboto", "sans-serif"],
+        skranji: ["Skranji", "cursive"],
+        poetsen: ["Poetsen One", "sans-serif"],
         fredoka: ["Fredoka", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
         chewy: ["Chewy", "system-ui"],
@@ -13,6 +17,15 @@ export default {
         bowlby: ["Bowlby One SC", "sans-serif"],
         baloo: ["Baloo 2", "cursive"],
         nunito: ["Nunito", "sans-serif"],
+      },
+      keyframes: {
+        slideUp: {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        "slide-up": "slideUp 0.3s ease-in-out",
       },
     },
   },
