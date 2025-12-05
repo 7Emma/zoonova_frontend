@@ -3,14 +3,14 @@ import React from "react";
 const LegalMentionsPage = () => {
   return (
     <div
-      className="min-h-screen py-0 px-0"
+      className="h-screen py-0 px-0 overflow-y-auto"
       style={{
         background:
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
       <div className="">
-        <div className="p-20 max-w-full">
+        <div className="py-20 px-8 max-w-full">
           <h1
             className="text-4xl font-bowlby text-center mb-8 text-slate-700"
             style={{

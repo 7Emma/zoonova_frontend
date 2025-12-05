@@ -629,7 +629,7 @@ export default function BookDetailPage() {
             <img
               src={book.coverImg}
               className="w-64 lg:w-80 xl:w-96 cursor-pointer hover:opacity-80 transition-opacity"
-              alt="Première de couverture"
+              alt="Première de couverture Zoonova"
               onClick={() => handleImageClick(book.coverImg)}
             />
           ) : (
@@ -647,7 +647,7 @@ export default function BookDetailPage() {
               <img
                 src={book.coverImg}
                 className="w-48 cursor-pointer hover:opacity-80 transition-opacity"
-                alt="Première de couverture"
+                alt="Première de couverture Zoonova"
                 onClick={() => handleImageClick(book.coverImg)}
               />
             )}

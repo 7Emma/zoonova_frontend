@@ -116,7 +116,7 @@ const ContactPage = () => {
             />
           </div>
 
-          <div className="p-6 md:p-10 w-full lg:w-3/5">
+          <div className="p-6 md:p-10 w-full lg:w-3/5 flex flex-col">
             {/* Success Message */}
             {submitSuccess && (
               <div className="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3">
@@ -137,7 +137,7 @@ const ContactPage = () => {
               </div>
             )}
 
-            <div className="space-y-6">
+            <div className="space-y-6 flex-1">
               {/* Prénom et Nom */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -334,6 +334,20 @@ const ContactPage = () => {
               src={flamant}
               alt="flamant"
               className="h-60 flex-shrink-0 mb-10"
+            />
+          </div>
+
+          {/* Images Mobile en bas */}
+          <div className="lg:hidden flex w-full justify-center items-end gap-8 mt-8">
+            <img
+              src={castor}
+              alt="castor"
+              className="h-32 flex-shrink-0"
+            />
+            <img
+              src={flamant}
+              alt="flamant"
+              className="h-40 flex-shrink-0"
             />
           </div>
         </div>
