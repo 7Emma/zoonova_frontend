@@ -1,13 +1,13 @@
 // BookDetailPage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import barCode from "../assets/png_rez/barcode-lines.png";
-import openBook from "../assets/png_rez/open-book.png";
-import bookOfBlackCover from "../assets/png_rez/book-of-black-cover-closed.png";
-import calendar from "../assets/png_rez/calendar.png";
-import basket from "../assets/png_rez/basket2.png";
-import leftArrow from "../assets/png_rez/left-arrow.png";
-import rightArrow from "../assets/png_rez/right-arrow.png";
+import barCode from "../assets/png_rez/codebarre_.png";
+import openBook from "../assets/png_rez/livreouvert_.png";
+import bookOfBlackCover from "../assets/png_rez/livre_.png";
+import calendar from "../assets/png_rez/calendrier_.png";
+import basket from "../assets/png_rez/panier_.png";
+import leftArrow from "../assets/png_rez/fleche1.png";
+import rightArrow from "../assets/png_rez/fleche2.png";
 import booksService from "../services/booksService";
 import useCart from "../hooks/useCart";
 import Toast from "../components/Toast";
@@ -395,7 +395,7 @@ export default function BookDetailPage() {
                 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-4 font-fredoka font-bold mt-8"
                 style={{
                   color: colors.titre,
-                  textShadow: "0px 2px 0px rgba(0,0,0,0.15)",
+                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.title.charAt(0).toUpperCase() +
@@ -405,7 +405,7 @@ export default function BookDetailPage() {
                 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-4 sm:mb-8 font-fredoka font-bold"
                 style={{
                   color: colors.description,
-                  textShadow: "0px 2px 0px rgba(0,0,0,0.1)",
+                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.description.charAt(0).toUpperCase() +
@@ -614,7 +614,7 @@ export default function BookDetailPage() {
               )}
               <button
                 onClick={handleAddToCart}
-                className="bg-white hover:bg-green-500 text-black hover:text-white font-bowlby text-2xl py-3 px-6 lg:py-4 lg:px-8 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105"
+                className="bg-white hover:bg-green-500 text-black hover:text-white font-bowlby text-2xl py-3 px-6 lg:py-4 lg:px-8 rounded-full transition-all duration-200 transform hover:scale-105"
               >
                 Acheter
               </button>
@@ -766,11 +766,11 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={barCode}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-24 mx-auto mb-0.5 xs:mb-1 text-gray-400"
               alt="Code barre"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-slate-500"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.isbn || "N/A"}
@@ -781,11 +781,11 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={bookOfBlackCover}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
+              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-18 mx-auto mb-0.5 xs:mb-1 "
               alt="Dimensions"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-slate-500"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.dimensions || "N/A"}
@@ -796,11 +796,11 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={openBook}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
+              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
               alt="Pages"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-slate-500"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.pages ? `${book.pages} pages` : "N/A"}
@@ -815,7 +815,7 @@ export default function BookDetailPage() {
               alt="Date"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight  break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-slate-500 break-words"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.releaseDate || "N/A"}
@@ -830,11 +830,11 @@ export default function BookDetailPage() {
             >
               <img
                 src={basket}
-                className="w-7 xs:w-8 sm:w-11 md:w-14 lg:w-18 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
+                className="w-7 xs:w-8 sm:w-11 md:w-14 lg:w-18 xl:w-24 mx-auto mb-0.5 xs:mb-1"
                 alt="Ajouter au panier"
               />
               <h5
-                className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight  break-words"
+                className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight mb-1 break-words text-slate-500"
                 style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
               >
                 {book.price || "Prix N/A"}
