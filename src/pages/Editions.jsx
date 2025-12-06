@@ -23,7 +23,7 @@ const NacrealePage = () => {
               Découvrir Nacreale Editions
             </h1>
 
-            <div className="mt-5 text-slate-700 leading-relaxed font-bold">
+            <div className="mt-5 text-slate-700 leading-relaxed">
               <p>
                 Bienvenue chez Nacreale Editions Nous sommes une
                 micro-entreprise dédiée à l'imaginaire, à la créativité et au

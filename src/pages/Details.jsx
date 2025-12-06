@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import barCode from "../assets/png_rez/barcode-lines.png";
-import openBook from "../assets/png_rez/open_book.png";
+import openBook from "../assets/png_rez/open-book.png";
 import bookOfBlackCover from "../assets/png_rez/book-of-black-cover-closed.png";
 import calendar from "../assets/png_rez/calendar.png";
 import basket from "../assets/png_rez/basket2.png";
@@ -387,49 +387,49 @@ export default function BookDetailPage() {
         />
       )}
       <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-8">
-         {/* Titres (Désormais dynamiques) */}
-         {(() => {
-           const colors = getColorsByTitle(book.title);
-           return (
-             <>
-               <h1
-                 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-4 font-fredoka font-bold line-clamp-3 mt-8"
-                 style={{
-                   color: colors.titre,
-                   WebkitTextStroke: "0.5px white",
-                   textShadow: "0px 2px 0px rgba(0,0,0,0.15)",
-                 }}
-               >
-                 {book.title.charAt(0).toUpperCase() + book.title.slice(1).toLowerCase()}
-               </h1>
-               <h1
-                 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-4 sm:mb-8 font-fredoka font-bold line-clamp-4"
-                 style={{
-                   color: colors.description,
-                   WebkitTextStroke: "0.5px white",
-                   textShadow: "0px 2px 0px rgba(0,0,0,0.1)",
-                 }}
-               >
-                 {book.description.charAt(0).toUpperCase() + book.description.slice(1).toLowerCase()}
-               </h1>
-             </>
-           );
-         })()}
+        {/* Titres (Désormais dynamiques) */}
+        {(() => {
+          const colors = getColorsByTitle(book.title);
+          return (
+            <>
+              <h1
+                className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-4 font-fredoka font-bold mt-8"
+                style={{
+                  color: colors.titre,
+                  textShadow: "0px 2px 0px rgba(0,0,0,0.15)",
+                }}
+              >
+                {book.title.charAt(0).toUpperCase() +
+                  book.title.slice(1).toLowerCase()}
+              </h1>
+              <h1
+                className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-4 sm:mb-8 font-fredoka font-bold"
+                style={{
+                  color: colors.description,
+                  textShadow: "0px 2px 0px rgba(0,0,0,0.1)",
+                }}
+              >
+                {book.description.charAt(0).toUpperCase() +
+                  book.description.slice(1).toLowerCase()}
+              </h1>
+            </>
+          );
+        })()}
 
         {/* Layout Tablette (md-2xl) - Couvertures en haut, Images en bas */}
-        <div className="hidden md:flex 2xl:hidden flex-col items-center justify-center mb-6 sm:mb-8 gap-4 sm:gap-6">
+        <div className="hidden md:flex 2xl:hidden flex-col items-center justify-center mb-6 sm:mb-8 gap-4 sm:gap-8">
           {/* Couvertures côte à côte */}
-          <div className="flex gap-2 sm:gap-4 items-center justify-center">
+          <div className="flex gap-2 sm:gap-6 items-center justify-center">
             {/* Image back (couverture arrière) */}
             {book.backImg ? (
               <img
                 src={book.backImg}
-                className="w-40 sm:w-48 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-40  sm:w-52 h-80 cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
               />
             ) : (
-              <div className="w-40 sm:w-48 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-64">
+              <div className="w-40 sm:w-52 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-80">
                 No image
               </div>
             )}
@@ -438,45 +438,51 @@ export default function BookDetailPage() {
             {book.coverImg ? (
               <img
                 src={book.coverImg}
-                className="w-40 sm:w-48 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-40  sm:w-52 h-80 cursor-pointer  hover:opacity-80 transition-opacity"
                 alt="Première de couverture"
                 onClick={() => handleImageClick(book.coverImg)}
               />
             ) : (
-              <div className="w-40 sm:w-48 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-64">
+              <div className="w-40 sm:w-52 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-80">
                 No image
               </div>
             )}
           </div>
 
           {/* Carousel des pages - En bas */}
-          <div className="relative w-80 md:w-[36rem] lg:w-[42rem] xl:w-[48rem] 2xl:w-[52rem]">
+          <div className="relative w-80 md:w-[36rem] lg:w-[42rem] xl:w-[48rem] 2xl:w-[52rem] overflow-hidden">
             {slides.length > 0 && (
-              <div className="flex gap-0 bg-white">
-                {slides[currentSlide].page1 ? (
-                  <img
-                    src={slides[currentSlide].page1}
-                    className="w-1/2 max-h-80 md:max-h-96 lg:max-h-[28rem] xl:max-h-[32rem] 2xl:max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                    alt={`Page ${currentSlide * 2 + 1}`}
-                    onClick={() => handleImageClick(slides[currentSlide].page1)}
-                  />
-                ) : (
-                  <div className="w-1/2 flex items-center justify-center text-xs text-slate-400">
-                    No image
-                  </div>
-                )}
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {slides.map((slide, index) => (
+                  <div key={index} className="flex gap-0 bg-white min-w-full">
+                    {slide.page1 ? (
+                      <img
+                        src={slide.page1}
+                        className="w-1/2 max-h-80 md:max-h-96 lg:max-h-[28rem] xl:max-h-[32rem] 2xl:max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        alt={`Page ${index * 2 + 1}`}
+                        onClick={() => handleImageClick(slide.page1)}
+                      />
+                    ) : (
+                      <div className="w-1/2 flex items-center justify-center text-xs text-slate-400">
+                        No image
+                      </div>
+                    )}
 
-                {slides[currentSlide].page2 ? (
-                  <img
-                    src={slides[currentSlide].page2}
-                    className="w-1/2 max-h-80 md:max-h-96 lg:max-h-[28rem] xl:max-h-[32rem] 2xl:max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                    alt={`Page ${currentSlide * 2 + 2}`}
-                    onClick={() => handleImageClick(slides[currentSlide].page2)}
-                  />
-                ) : (
-                  <div className="w-1/2">
+                    {slide.page2 ? (
+                      <img
+                        src={slide.page2}
+                        className="w-1/2 max-h-80 md:max-h-96 lg:max-h-[28rem] xl:max-h-[32rem] 2xl:max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        alt={`Page ${index * 2 + 2}`}
+                        onClick={() => handleImageClick(slide.page2)}
+                      />
+                    ) : (
+                      <div className="w-1/2"></div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
             )}
 
@@ -535,48 +541,53 @@ export default function BookDetailPage() {
           {book.backImg ? (
             <img
               src={book.backImg}
-              className="w-64 lg:w-80 xl:w-96 cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-64 lg:w-80 xl:w-96 h-96 lg:h-[26rem] xl:h-[31rem] cursor-pointer hover:opacity-80 transition-opacity"
               alt="Quatrième de couverture"
               onClick={() => handleImageClick(book.backImg)}
             />
           ) : (
-            <div className="w-64 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+            <div className="w-64 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 lg:h-[26rem] xl:h-[30rem]">
               No image
             </div>
           )}
-
-          {/* Carousel des pages - Centre du livre */}
-          <div className="relative w-80 md:w-[36rem] lg:w-[42rem] xl:w-[52rem]">
+          {/**Layout */}
+          <div className="relative w-80 md:w-[36rem] lg:w-[42rem] xl:w-[52rem] overflow-hidden">
             {slides.length > 0 && (
-              <div className="flex gap-0 bg-white">
-                {slides[currentSlide].page1 ? (
-                  <img
-                    src={slides[currentSlide].page1}
-                    className="w-1/2 max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                    alt={`Page ${currentSlide * 2 + 1}`}
-                    onClick={() => handleImageClick(slides[currentSlide].page1)}
-                  />
-                ) : (
-                  <div className="w-1/2 flex items-center justify-center text-xs text-slate-400">
-                    No image
-                  </div>
-                )}
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {slides.map((slide, index) => (
+                  <div key={index} className="flex gap-0 bg-white min-w-full">
+                    {slide.page1 ? (
+                      <img
+                        src={slide.page1}
+                        className="w-1/2 max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        alt={`Page ${index * 2 + 1}`}
+                        onClick={() => handleImageClick(slide.page1)}
+                      />
+                    ) : (
+                      <div className="w-1/2 flex items-center justify-center text-xs text-slate-400">
+                        No image
+                      </div>
+                    )}
 
-                {slides[currentSlide].page2 ? (
-                  <img
-                    src={slides[currentSlide].page2}
-                    className="w-1/2 max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
-                    alt={`Page ${currentSlide * 2 + 2}`}
-                    onClick={() => handleImageClick(slides[currentSlide].page2)}
-                  />
-                ) : (
-                  <div className="w-1/2">
+                    {slide.page2 ? (
+                      <img
+                        src={slide.page2}
+                        className="w-1/2 max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        alt={`Page ${index * 2 + 2}`}
+                        onClick={() => handleImageClick(slide.page2)}
+                      />
+                    ) : (
+                      <div className="w-1/2"></div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
             )}
 
-            {/* Cas où slides.length est 0 et qu'il n'y a pas d'images de contenu */}
+            {/* Cas où slides.length est 0 */}
             {slides.length === 0 && (
               <div className="flex gap-0 bg-white">
                 <div className="w-full flex items-center justify-center text-xs text-slate-400 max-h-[32rem]">
@@ -628,25 +639,25 @@ export default function BookDetailPage() {
           {book.coverImg ? (
             <img
               src={book.coverImg}
-              className="w-64 lg:w-80 xl:w-96 cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-64 lg:w-80 xl:w-96 h-96 lg:h-[26rem] xl:h-[31rem] cursor-pointer hover:opacity-80 transition-opacity"
               alt="Première de couverture Zoonova"
               onClick={() => handleImageClick(book.coverImg)}
             />
           ) : (
-            <div className="w-64 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96">
+            <div className="w-64 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 lg:h-[26rem] xl:h-[30rem]">
               No image
             </div>
           )}
         </div>
 
-          {/* Carousel Mobile */}
-          <div className="md:hidden mb-4 sm:mb-8">
+        {/* Carousel Mobile */}
+        <div className="md:hidden mb-4 sm:mb-8">
           {/* Affichage des couvertures en haut */}
           <div className="flex gap-2 sm:gap-4 justify-center mb-4 sm:mb-6">
             {book.coverImg && (
               <img
                 src={book.coverImg}
-                className="w-48 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Première de couverture Zoonova"
                 onClick={() => handleImageClick(book.coverImg)}
               />
@@ -654,7 +665,7 @@ export default function BookDetailPage() {
             {book.backImg && (
               <img
                 src={book.backImg}
-                className="w-48 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
               />
@@ -750,7 +761,7 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-wrap justify-center items-center gap-2 xs:gap-3 sm:gap-6 md:gap-12 lg:gap-20 xl:gap-32 mb-6 sm:mb-8 px-2">
+        <div className="flex flex-wrap justify-center items-center gap-8 xs:gap-10 sm:gap-16 md:gap-20 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 px-2">
           {/* Code barre (ISBN) */}
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
@@ -759,77 +770,77 @@ export default function BookDetailPage() {
               alt="Code barre"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-gray-400 break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.isbn || "N/A"}
             </h5>
-            </div>
+          </div>
 
-            {/* Dimensions */}
-            <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+          {/* Dimensions */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={bookOfBlackCover}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
               alt="Dimensions"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-gray-400 break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.dimensions || "N/A"}
             </h5>
-            </div>
+          </div>
 
-            {/* Pages */}
-            <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+          {/* Pages */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={openBook}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
               alt="Pages"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-gray-400 break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.pages ? `${book.pages} pages` : "N/A"}
             </h5>
-            </div>
+          </div>
 
-            {/* Date */}
-            <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+          {/* Date */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={calendar}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
               alt="Date"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-gray-400 break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight  break-words"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.releaseDate || "N/A"}
             </h5>
-            </div>
+          </div>
 
-            {/* Panier */}
-            <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
+          {/* Panier */}
+          <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <button
               onClick={handleAddToCartOnly}
               className="border-0 cursor-pointer hover:scale-110 transition-transform rounded-lg p-1 xs:p-1.5 sm:p-2 md:p-3"
             >
               <img
                 src={basket}
-                className="w-7 xs:w-8 sm:w-11 md:w-14 lg:w-18 xl:w-24 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+                className="w-7 xs:w-8 sm:w-11 md:w-14 lg:w-18 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
                 alt="Ajouter au panier"
               />
               <h5
-                className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-gray-400 break-words"
+                className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight  break-words"
                 style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
               >
                 {book.price || "Prix N/A"}
               </h5>
             </button>
-            </div>
+          </div>
         </div>
 
         {/* Affichage de l'image sélectionnée - Popup mobile uniquement */}

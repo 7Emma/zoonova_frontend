@@ -13,13 +13,13 @@ const Footer = () => {
       <div className="border-b-[1px] border-black w-full"></div>
 
       <footer
-        className="w-full bg-gradient-to-r from-slate-700 to-[#A8C0C7] text-white py-10 mt-1"
+        className="w-full bg-gradient-to-r from-slate-700 to-[#A8C0C7] text-white py-6 mt-1 flex justify-center"
         style={{ fontFamily: "Arial, sans-serif", marginRight: "calc(50% - 50vw)" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="w-full max-w-full px-6 sm:px-6 lg:px-8 py-6">
+          <div className="w-full flex flex-col md:flex-row md:justify-between gap-8">
             {/* Section 1 - Zoonova */}
-            <div className="text-sm">
+            <div className="text-sm md:ml-10">
               <Link to="/" className="mb-4">
                 <img src={logo2} alt="Zoonova Logo" className="h-6 w-auto" />
               </Link>
@@ -51,7 +51,7 @@ const Footer = () => {
                 to="/nacreale"
                 className="flex items-center gap-2 mb-3 hover:underline group"
               >
-                <span className="w-2 h-2 rounded-full bg-pink-500 group-hover:scale-125 transition-transform"></span>
+                <span className="w-2 h-2 rounded-full bg-red-500 group-hover:scale-125 transition-transform"></span>
                 Découvrir Nacréale Editions
               </Link>
               <Link
@@ -77,13 +77,13 @@ const Footer = () => {
                 to="/mentions"
                 className="flex items-center gap-2 mb-3 hover:underline group"
               >
-                <span className="w-2 h-2 rounded-full bg-green-400 group-hover:scale-125 transition-transform"></span>
+                <span className="w-2 h-2 rounded-full bg-green-500 group-hover:scale-125 transition-transform"></span>
                 Mentions légales
               </Link>
             </div>
 
             {/* Section 4 - Ma commande */}
-            <div className="text-sm">
+            <div className="text-sm mr-8">
               <h5 className="font-bold mb-4 text-xl">Ma commande</h5>
               <Link
                 to="/order"
@@ -96,7 +96,7 @@ const Footer = () => {
                 to="/cart"
                 className="flex items-center gap-2 mb-3 hover:underline group"
               >
-                <span className="w-2 h-2 rounded-full bg-blue-400 group-hover:scale-125 transition-transform"></span>
+                <span className="w-2 h-2 rounded-full bg-blue-500 group-hover:scale-125 transition-transform"></span>
                 Mon panier
               </Link>
 

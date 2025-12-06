@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import HomePage from "../pages/Home";
 import CheckoutPage from "../pages/Commande";
 import PrivacyPolicyPage from "../pages/Politiques";
@@ -28,6 +28,7 @@ function AppRoute() {
     <div className="">
       <ScrollToTop />
       <Routes>
+        {/**Routes des pages principales */}
         <Route path="/" element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/book/:bookSlug" element={<BookDetailPage />} />
@@ -36,6 +37,8 @@ function AppRoute() {
         <Route path="/order" element={<CheckoutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/nacreale" element={<NacrealePage />} />
+
+        {/**Message de succes ou echec de paiement */}
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/cancel" element={<CancelPage />} />
 

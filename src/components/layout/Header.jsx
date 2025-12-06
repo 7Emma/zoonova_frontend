@@ -4,44 +4,31 @@ import A from "../../assets/A_Z/Zoonova_burger_A.png";
 import Z from "../../assets/A_Z/Zoonova_burger_Z.png";
 import instagram from "../../assets/reseau/instagram1.png";
 import { ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getCartCount } = useCart();
   const cartItemCount = getCartCount();
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Gère le scroll quand le menu est ouvert
+  const isActive = (path) => location.pathname === path;
+
+  // Ferme le menu quand on navigue vers une autre page
   useEffect(() => {
-    if (isMenuOpen) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = scrollbarWidth + "px";
-    } else {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
-    };
-  }, [isMenuOpen]);
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   return (
     <>
-      <header
-        className={`${
-          isMenuOpen ? "fixed top-0 left-0 right-0" : "relative"
-        } z-50 bg-gradient-to-r from-slate-600 to-slate-300 shadow-md`}
-      >
-        <div className="container mx-auto px-6 sm:px-6 lg:px-8">
-          <div className="relative flex items-center justify-between h-16 md:h-20 space-x-8">
+      <header className="bg-gradient-to-r from-slate-600 to-slate-300 shadow-md">
+        <div className="w-full px-6 sm:px-6 lg:px-8 py-6">
+          <div className="relative flex items-center justify-between space-x-8">
             {/* --- SECTION CENTRE (Logo Absolu) --- */}
             <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
               <Link
@@ -121,7 +108,7 @@ export default function Navbar() {
               {/* Bouton Commander - MASQUÉ SUR MOBILE */}
               <Link
                 to="/order"
-                className="hidden sm:flex items-center justify-center border border-white text-white 
+                className="hidden md:hidden lg:block sm:flex items-center justify-center border border-white text-white 
                 px-4 py-2 text-base 
                 rounded-lg font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-md whitespace-nowrap"
               >
@@ -133,7 +120,7 @@ export default function Navbar() {
                 href="https://www.instagram.com/zoonova_book/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:scale-110 transition-transform p-1"
+                className="hover:scale-110 transition-transform p-1 mr-8"
                 aria-label="Instagram"
               >
                 <img
@@ -145,86 +132,114 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+        {/* Espace blanc */}
+        <div className="h-1 bg-white"></div>
+
+        {/* Trait noir */}
+        <div className="border-b-[1px] border-black"></div>
       </header>
 
       {/* --- MENU DÉROULANT --- */}
       <nav
-        className={`fixed top-16 md:top-20 left-0 
-  w-full sm:w-96 
-  bg-black/20 backdrop-blur-md text-white 
-  shadow-2xl transform transition-all duration-300 ease-in-out z-40 
-  overflow-hidden rounded-bl-xl
+        className={`fixed top-20 md:top-24 left-0 ml-4 w-full sm:w-64 transform transition-all duration-300 ease-in-out z-40 overflow-hidden
   ${
     isMenuOpen
       ? "max-h-screen opacity-100 translate-y-0"
       : "max-h-0 opacity-0 -translate-y-4"
   }`}
       >
-        <div className="flex flex-col py-6 px-6 sm:px-8 space-y-2">
-          <Link
-            to="/"
-            className="block py-3 px-4 hover:bg-white/10 rounded-lg transition-all text-base sm:text-lg font-medium"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Accueil
-          </Link>
+        <div className="flex flex-col gap-1 p-1 mt-1">
+          {/* Accueil */}
+          <div>
+            <Link
+              to="/"
+              className={`block py-2 px-4 text-center text-base font-semibold transition-all ${
+                isActive("/")
+                  ? "bg-gradient-to-r from-slate-600 to-slate-300 text-yellow-300"
+                  : "bg-gradient-to-r from-slate-600 to-slate-300 text-white  hover:bg-slate-700 border-[1px] border-black"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Accueil
+            </Link>
+          </div>
 
-          <Link
-            to="/cart"
-            className="block py-3 px-4 hover:bg-white/10 rounded-lg transition-all text-base sm:text-lg font-medium"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Panier
-          </Link>
+          {/* Panier */}
+          <div>
+            <Link
+              to="/cart"
+              className={`block py-2 px-4 text-center text-base font-semibold transition-all ${
+                isActive("/cart")
+                  ? "bg-gradient-to-r from-slate-600 to-slate-300 text-yellow-300"
+                  : "bg-gradient-to-r from-slate-600 to-slate-300 text-white hover:bg-slate-700 border-[1px] border-black"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Panier
+            </Link>
+          </div>
 
-          <Link
-            to="/order"
-            className="block py-3 px-4 hover:bg-white/10 rounded-lg transition-all text-base sm:text-lg font-medium"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Commande
-          </Link>
+          {/* Commande */}
+          <div>
+            <Link
+              to="/order"
+              className={`block py-2 px-4 text-center text-base font-semibold transition-all ${
+                isActive("/order")
+                  ? "bg-gradient-to-r from-slate-600 to-slate-300 text-yellow-300"
+                  : "bg-gradient-to-r from-slate-600 to-slate-300 text-white hover:bg-slate-700 border-[1px] border-black"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Commande
+            </Link>
+          </div>
 
-          <Link
-            to="/contact"
-            className="flex items-center gap-2 py-3 px-4 hover:bg-white/10 rounded-lg transition-all text-base sm:text-lg font-medium"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
-          </Link>
+          {/* Contact */}
+          <div>
+            <Link
+              to="/contact"
+              className={`block py-2 px-4 text-center text-base font-semibold transition-all ${
+                isActive("/contact")
+                  ? "bg-gradient-to-r from-slate-600 to-slate-300 text-yellow-300"
+                  : "bg-gradient-to-r from-slate-600 to-slate-300 text-white hover:bg-slate-700 border-[1px] border-black"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
+          </div>
 
-          <div className="pt-4 mt-2 border-t border-white/20">
+          {/* Mentions Légales */}
+          <div>
             <Link
               to="/mentions"
-              className="flex items-center gap-2 py-3 px-4 hover:bg-white/10 rounded-lg transition-all text-base sm:text-lg font-medium"
+              className={`block py-2 px-4 text-center text-base font-semibold transition-all ${
+                isActive("/mentions")
+                  ? "bg-gradient-to-r from-slate-600 to-slate-300 text-yellow-300"
+                  : "bg-gradient-to-r from-slate-600 to-slate-300 text-white hover:bg-slate-700 border-[1px] border-black"
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Mentions légales
+              Mentions Légales
             </Link>
+          </div>
 
+          {/* Politique de confidentialité */}
+          <div>
             <Link
               to="/politiques"
-              className="flex items-center gap-2 py-3 px-4 hover:bg-white/10 rounded-lg transition-all text-base sm:text-lg font-medium"
+              className={`block py-2 px-4 text-center text-base font-semibold transition-all ${
+                isActive("/politiques")
+                  ? "bg-gradient-to-r from-slate-600 to-slate-300 text-yellow-300"
+                  : "bg-gradient-to-r from-slate-600 to-slate-300 text-white hover:bg-slate-700 border-[1px] border-black"
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Politique de confidentialité
+              Polique de confidentialité
             </Link>
           </div>
         </div>
       </nav>
-
-      {/* Espace blanc */}
-      <div className="h-1 bg-white"></div>
-
-      {/* Trait noir */}
-      <div className="border-b-[1px] border-black"></div>
-      {/* Overlay sombre */}
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 z-30 top-16 md:top-20"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
     </>
   );
 }
