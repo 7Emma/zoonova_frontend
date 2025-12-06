@@ -424,12 +424,12 @@ export default function BookDetailPage() {
             {book.backImg ? (
               <img
                 src={book.backImg}
-                className="w-40  sm:w-52 h-80 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-48 sm:w-56 md:w-64 max-h-[28rem] md:max-h-[36rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
               />
             ) : (
-              <div className="w-40 sm:w-52 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-80">
+              <div className="w-48 sm:w-56 md:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 max-h-80 md:max-h-96">
                 No image
               </div>
             )}
@@ -438,12 +438,12 @@ export default function BookDetailPage() {
             {book.coverImg ? (
               <img
                 src={book.coverImg}
-                className="w-40  sm:w-52 h-80 cursor-pointer  hover:opacity-80 transition-opacity"
+                className="w-48 sm:w-56 md:w-64 max-h-[28rem] md:max-h-[36rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Première de couverture"
                 onClick={() => handleImageClick(book.coverImg)}
               />
             ) : (
-              <div className="w-40 sm:w-52 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-80">
+              <div className="w-48 sm:w-56 md:w-64 bg-slate-100 flex items-center justify-center text-xs text-slate-400 max-h-80 md:max-h-96">
                 No image
               </div>
             )}
@@ -541,15 +541,16 @@ export default function BookDetailPage() {
           {book.backImg ? (
             <img
               src={book.backImg}
-              className="w-64 lg:w-80 xl:w-96 h-96 lg:h-[26rem] xl:h-[31rem] cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-72 lg:w-80 xl:w-[26rem] max-h-[44rem] lg:max-h-[48rem] object-contain cursor-pointer hover:opacity-80 transition-opacity relative bottom-4"
               alt="Quatrième de couverture"
               onClick={() => handleImageClick(book.backImg)}
             />
           ) : (
-            <div className="w-64 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 lg:h-[26rem] xl:h-[30rem]">
+            <div className="w-72 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 max-h-[36rem] lg:max-h-[40rem]">
               No image
             </div>
           )}
+
           {/**Layout */}
           <div className="relative w-80 md:w-[36rem] lg:w-[42rem] xl:w-[52rem] overflow-hidden">
             {slides.length > 0 && (
@@ -562,7 +563,7 @@ export default function BookDetailPage() {
                     {slide.page1 ? (
                       <img
                         src={slide.page1}
-                        className="w-1/2 max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        className="w-[20rem] max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                         alt={`Page ${index * 2 + 1}`}
                         onClick={() => handleImageClick(slide.page1)}
                       />
@@ -575,7 +576,7 @@ export default function BookDetailPage() {
                     {slide.page2 ? (
                       <img
                         src={slide.page2}
-                        className="w-1/2 max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        className="w-[20rem] max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                         alt={`Page ${index * 2 + 2}`}
                         onClick={() => handleImageClick(slide.page2)}
                       />
@@ -639,12 +640,12 @@ export default function BookDetailPage() {
           {book.coverImg ? (
             <img
               src={book.coverImg}
-              className="w-64 lg:w-80 xl:w-96 h-96 lg:h-[26rem] xl:h-[31rem] cursor-pointer hover:opacity-80 transition-opacity"
+              className="w-72 lg:w-80 xl:w-[26rem] max-h-[48rem] lg:max-h-[52rem] object-contain cursor-pointer hover:opacity-80 transition-opacity relative bottom-4"
               alt="Première de couverture Zoonova"
               onClick={() => handleImageClick(book.coverImg)}
             />
           ) : (
-            <div className="w-64 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 h-96 lg:h-[26rem] xl:h-[30rem]">
+            <div className="w-72 lg:w-80 xl:w-96 bg-slate-100 flex items-center justify-center text-xs text-slate-400 max-h-[36rem] lg:max-h-[40rem]">
               No image
             </div>
           )}
