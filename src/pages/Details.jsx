@@ -1,5 +1,4 @@
 // BookDetailPage.jsx
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import barCode from "../assets/png_rez/barcode-lines.png";
@@ -552,18 +551,18 @@ export default function BookDetailPage() {
           )}
 
           {/**Layout */}
-          <div className="relative w-80 md:w-[36rem] lg:w-[42rem] xl:w-[52rem] overflow-hidden">
+          <div className="relative w-80 md:w-[36rem] lg:w-[48rem] xl:w-[64rem] overflow-hidden">
             {slides.length > 0 && (
               <div
                 className="flex transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {slides.map((slide, index) => (
-                  <div key={index} className="flex gap-0 bg-white min-w-full">
+                  <div key={index} className="flex gap-0 bg-white min-w-fit">
                     {slide.page1 ? (
                       <img
                         src={slide.page1}
-                        className="w-[20rem] max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        className="w-1/2 max-h-[40rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                         alt={`Page ${index * 2 + 1}`}
                         onClick={() => handleImageClick(slide.page1)}
                       />
@@ -576,7 +575,7 @@ export default function BookDetailPage() {
                     {slide.page2 ? (
                       <img
                         src={slide.page2}
-                        className="w-[20rem] max-h-[32rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                        className="w-1/2 max-h-[40rem] object-contain cursor-pointer hover:opacity-80 transition-opacity"
                         alt={`Page ${index * 2 + 2}`}
                         onClick={() => handleImageClick(slide.page2)}
                       />
