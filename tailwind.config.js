@@ -5,6 +5,7 @@ export default {
     extend: {
       screens: {
         xs: "375px",
+        sm430: "430px",
       },
       fontFamily: {
         alfa: ["Alfa Slab One", "serif"],

@@ -769,16 +769,16 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-nowrap justify-center items-center gap-4 xs:gap-6 sm:gap-8 md:gap-16 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 px-2 overflow-x-auto scrollbar-hide">
+        <div className="flex flex-nowrap justify-center items-center gap-4 xs:gap-6 sm430:gap-5 sm:gap-8 md:gap-16 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 overflow-x-auto sm430:overflow-visible scrollbar-hide mx-auto">
           {/* Code barre (ISBN) */}
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={barCode}
-              className="w-11 xs:w-7 sm:w-16 md:w-16 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+              className="w-11 xs:w-12 sm:w-16 md:w-16 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 text-gray-400"
               alt="Code barre"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-[#999999]"
+              className="text-[8px] xs:text-[7px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-[#999999]"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.isbn || "N/A"}
@@ -804,7 +804,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={openBook}
-              className="w-10 xs:w-14 sm:w-14 md:w-14 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
+              className="w-10 xs:w-10 sm:w-14 md:w-14 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
               alt="Pages"
             />
             <h5
@@ -819,7 +819,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={calendar}
-              className="w-8 xs:w-12 sm:w-12 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
+              className="w-8 xs:w-9 sm:w-12 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
               alt="Date"
             />
             <h5
