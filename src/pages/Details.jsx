@@ -400,7 +400,6 @@ export default function BookDetailPage() {
                   fontStyle: "normal",
                   color: colors.titre,
                   WebkitTextStroke: "1px #333333",
-                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.title.charAt(0).toUpperCase() +
@@ -414,7 +413,6 @@ export default function BookDetailPage() {
                   fontStyle: "normal",
                   color: colors.description,
                   WebkitTextStroke: "1px #333333",
-                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.description.charAt(0).toUpperCase() +
