@@ -60,7 +60,7 @@ const Home = () => {
         </h1>
 
         {/* Subtitle  */}
-        <h2 className="text-center md:text-2xl lg:text-3xl uppercase mb-6 text-[#666666] leading-relaxed font-bowlby">
+        <h2 className="text-center text-sm md:text-2xl lg:text-3xl uppercase mb-6 text-[#666666] leading-relaxed font-bowlby line-clamp-3">
           EST UNE COLLECTION DE LIVRES JEUNESSE <br /> DESTINÉE AUX ENFANTS DE 4
           À 10 ANS.
         </h2>
