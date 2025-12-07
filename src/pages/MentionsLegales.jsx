@@ -21,7 +21,7 @@ const LegalMentionsPage = () => {
             Mentions légales
           </h1>
 
-          <div className="space-y-4 xs:space-y-5 sm:space-y-6 text-slate-700 leading-relaxed max-w-5xl">
+          <div className="space-y-4 xs:space-y-5 sm:space-y-6 text-slate-700 leading-relaxed">
             {/* Section 1 */}
             <section className="">
               <h2 className="text-base xs:text-lg sm:text-xl font-bold text-slate-800 mb-2 xs:mb-3">
