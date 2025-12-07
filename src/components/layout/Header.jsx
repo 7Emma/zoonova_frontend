@@ -108,7 +108,7 @@ export default function Navbar() {
               {/* Bouton Commander - MASQUÉ SUR MOBILE */}
               <Link
                 to="/order"
-                className="hidden md:hidden lg:block sm:flex items-center justify-center border border-white text-white 
+                className="hidden md:hidden sm:hidden lg:block sm:flex items-center justify-center border border-white text-white 
                 px-4 py-2 text-base 
                 rounded-lg font-medium transition-all duration-300 hover:bg-white/10 hover:shadow-md whitespace-nowrap"
               >

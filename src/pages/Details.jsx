@@ -399,7 +399,8 @@ export default function BookDetailPage() {
                   fontWeight: 400,
                   fontStyle: "normal",
                   color: colors.titre,
-                  WebkitTextStroke: "1px #333333",
+                  //WebkitTextStroke: "1px #333333",
+                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.title.charAt(0).toUpperCase() +
@@ -412,7 +413,8 @@ export default function BookDetailPage() {
                   fontWeight: 400,
                   fontStyle: "normal",
                   color: colors.description,
-                  WebkitTextStroke: "1px #333333",
+                  //WebkitTextStroke: "1px #333333",
+                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.description.charAt(0).toUpperCase() +
@@ -661,20 +663,20 @@ export default function BookDetailPage() {
         <div className="md:hidden mb-4 sm:mb-8">
           {/* Affichage des couvertures en haut */}
           <div className="flex gap-2 sm:gap-4 justify-center mb-4 sm:mb-6">
-            {book.coverImg && (
-              <img
-                src={book.coverImg}
-                className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
-                alt="Première de couverture Zoonova"
-                onClick={() => handleImageClick(book.coverImg)}
-              />
-            )}
             {book.backImg && (
               <img
                 src={book.backImg}
                 className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
+              />
+            )}
+            {book.coverImg && (
+              <img
+                src={book.coverImg}
+                className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
+                alt="Première de couverture Zoonova"
+                onClick={() => handleImageClick(book.coverImg)}
               />
             )}
           </div>
@@ -773,7 +775,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={barCode}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-24 mx-auto mb-0.5 xs:mb-1 text-gray-400"
+              className="w-11 xs:w-7 sm:w-16 md:w-16 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 text-gray-400"
               alt="Code barre"
             />
             <h5
@@ -788,7 +790,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={bookOfBlackCover}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-18 mx-auto mb-0.5 xs:mb-1 "
+              className="w-7 xs:w-10 sm:w-10 md:w-10 lg:w-14 xl:w-16 mx-auto mb-0.5 xs:mb-1 "
               alt="Dimensions"
             />
             <h5
@@ -803,7 +805,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={openBook}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
+              className="w-10 xs:w-10 sm:w-14 md:w-14 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
               alt="Pages"
             />
             <h5
@@ -818,7 +820,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={calendar}
-              className="w-6 xs:w-7 sm:w-10 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
+              className="w-8 xs:w-12 sm:w-12 md:w-12 lg:w-16 xl:w-20 mx-auto mb-0.5 xs:mb-1 "
               alt="Date"
             />
             <h5
@@ -837,7 +839,7 @@ export default function BookDetailPage() {
             >
               <img
                 src={basket}
-                className="w-7 xs:w-8 sm:w-11 md:w-14 lg:w-18 xl:w-24 mx-auto mb-0.5 xs:mb-1"
+                className="w-11 xs:w-12 sm:w-16 md:w-16 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1"
                 alt="Ajouter au panier"
               />
               <h5
