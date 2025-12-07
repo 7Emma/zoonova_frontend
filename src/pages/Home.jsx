@@ -50,7 +50,7 @@ const Home = () => {
       {/* Main Title */}
       <div className="text-center mb-8">
         <h1
-          className="text-2xl md:text-4xl lg:text-6xl mb-6 font-bowlby"
+          className="text-xl md:text-4xl lg:text-6xl mb-6 font-bowlby"
           style={{
             color: "white",
             WebkitTextStroke: "1.38px #c45554",
@@ -120,6 +120,13 @@ const Home = () => {
 
         .aspect-video {
           aspect-ratio: 16 / 9;
+        }
+
+        @media (max-width: 375px) {
+          h1[class*="font-bowlby"] {
+            white-space: nowrap;
+            font-size: 0.875rem;
+          }
         }
       `}</style>
     </main>
