@@ -9,7 +9,7 @@ const PrivacyPolicyPage = () => {
           "linear-gradient(135deg, #E8F5E3 0%, #FFF9E6 25%, #FFE8F0 50%, #E8D5FF 75%, #FFE5D9 100%)",
       }}
     >
-      <div className="flex-1">
+      <div className="flex-1 mt-0 sm:mt-6 lg:mt-4">
         <div className="p-4 sm:p-6 md:p-10">
           <h1
             className="text-2xl sm:text-3xl md:text-4xl font-bowlby text-center mb-6 sm:mb-8 text-slate-700 leading-tight"
