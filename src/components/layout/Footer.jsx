@@ -22,7 +22,7 @@ const Footer = () => {
             
             {/* Section 1 - Zoonova */}
             <div className="text-sm md:ml-0 lg:ml-10">
-              <Link to="/" className="block mb-3 sm:mb-4">
+              <Link to="/" className="block mb-3 sm:mb-1">
                 <img src={logo2} alt="Zoonova Logo" className="h-5 sm:h-6 w-auto" />
               </Link>
               <p className="mb-2 text-xs sm:text-sm">
