@@ -324,7 +324,6 @@ export default function BookDetailPage() {
   const handleAddToCart = () => {
     if (book) {
       addToCart(book);
-      setToastMessage(`${book.title} ajouté au panier !`);
       navigate("/cart");
     }
   };
@@ -666,7 +665,7 @@ export default function BookDetailPage() {
             {book.backImg && (
               <img
                 src={book.backImg}
-                className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-40 h-auto cursor-pointer hover:opacity-80 transition-opacity object-contain"
                 alt="Quatrième de couverture"
                 onClick={() => handleImageClick(book.backImg)}
               />
@@ -674,7 +673,7 @@ export default function BookDetailPage() {
             {book.coverImg && (
               <img
                 src={book.coverImg}
-                className="w-48 h-72 cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-40 h-auto cursor-pointer hover:opacity-80 transition-opacity object-contain"
                 alt="Première de couverture Zoonova"
                 onClick={() => handleImageClick(book.coverImg)}
               />
@@ -696,7 +695,7 @@ export default function BookDetailPage() {
                         src={
                           contentPages[currentMobileSlide % contentPages.length]
                         }
-                        className="w-full shadow-lg"
+                        className="w-full h-auto object-contain"
                         alt={`page ${currentMobileSlide + 1}`}
                       />
 
