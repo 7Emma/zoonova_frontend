@@ -392,10 +392,14 @@ export default function BookDetailPage() {
           return (
             <>
               {/* Conteneur pour le premier titre */}
-                <h1
-                className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-4 font-fredoka font-bold mt-8"
+              <h1
+                className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-4 font-bold mt-8"
                 style={{
+                  fontFamily: "'Alfa Slab One', serif",
+                  fontWeight: 400,
+                  fontStyle: "normal",
                   color: colors.titre,
+                  WebkitTextStroke: "1px #333333",
                   textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
@@ -403,9 +407,13 @@ export default function BookDetailPage() {
                   book.title.slice(1).toLowerCase()}
               </h1>
               <h1
-                className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-4 sm:mb-8 font-fredoka font-bold"
+                className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-4 sm:mb-8 font-bold"
                 style={{
+                  fontFamily: "'Alfa Slab One', serif",
+                  fontWeight: 400,
+                  fontStyle: "normal",
                   color: colors.description,
+                  WebkitTextStroke: "1px #333333",
                   textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
