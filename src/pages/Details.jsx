@@ -6,8 +6,8 @@ import openBook from "../assets/png_rez/livreouvert_.png";
 import bookOfBlackCover from "../assets/png_rez/livre_.png";
 import calendar from "../assets/png_rez/calendrier_.png";
 import basket from "../assets/png_rez/panier_.png";
-import leftArrow from "../assets/png_rez/fleche1.png";
-import rightArrow from "../assets/png_rez/fleche2.png";
+import leftArrow from "../assets/png_rez/fleche2.png";
+import rightArrow from "../assets/png_rez/fleche1.png";
 import booksService from "../services/booksService";
 import useCart from "../hooks/useCart";
 import Toast from "../components/Toast";
@@ -391,7 +391,8 @@ export default function BookDetailPage() {
           const colors = getColorsByTitle(book.title);
           return (
             <>
-              <h1
+              {/* Conteneur pour le premier titre */}
+                <h1
                 className="text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl mb-2 sm:mb-4 font-fredoka font-bold mt-8"
                 style={{
                   color: colors.titre,
@@ -416,7 +417,7 @@ export default function BookDetailPage() {
         })()}
 
         {/* Layout Tablette (md-2xl) - Couvertures en haut, Images en bas */}
-        <div className="hidden md:flex 2xl:hidden flex-col items-center justify-center mb-6 sm:mb-8 gap-4 sm:gap-8">
+        <div className="hidden md:flex 2xl:hidden flex-col items-center justify-center mb-6 sm:mb-8 gap-4 sm:gap-8 ">
           {/* Couvertures côte à côte */}
           <div className="flex gap-2 sm:gap-6 items-center justify-center">
             {/* Image back (couverture arrière) */}
@@ -770,7 +771,7 @@ export default function BookDetailPage() {
               alt="Code barre"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-slate-500"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-[#999999]"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.isbn || "N/A"}
@@ -785,7 +786,7 @@ export default function BookDetailPage() {
               alt="Dimensions"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-slate-500"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-[#999999]"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.dimensions || "N/A"}
@@ -800,7 +801,7 @@ export default function BookDetailPage() {
               alt="Pages"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-slate-500"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight break-words text-[#999999]"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.pages ? `${book.pages} pages` : "N/A"}
@@ -815,7 +816,7 @@ export default function BookDetailPage() {
               alt="Date"
             />
             <h5
-              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-slate-500 break-words"
+              className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight text-[#999999] break-words"
               style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
             >
               {book.releaseDate || "N/A"}
@@ -834,7 +835,7 @@ export default function BookDetailPage() {
                 alt="Ajouter au panier"
               />
               <h5
-                className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight mb-1 break-words text-slate-500"
+                className="text-[8px] xs:text-[9px] sm:text-xs md:text-sm lg:text-base font-bold italic leading-tight mb-1 break-words text-[#999999]"
                 style={{ fontFamily: "'Roboto Condensed', sans-serif" }}
               >
                 {book.price || "Prix N/A"}

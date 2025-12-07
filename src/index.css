@@ -8,3 +8,26 @@
 @theme {
   --font-roboto: "Roboto", sans-serif;
 }
+/*Nouvelle*/
+.jeneveux{
+position:relative;
+margin-bottom: 0px;
+font-family: "Alfa Slab One", serif;
+font-weight: 400;
+font-style: normal;
+}
+.jeneveux h1{
+font-family: 'PoetsenOne';
+font-weight: bold;
+}                            
+
+.legende{
+position:relative;
+margin-bottom: 20px;
+font-family: "Alfa Slab One", serif;
+font-weight: 400;
+font-style: normal;
+}
+.legende h1{
+font-family: 'PoetsenOne';
+}
