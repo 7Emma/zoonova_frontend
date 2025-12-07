@@ -769,7 +769,7 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-wrap justify-center items-center gap-8 xs:gap-10 sm:gap-16 md:gap-20 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 px-2">
+        <div className="flex flex-nowrap justify-center items-center gap-4 xs:gap-6 sm:gap-8 md:gap-16 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 px-2 overflow-x-auto">
           {/* Code barre (ISBN) */}
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
