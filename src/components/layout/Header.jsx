@@ -33,12 +33,12 @@ export default function Navbar() {
             <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
               <Link
                 to="/"
-                className="block hover:scale-105 transition-transform"
+                className="block transition-transform"
               >
                 <img
                   src={logo}
                   alt="Logo Zoonova"
-                  className="h-6 sm:h-10 md:h-12 w-auto object-contain"
+                  className="h-8 sm:h-12 md:h-14 w-auto object-contain"
                 />
               </Link>
             </div>
