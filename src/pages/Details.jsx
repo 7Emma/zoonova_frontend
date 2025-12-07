@@ -769,7 +769,7 @@ export default function BookDetailPage() {
         </div>
 
         {/* Section informations et panier */}
-        <div className="flex flex-nowrap justify-center items-center gap-4 xs:gap-6 sm:gap-8 md:gap-16 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 px-2 overflow-x-auto">
+        <div className="flex flex-nowrap justify-center items-center gap-4 xs:gap-6 sm:gap-8 md:gap-16 lg:gap-32 xl:gap-50 mb-6 sm:mb-8 px-2 overflow-x-auto scrollbar-hide">
           {/* Code barre (ISBN) */}
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
@@ -789,7 +789,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={bookOfBlackCover}
-              className="w-7 xs:w-10 sm:w-10 md:w-10 lg:w-14 xl:w-16 mx-auto mb-0.5 xs:mb-1 "
+              className="w-7 xs:w-7 sm:w-10 md:w-10 lg:w-14 xl:w-16 mx-auto mb-0.5 xs:mb-1 "
               alt="Dimensions"
             />
             <h5
@@ -804,7 +804,7 @@ export default function BookDetailPage() {
           <div className="text-center flex-shrink-0 whitespace-nowrap min-w-max">
             <img
               src={openBook}
-              className="w-10 xs:w-10 sm:w-14 md:w-14 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
+              className="w-10 xs:w-14 sm:w-14 md:w-14 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1 "
               alt="Pages"
             />
             <h5

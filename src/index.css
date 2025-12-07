@@ -31,3 +31,14 @@ font-style: normal;
 .legende h1{
 font-family: 'PoetsenOne';
 }
+
+/* Masquer la scrollbar sur mobile */
+@media (max-width: 768px) {
+  .overflow-x-auto {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+}
