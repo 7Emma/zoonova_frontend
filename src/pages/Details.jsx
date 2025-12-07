@@ -400,7 +400,7 @@ export default function BookDetailPage() {
                   fontStyle: "normal",
                   color: colors.titre,
                   //WebkitTextStroke: "1px #333333",
-                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
+                  //textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.title.charAt(0).toUpperCase() +
@@ -414,7 +414,7 @@ export default function BookDetailPage() {
                   fontStyle: "normal",
                   color: colors.description,
                   //WebkitTextStroke: "1px #333333",
-                  textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
+                  //textShadow: "0px 2px 0px rgba(51, 51, 51, 0.7)",
                 }}
               >
                 {book.description.charAt(0).toUpperCase() +
@@ -839,7 +839,7 @@ export default function BookDetailPage() {
             >
               <img
                 src={basket}
-                className="w-11 xs:w-12 sm:w-16 md:w-16 lg:w-20 xl:w-24 mx-auto mb-0.5 xs:mb-1"
+                className="w-11 xs:w-12 sm:w-16 md:w-16 lg:w-20 xl:w-[95px] 2xl:w-[100px] mx-auto mb-0.5 xs:mb-1"
                 alt="Ajouter au panier"
               />
               <h5
