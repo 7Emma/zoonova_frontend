@@ -10,7 +10,6 @@ const getBooks = async (params = {}) => {
     // Définit page_size par défaut pour obtenir plus de résultats
     const finalParams = { page_size: 100, ...params };
     const res = await axiosInstance.get(prefix, { params: finalParams });
-    console.log('Books fetched:', res.data);
     return res.data;
   } catch (err) {
     throw new ApiError('Failed to fetch books', err?.response?.status || 500, err?.response?.data);

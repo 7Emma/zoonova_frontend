@@ -49,7 +49,6 @@ const SuccessPage = () => {
           setError("Commande non trouvée ou paiement non confirmé");
         }
       } catch (err) {
-        console.error("Erreur lors du chargement de la commande:", err);
         setError("Erreur lors du chargement des informations");
       } finally {
         setLoading(false);
@@ -74,7 +73,6 @@ const SuccessPage = () => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (err) {
-      console.error("Erreur lors du téléchargement de la facture:", err);
       alert("Erreur lors du téléchargement de la facture. Veuillez réessayer.");
     } finally {
       setDownloadingInvoice(false);

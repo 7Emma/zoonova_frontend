@@ -77,11 +77,7 @@ const fetchBookDetails = async (slug) => {
   try {
     const res = await booksService.getBookBySlug(slug);
     return res;
-  } catch (e) {
-    console.error(
-      `Erreur critique lors de la récupération du livre (${slug}) :`,
-      e
-    );
+  } catch {
     // On retourne null pour afficher l'état d'erreur
     return null;
   }
@@ -100,8 +96,8 @@ export default function BookDetailPage() {
     right: false,
   });
   const [selectedImage, setSelectedImage] = useState(null);
-  const [dominantColor, setDominantColor] = useState("#c45554");
-  const [dominantColorBack, setDominantColorBack] = useState("#c45554");
+  const [, setDominantColor] = useState("#c45554");
+  const [, setDominantColorBack] = useState("#c45554");
   const [toastMessage, setToastMessage] = useState(null);
 
   // Fonction pour extraire la couleur dominante d'une image
@@ -138,10 +134,9 @@ export default function BookDetailPage() {
           .join("")
           .toUpperCase()}`;
         setColorFunction(hex);
-      } catch (e) {
-        console.warn("CORS error extracting color, using default:", e);
+        } catch {
         setColorFunction("#c45554");
-      }
+        }
     };
     img.onerror = () => setColorFunction("#c45554");
     img.src = imageUrl;
@@ -210,12 +205,11 @@ export default function BookDetailPage() {
           // Formate en "Mois Année" (ex: "Septembre 2024")
           const options = { year: "numeric", month: "long" };
           formattedDate = dateObj.toLocaleDateString("fr-FR", options);
-        }
-      } catch (e) {
-        console.warn("Erreur de formatage de date:", e);
-        // Conserve la date brute si le formatage échoue
-        formattedDate = rawReleaseDate;
-      }
+          }
+          } catch {
+          // Conserve la date brute si le formatage échoue
+          formattedDate = rawReleaseDate;
+          }
     }
 
     // 5. Slides mobiles : Couverture avant + Couverture arrière + Contenu
@@ -280,7 +274,6 @@ export default function BookDetailPage() {
       const details = await fetchBookDetails(bookSlug);
       if (details) {
         // VÉRIFIEZ LES DONNÉES ICI
-        console.log("Données brutes de l'API :", details);
 
         const normalizedBook = normalizeBook(details);
         setBook(normalizedBook);
@@ -307,7 +300,6 @@ export default function BookDetailPage() {
 
   // Gestion des carrousels — ensure arrays
   const slides = book && book.slides ? book.slides : [];
-  const mobileSlides = book && book.mobileSlides ? book.mobileSlides : [];
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);

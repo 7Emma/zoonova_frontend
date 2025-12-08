@@ -21,7 +21,7 @@ class ApiClient {
     // Configuration d'axios
     this.axiosInstance = axios.create({
       baseURL: this.baseURL,
-      timeout: 10000,
+      timeout: 50000,
     });
   }
 
@@ -162,7 +162,6 @@ class ApiClient {
       this.logout();
       return null;
     } catch (error) {
-      console.error('Erreur lors du rafraîchissement du token:', error);
       this.logout();
       return null;
     }

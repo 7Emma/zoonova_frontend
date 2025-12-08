@@ -55,8 +55,8 @@ const CheckoutPage = () => {
             setSelectedCountry(countriesList[0]);
           }
         }
-      } catch (error) {
-        console.error("Erreur lors du chargement des pays:", error);
+      } catch {
+        // Erreur silencieuse
       } finally {
         setLoadingCountries(false);
       }
@@ -126,82 +126,26 @@ const CheckoutPage = () => {
   const [suggestedCities, setSuggestedCities] = useState([]);
   const [loadingCity, setLoadingCity] = useState(false);
 
-  // Mapping des noms de pays vers les codes ISO pour les APIs
-  const countryNameMapping = {
-    "France": "FR",
-    "Belgium": "BE",
-    "Belgique": "BE",
-    "Germany": "DE",
-    "Allemagne": "DE",
-    "Spain": "ES",
-    "Espagne": "ES",
-    "Italy": "IT",
-    "Italie": "IT",
-    "Netherlands": "NL",
-    "Pays-Bas": "NL",
-    "Portugal": "PT",
-    "Austria": "AT",
-    "Autriche": "AT",
-    "Switzerland": "CH",
-    "Suisse": "CH",
-    "Luxembourg": "LU",
-    "Poland": "PL",
-    "Pologne": "PL",
-    "Sweden": "SE",
-    "Suède": "SE",
-    "Denmark": "DK",
-    "Danemark": "DK",
-    "Norway": "NO",
-    "Norvège": "NO",
-    "Finland": "FI",
-    "Finlande": "FI",
-    "Ireland": "IE",
-    "Irlande": "IE",
-    "Greece": "GR",
-    "Grèce": "GR",
-    "Czech Republic": "CZ",
-    "Tchéquie": "CZ",
-    "Hungary": "HU",
-    "Hongrie": "HU",
-    "Romania": "RO",
-    "Roumanie": "RO",
-    "Bulgaria": "BG",
-    "Bulgarie": "BG",
-    "United Kingdom": "GB",
-    "Royaume-Uni": "GB",
-  };
-
-  // Fonction pour obtenir le code ISO depuis le nom du pays
-  const getISOCountryCode = (countryName) => {
-    if (!countryName) return null;
-    return countryNameMapping[countryName] || null;
-  };
-
   // Ajoutez cette fonction pour rechercher la ville
   const fetchCityFromPostalCode = async (postalCode) => {
     // Nettoyer le code postal (enlever les espaces)
     const cleanPostalCode = postalCode.trim().replace(/\s/g, "");
 
-    console.log("fetchCityFromPostalCode called with:", { postalCode, cleanPostalCode, selectedCountry });
-
     // Si le code postal est vide ou trop court, ne rien faire
     if (!cleanPostalCode || cleanPostalCode.length < 2) {
-      console.log("Code postal trop court");
       setSuggestedCities([]);
       return;
     }
 
     // Vérifier s'il y a un pays sélectionné
     if (!selectedCountry) {
-      console.log("Pas de pays sélectionné");
       setSuggestedCities([]);
       return;
     }
 
     // Déterminer si on est en France ou en Europe
-    console.log("selectedCountry complet:", JSON.stringify(selectedCountry));
     const isFrance =
-      selectedCountry?.code === "FR" || 
+      selectedCountry?.code === "FR" ||
       selectedCountry?.name === "France" ||
       selectedCountry?.name?.toLowerCase()?.includes("france");
 
@@ -210,21 +154,15 @@ const CheckoutPage = () => {
       selectedCountry?.name === "Europe" ||
       selectedCountry?.name?.toLowerCase()?.includes("europe");
 
-    console.log("isFrance:", isFrance, "isEurope:", isEurope);
-
     setLoadingCity(true);
     try {
       // Pour la France, utiliser l'API gouvernementale
       if (isFrance) {
-        console.log("Recherche France");
-
         try {
           const url = `https://api-adresse.data.gouv.fr/search/?q=${cleanPostalCode}&type=municipality&autocomplete=0`;
-          console.log("Appel API France:", url);
-          
+
           const response = await fetch(url);
           const data = await response.json();
-          console.log("Données API France reçues:", data);
 
           if (data.features && data.features.length > 0) {
             // Extraire les villes uniques
@@ -232,7 +170,6 @@ const CheckoutPage = () => {
               .map((feature) => feature.properties.city)
               .filter((city, index, self) => self.indexOf(city) === index);
 
-            console.log("Villes trouvées en France:", cities);
             setSuggestedCities(cities);
 
             // Si une seule ville correspond, la remplir automatiquement
@@ -243,42 +180,57 @@ const CheckoutPage = () => {
               }));
             }
           } else {
-            console.log("Aucune ville trouvée en France");
             setSuggestedCities([]);
           }
-        } catch (err) {
-          console.error("Erreur API France:", err);
+        } catch {
           setSuggestedCities([]);
         }
       }
       // Pour l'Europe, essayer tous les pays jusqu'à trouver une correspondance
       else if (isEurope) {
-        console.log("Recherche Europe - essai automatique des pays");
-        
         const europeanCountries = [
-          "FR", "BE", "DE", "ES", "IT", "NL", "PT", "AT", "CH", "LU", 
-          "PL", "SE", "DK", "NO", "FI", "IE", "GR", "CZ", "HU", "RO", "BG", "GB"
+          "FR",
+          "BE",
+          "DE",
+          "ES",
+          "IT",
+          "NL",
+          "PT",
+          "AT",
+          "CH",
+          "LU",
+          "PL",
+          "SE",
+          "DK",
+          "NO",
+          "FI",
+          "IE",
+          "GR",
+          "CZ",
+          "HU",
+          "RO",
+          "BG",
+          "GB",
         ];
 
         let found = false;
 
         for (const countryCode of europeanCountries) {
           try {
-            const url = `https://api.zippopotam.us/${countryCode.toLowerCase()}/${encodeURIComponent(cleanPostalCode)}`;
-            console.log(`Essai ${countryCode}:`, url);
+            const url = `https://api.zippopotam.us/${countryCode.toLowerCase()}/${encodeURIComponent(
+              cleanPostalCode
+            )}`;
 
             const response = await fetch(url);
 
             if (response.ok) {
               const data = await response.json();
-              console.log(`Données reçues pour ${countryCode}:`, data);
 
               if (data.places && data.places.length > 0) {
                 // Extraire les villes uniques
                 const cities = data.places.map((place) => place["place name"]);
                 const uniqueCities = [...new Set(cities)];
 
-                console.log(`Villes trouvées (${countryCode}):`, uniqueCities);
                 setSuggestedCities(uniqueCities);
 
                 // Si une seule ville correspond, la remplir automatiquement
@@ -293,20 +245,17 @@ const CheckoutPage = () => {
                 break; // Arrêter dès qu'on trouve un résultat
               }
             }
-          } catch (err) {
+          } catch {
             // Continuer avec le pays suivant
-            console.log(`Erreur pour ${countryCode}:`, err.message);
             continue;
           }
         }
 
         if (!found) {
-          console.log("Aucune ville trouvée dans aucun pays européen");
           setSuggestedCities([]);
         }
       }
-    } catch (error) {
-      console.error("Erreur lors de la recherche de la ville:", error);
+    } catch {
       setSuggestedCities([]);
     } finally {
       setLoadingCity(false);
@@ -407,9 +356,7 @@ const CheckoutPage = () => {
         })),
       };
 
-      console.log("Création de la commande:", orderPayload);
       const orderResponse = await ordersService.createOrder(orderPayload);
-      console.log("Commande créée:", orderResponse);
 
       const orderId = orderResponse.order?.id || orderResponse.id;
 
@@ -417,11 +364,9 @@ const CheckoutPage = () => {
         throw new Error("ID de commande non reçu");
       }
 
-      console.log("Création de la session Stripe pour commande:", orderId);
       const checkoutResponse = await paymentsService.createCheckoutSession(
         orderId
       );
-      console.log("Session Stripe créée:", checkoutResponse);
 
       if (checkoutResponse.checkout_url) {
         window.location.href = checkoutResponse.checkout_url;
@@ -429,8 +374,6 @@ const CheckoutPage = () => {
         throw new Error("URL de checkout non reçue");
       }
     } catch (error) {
-      console.error("Erreur lors de la commande:", error);
-
       if (error.data?.items) {
         setSubmitError(error.data.items.join(", "));
       } else if (error.data?.error) {
@@ -654,111 +597,113 @@ const CheckoutPage = () => {
 
                 {/* Code Postal, Ville et Pays */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 xs:gap-4">
-  <div>
-    <label
-      htmlFor="codePostal"
-      className="block text-xs xs:text-sm font-semibold text-slate-700 mb-1 xs:mb-2"
-    >
-      Code postal <span className="text-red-600">*</span>
-    </label>
-    <input
-      type="text"
-      id="codePostal"
-      name="codePostal"
-      value={formData.codePostal}
-      onChange={handleInputChange}
-      maxLength="10"
-      placeholder="Ex: 75001 ou 1012"
-      className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-        errors.codePostal ? "border-red-500" : "border-gray-300"
-      }`}
-    />
-    {errors.codePostal && (
-      <p className="text-red-600 text-xs xs:text-sm mt-1">
-        {errors.codePostal}
-      </p>
-    )}
-  </div>
+                  <div>
+                    <label
+                      htmlFor="codePostal"
+                      className="block text-xs xs:text-sm font-semibold text-slate-700 mb-1 xs:mb-2"
+                    >
+                      Code postal <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="codePostal"
+                      name="codePostal"
+                      value={formData.codePostal}
+                      onChange={handleInputChange}
+                      maxLength="10"
+                      placeholder="Ex: 75001 ou 1012"
+                      className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        errors.codePostal ? "border-red-500" : "border-gray-300"
+                      }`}
+                    />
+                    {errors.codePostal && (
+                      <p className="text-red-600 text-xs xs:text-sm mt-1">
+                        {errors.codePostal}
+                      </p>
+                    )}
+                  </div>
 
-  <div className="relative">
-    <label
-      htmlFor="ville"
-      className="block text-xs xs:text-sm font-semibold text-slate-700 mb-1 xs:mb-2"
-    >
-      Ville <span className="text-red-600">*</span>
-      {loadingCity && (
-        <span className="ml-2 text-xs text-gray-500">Recherche...</span>
-      )}
-    </label>
-    <input
-      type="text"
-      id="ville"
-      name="ville"
-      value={formData.ville}
-      onChange={handleInputChange}
-      className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-        errors.ville ? "border-red-500" : "border-gray-300"
-      }`}
-    />
-    {errors.ville && (
-      <p className="text-red-600 text-xs xs:text-sm mt-1">
-        {errors.ville}
-      </p>
-    )}
-    
-    {/* Liste déroulante des suggestions de villes */}
-    {suggestedCities.length > 1 && (
-      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-        {suggestedCities.map((city, index) => (
-          <button
-            key={index}
-            type="button"
-            onClick={() => handleCitySelect(city)}
-            className="w-full text-left px-3 py-2 hover:bg-blue-50 text-sm border-b border-gray-100 last:border-b-0"
-          >
-            {city}
-          </button>
-        ))}
-      </div>
-    )}
-  </div>
+                  <div className="relative">
+                    <label
+                      htmlFor="ville"
+                      className="block text-xs xs:text-sm font-semibold text-slate-700 mb-1 xs:mb-2"
+                    >
+                      Ville <span className="text-red-600">*</span>
+                      {loadingCity && (
+                        <span className="ml-2 text-xs text-gray-500">
+                          Recherche...
+                        </span>
+                      )}
+                    </label>
+                    <input
+                      type="text"
+                      id="ville"
+                      name="ville"
+                      value={formData.ville}
+                      onChange={handleInputChange}
+                      className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        errors.ville ? "border-red-500" : "border-gray-300"
+                      }`}
+                    />
+                    {errors.ville && (
+                      <p className="text-red-600 text-xs xs:text-sm mt-1">
+                        {errors.ville}
+                      </p>
+                    )}
 
-  <div>
-    <label
-      htmlFor="pays"
-      className="block text-xs xs:text-sm font-semibold text-slate-700 mb-1 xs:mb-2"
-    >
-      Zone <span className="text-red-600">*</span>
-    </label>
-    {loadingCountries ? (
-      <div className="w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border border-gray-300 rounded-lg bg-gray-100">
-        Chargement...
-      </div>
-    ) : (
-      <select
-        id="pays"
-        name="pays"
-        value={selectedCountry?.id || ""}
-        onChange={handleCountryChange}
-        className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          errors.pays ? "border-red-500" : "border-gray-300"
-        }`}
-      >
-        <option value="">Choisir une Zone</option>
-        {countries.map((country) => (
-          <option key={country.id} value={country.id}>
-            {country.name}
-          </option>
-        ))}
-      </select>
-    )}
-    {errors.pays && (
-      <p className="text-red-600 text-xs xs:text-sm mt-1">
-        {errors.pays}
-      </p>
-    )}
-  </div>
-</div>
+                    {/* Liste déroulante des suggestions de villes */}
+                    {suggestedCities.length > 1 && (
+                      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                        {suggestedCities.map((city, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => handleCitySelect(city)}
+                            className="w-full text-left px-3 py-2 hover:bg-blue-50 text-sm border-b border-gray-100 last:border-b-0"
+                          >
+                            {city}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="pays"
+                      className="block text-xs xs:text-sm font-semibold text-slate-700 mb-1 xs:mb-2"
+                    >
+                      Zone <span className="text-red-600">*</span>
+                    </label>
+                    {loadingCountries ? (
+                      <div className="w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border border-gray-300 rounded-lg bg-gray-100">
+                        Chargement...
+                      </div>
+                    ) : (
+                      <select
+                        id="pays"
+                        name="pays"
+                        value={selectedCountry?.id || ""}
+                        onChange={handleCountryChange}
+                        className={`w-full px-2 xs:px-3 sm:px-4 py-1.5 xs:py-2 text-sm xs:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                          errors.pays ? "border-red-500" : "border-gray-300"
+                        }`}
+                      >
+                        <option value="">Choisir une Zone</option>
+                        {countries.map((country) => (
+                          <option key={country.id} value={country.id}>
+                            {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {errors.pays && (
+                      <p className="text-red-600 text-xs xs:text-sm mt-1">
+                        {errors.pays}
+                      </p>
+                    )}
+                  </div>
+                </div>
 
                 {/* Section Paiement */}
                 <div className="pt-4 xs:pt-6 mt-4 xs:mt-6 border-t border-gray-300">

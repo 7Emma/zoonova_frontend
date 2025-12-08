@@ -15,14 +15,12 @@ const OrdersTester = () => {
         const b = await booksService.getBooks({ page_size: 5 });
         setBooks(Array.isArray(b.results) ? b.results : []);
       } catch (e) {
-        console.warn('Cannot fetch books', e);
       }
 
       try {
         const c = await ordersService.getCountries();
         setCountries(Array.isArray(c) ? c : []);
       } catch (e) {
-        console.warn('Cannot fetch countries', e);
       }
     })();
   }, []);

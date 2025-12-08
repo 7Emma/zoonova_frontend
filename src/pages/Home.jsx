@@ -16,16 +16,14 @@ const Home = () => {
         const data = await booksService.getBooks({ page_size: 8 });
         const items = Array.isArray(data) ? data : data.results || [];
         
-        console.log('Home - Books from API (avec videos et main_image):', items);
 
         // Les données incluent déjà videos et main_image, pas besoin de recharger
          const finalBooks = items.slice(0, 8).reverse();
          
-         console.log('Home - Books ready to display:', finalBooks);
          
          if (mounted) setBooks(finalBooks);
-      } catch (e) {
-        console.error('Home - Error loading books:', e);
+      } catch {
+        // Erreur silencieuse
       }
     };
 

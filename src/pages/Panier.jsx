@@ -19,9 +19,6 @@ const CartPage = () => {
       try {
         setLoadingCountries(true);
         const response = await ordersService.getCountries();
-        console.log("API Response - Full:", response);
-        console.log("API Response - Type:", typeof response);
-        console.log("API Response - Is Array:", Array.isArray(response));
 
         let countriesList = [];
         if (Array.isArray(response)) {
@@ -32,14 +29,11 @@ const CartPage = () => {
           countriesList = response.data;
         }
 
-        console.log("Countries List after parsing:", countriesList);
-        console.log("Countries List length:", countriesList.length);
 
         // Filter for active countries only
         const activeCountries = countriesList.filter(
           (c) => c.is_active !== false
         );
-        console.log("Active countries:", activeCountries);
 
         setCountries(activeCountries);
 
@@ -49,13 +43,11 @@ const CartPage = () => {
         );
         if (france) {
           setSelectedCountry(france);
-          console.log("France selected:", france);
         } else if (activeCountries.length > 0) {
           setSelectedCountry(activeCountries[0]);
-          console.log("First country selected:", activeCountries[0]);
         }
-      } catch (error) {
-        console.error("Erreur lors du chargement des pays:", error);
+      } catch {
+        // Erreur silencieuse
       } finally {
         setLoadingCountries(false);
       }
