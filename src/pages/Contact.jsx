@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import castor from "../assets/figures/castor.png";
 import flamant from "../assets/figures/Flamant.png";
+import contactService from "../services/contactService";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const ContactPage = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +58,7 @@ const ContactPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -64,9 +66,18 @@ const ContactPage = () => {
     }
 
     setIsSubmitting(true);
+    setSubmitError("");
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const payload = {
+        first_name: formData.prenom,
+        last_name: formData.nom,
+        email: formData.email,
+        message: formData.message,
+      };
+
+      await contactService.createMessage(payload);
+
       setSubmitSuccess(true);
       setIsSubmitting(false);
 
@@ -82,7 +93,29 @@ const ContactPage = () => {
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 5000);
-    }, 1500);
+    } catch (error) {
+      let errorMsg = "Une erreur est survenue lors de l'envoi du message.";
+      
+      // Gérer les erreurs de validation du backend
+      if (error.data) {
+        if (typeof error.data === 'object') {
+          // Récupérer le premier message d'erreur du backend
+          const firstError = Object.values(error.data)[0];
+          if (Array.isArray(firstError)) {
+            errorMsg = firstError[0];
+          } else if (typeof firstError === 'string') {
+            errorMsg = firstError;
+          }
+        } else if (typeof error.data === 'string') {
+          errorMsg = error.data;
+        }
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+      
+      setSubmitError(errorMsg);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -132,6 +165,16 @@ const ContactPage = () => {
                 <span className="font-semibold text-xs xs:text-sm sm:text-base">
                   Votre message a été envoyé avec succès !
                 </span>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {submitError && (
+              <div className="mb-4 xs:mb-6 bg-red-100 border border-red-400 text-red-700 px-3 xs:px-4 py-2 xs:py-3 rounded-lg">
+                <p className="font-semibold text-xs xs:text-sm sm:text-base">
+                  Erreur:
+                </p>
+                <p className="text-xs xs:text-sm">{submitError}</p>
               </div>
             )}
 

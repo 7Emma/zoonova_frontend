@@ -1,14 +1,18 @@
 import axiosInstance from './axiosInstance';
 import ApiError from './ApiError';
 
-const prefix = 'contact/';
+const prefix = 'contact/messages/';
 
 const createMessage = async (payload) => {
   try {
     const res = await axiosInstance.post(prefix, payload);
     return res.data;
   } catch (err) {
-    throw new ApiError('Failed to send message', err?.response?.status || 500, err?.response?.data);
+    const errData = err?.response?.data || {};
+    const errorMessage = errData.message || 
+                        Object.values(errData)[0]?.[0] ||
+                        'Une erreur est survenue lors de l\'envoi du message';
+    throw new ApiError(errorMessage, err?.response?.status || 500, err?.response?.data);
   }
 };
 
