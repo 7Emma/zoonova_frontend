@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import { useEffect, useState } from "react";
 import booksService from "../services/booksService";
+import { useServiceWorker } from "../hooks/useServiceWorker";
 
 const Home = () => {
   const navigate = useNavigate();
+  useServiceWorker();
 
   const [books, setBooks] = useState([]);
 

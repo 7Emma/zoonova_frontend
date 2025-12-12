@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import VideoPlayer from "./VideoPlayer";
 
 // ============ HOME COMPONENT ============
 const BookCard = ({ book, onClick }) => {
@@ -25,16 +26,11 @@ const BookCard = ({ book, onClick }) => {
         onClick={onClick}
       >
         {firstVideo ? (
-          <video
+          <VideoPlayer
+            videoUrls={firstVideo}
             className="w-full h-full object-cover"
             style={{ background: "transparent", transform: "scale(1.32)" }}
-            autoPlay
-            muted
-            playsInline
-            loop
-          >
-            <source src={firstVideo} type="video/mp4" />
-          </video>
+          />
         ) : mainImage ? (
           <img
             src={mainImage}
